@@ -81,7 +81,7 @@
               </v-btn> -->
 
         <!-- AIm 한줄 소개 -->
-        <div class="introduction">
+        <div class="introduction" style="color: black">
           <p>
             기업 분석과&nbsp;AI 모의면접&nbsp;|&nbsp;취업 준비는 <b>AIV</b>에서
           </p>
@@ -237,7 +237,7 @@ const checkPassword = async () => {
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  background: url("@/assets/images/fixed/login_bg2.png") no-repeat center center;
+  background: url("@/assets/images/fixed/login_bg4.png") no-repeat center center;
   background-size: cover;
 }
 
@@ -255,8 +255,9 @@ const checkPassword = async () => {
 .login-wrapper {
   position: relative;
   z-index: 1;
-  width: 80vh;
-  height: 70vh;
+  top: 70px;
+  width: 60vh;
+  height: 50vh;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 9vh;

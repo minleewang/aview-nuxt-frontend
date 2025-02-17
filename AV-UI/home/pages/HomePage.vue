@@ -4,15 +4,16 @@
       <h2 class="title typing-animation">
         <p style="text-transform: none; font-size: 56px">
           &nbsp;
-          <span style="color: white; font-weight: bold">A</span
-          >rtificial&nbsp;Intelligence -
+          <span style="color: black; font-weight: bold"
+            >Artificial&nbsp;Intelligence -
+          </span>
           <!-- &nbsp은 공백을 의미,대신 줄바꿈은 일어나지 않음-->
-          inter<span style="color: white; font-weight: bold">V</span>iew&nbsp;
+          <span style="color: black; font-weight: bold">interView&nbsp;</span>
         </p>
         <!-- 메인화면의 있는 글씨를 나타냄-->
       </h2>
       <div style="margin-bottom: 10px"></div>
-      <p class="subtitle">SINCE 2025</p>
+      <p class="subtitle" style="color: black">SINCE 2025</p>
       <div style="margin-bottom: 24px"></div>
 
       <!--메인화면 돌고있는 별-->
@@ -25,7 +26,7 @@
         </div>
       </div>
 
-      <p class="description">
+      <p class="description" style="color: black">
         AIV은 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여 <br />
         보다 많은 사람들에게 양질의 정보를 공유하고 도움을 드릴 수 있도록 최선을
         다하겠습니다.
@@ -93,7 +94,7 @@ const goToSurveyList = async () => {
   align-items: center; /*수직 중앙앙*/
   text-align: center; /*텍스트 수평 중앙앙*/
   overflow: hidden; /*콘텐츠가 영역을 벗어나면 안보이도록 설정정*/
-  background: url("@/assets/images/fixed/home_bg6.png") no-repeat center center;
+  background: url("@/assets/images/fixed/home_bg2.jpg") no-repeat center center;
   /*배경이미지가 반복 되지 않도록 설정, 즉 남는 공간 발생 시 이미지가 다시 생성되는 것을 막음*/
   background-size: cover;
 }

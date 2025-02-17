@@ -295,7 +295,7 @@ onMounted(() => {
 .menu-bar {
   background: var(
     --Gradient-Liner-1,
-    linear-gradient(94deg, #8c0ee0 1.69%, #b175c6 116.61%)
+    linear-gradient(94deg, #2a49e5 1.69%, #6751e0 116.61%)
   ) !important;
 }
 
