@@ -237,7 +237,7 @@ const checkPassword = async () => {
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  background: url("@/assets/images/fixed/login_bg7.png") no-repeat center center;
+  background: url("@/assets/images/fixed/login_bg6.png") no-repeat center center;
   background-size: cover;
 }
 
@@ -257,7 +257,7 @@ const checkPassword = async () => {
   z-index: 1;
   top: 70px;
   width: 60vh;
-  height: 50vh;
+  height: 70vh;
   overflow: hidden;
   background-color: rgba(255, 255, 255, 0.08);
   border-radius: 9vh;
