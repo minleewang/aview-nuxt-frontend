@@ -237,7 +237,7 @@ const checkPassword = async () => {
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  background: url("@/assets/images/fixed/login_bg4.png") no-repeat center center;
+  background: url("@/assets/images/fixed/login_bg7.png") no-repeat center center;
   background-size: cover;
 }
 

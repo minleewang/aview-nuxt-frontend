@@ -6,7 +6,7 @@
       <!-- NuxtPage를 메인 영역으로 설정 -->
       <NuxtPage />
     </main>
-    <div class="footer-container">
+    <div class="footer-container" style="color:black">
       <p class="reserved-info">
         2025-2026 AI-view Korea LLC. All Rights Reserved.
       </p>
@@ -17,12 +17,6 @@
 <script setup>
 import { defineComponent } from "vue";
 import NavigationBar from "~/navigationBar/pages/NavigationMenuBar.vue";
-import { useCompanyReportStore } from "./companyReport/stores/companyReportStore";
-
-const companyReportStore = useCompanyReportStore();
-const topN = ref(5);
-companyReportStore.requestCompanyReportListToDjango();
-companyReportStore.requestTopNCompanyReportListToDjango(topN.value);
 </script>
 
 <style>
