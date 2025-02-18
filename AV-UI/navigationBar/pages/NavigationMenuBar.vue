@@ -23,19 +23,7 @@
         naverAuthenticationStore.isNaverAdmin
       "
       text
-      @click="goToSurveyListPage"
-      class="btn-text"
-    >
-      SURVEY
-    </v-btn>
-    <v-btn
-      v-if="
-        !googleAuthenticationStore.isGoogleAdmin &&
-        !authenticationStore.isKakaoAdmin &&
-        !naverAuthenticationStore.isNaverAdmin
-      "
-      text
-      @click="goToSurvey"
+      @click="goToReviewListPage"
       class="btn-text"
     >
       REVIEW
@@ -45,18 +33,6 @@
       COMPANY REPORT
     </v-btn>
     <v-btn text @click="goToLlmTestPage" class="btn-text"> AI INTERVIEW </v-btn>
-    <!-- <v-menu>
-      <template v-slot:activator="{ props }">
-        <v-btn v-bind="props" class="btn-text" style="margin-right: 14px">
-          <b>AI Interview</b>
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item v-for="(item, index) in aiInterviewPageList" :key="index" @click="item.action">
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu> -->
 
     <v-spacer></v-spacer>
 
@@ -138,7 +114,7 @@ import { useRouter } from "vue-router";
 import { useAccountStore } from "../../account/stores/accountStore";
 import { useAuthenticationStore } from "../../authentication/stores/authenticationStore";
 import { useNaverAuthenticationStore } from "../../naverAuthentication/stores/naverAuthenticationStore";
-import { useSurveyStore } from "../../survey/stores/surveyStore";
+import { useReviewStore } from "../../review/stores/reviewStore";
 import { useGoogleAuthenticationStore } from "../../googleAuthentication/stores/googleAuthenticationStore";
 
 // Pinia 스토어 사용
@@ -146,7 +122,7 @@ const accountStore = useAccountStore();
 const authenticationStore = useAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
-const surveyStore = useSurveyStore();
+const reviewStore = useReviewStore();
 
 const router = useRouter();
 
@@ -188,7 +164,7 @@ const aiInterviewPageList = ref([
   },
 ]);
 
-const surveyId = ref(1);
+const reviewId = ref(1);
 const isUserAuthenticated = ref(null);
 
 // 브라우저 환경에서만 실행되도록 수정
@@ -203,7 +179,7 @@ const goToProductList = () => router.push("/companyReport/list");
 const goToCart = () => router.push("/cart/list");
 const goToOrder = () => router.push("/order/list");
 const goToMyPage = () => router.push("/account/mypage");
-const goToSurveyListPage = () => router.push("/survey/list");
+const goToReviewListPage = () => router.push("/review/list");
 const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
 // const goToAiInterviewPage = () => router.push('/ai-interview');
@@ -246,12 +222,12 @@ const signOut = async () => {
 };
 
 // 설문조사 페이지 이동
-const goToSurvey = async () => {
-  const randomString = await surveyStore.requestRandomStringToDjango();
+const goToReview = async () => {
+  const randomString = await reviewStore.requestRandomStringToDjango();
 
   if (randomString) {
     router.push({
-      name: "SurveyReadPage",
+      name: "reviewReadPage",
       params: { randomString: randomString.toString() },
     });
   }

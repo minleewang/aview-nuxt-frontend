@@ -4,12 +4,12 @@
       <h2 class="title typing-animation">
         <p style="text-transform: none; font-size: 56px">
           &nbsp;
-          <span style="color: black; font-weight: bold"
-            >Artificial&nbsp;Intelligence -
-          </span>
           <!-- &nbsp은 공백을 의미,대신 줄바꿈은 일어나지 않음-->
-          <span style="color: black; font-weight: bold">interView&nbsp;</span>
+          <span style="color: black; font-weight: bold"
+            >Artificial&nbsp;Intelligence - interView&nbsp;
+          </span>
         </p>
+
         <!-- 메인화면의 있는 글씨를 나타냄-->
       </h2>
       <div style="margin-bottom: 10px"></div>
@@ -31,56 +31,19 @@
         보다 많은 사람들에게 양질의 정보를 공유하고 도움을 드릴 수 있도록 최선을
         다하겠습니다.
       </p>
-
-      <!-- 버튼 구현 안함-->
-      <div style="margin-bottom: 40px"></div>
-      <!-- <div class="buttons">
-        <button class="goToProduct-button" @click="goToProductList">
-          <b>기업 분석 보고서</b> 구경하기
-        </button>
-        <button class="goToSurvey-button" @click="goToSurveyList">
-          <b>리뷰</b> 작성하기
-        </button>
-      </div> -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"; // 라우터 사용을 위한 선언언
-import { useSurveyStore } from "../../survey/stores/surveyStore";
+import { useRouter } from "vue-router"; // 라우터 사용을 위한 선언
 
 const router = useRouter();
-const surveyStore = useSurveyStore();
-
-// 기업분석 리스트
-const goToProductList = () => {
-  router.push("/companyReport/list");
-};
-
-//질문지
-const goToSurveyList = async () => {
-  try {
-    const randomString = await surveyStore.requestRandomStringToDjango(1); // surveyId를 적절히 교체
-    if (randomString) {
-      router.push({
-        name: "SurveyReadPage",
-        params: { randomString: randomString.toString() },
-      });
-    } else {
-      alert("질문지가 아직 등록되지 않았습니다.");
-    }
-  } catch (error) {
-    console.error("질문지 정보를 불러오는 중 에러가 발생했습니다:", error);
-    alert(
-      "질문지를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
-    );
-  }
-};
 </script>
 
 <!--선언한 class들 모음-->
 <style scoped>
+/* 홈화면 설정*/
 .home-container {
   /* 브라우저 창의 전체화면 차지하게 함*/
   position: relative;
@@ -98,7 +61,7 @@ const goToSurveyList = async () => {
   /*배경이미지가 반복 되지 않도록 설정, 즉 남는 공간 발생 시 이미지가 다시 생성되는 것을 막음*/
   background-size: cover;
 }
-
+/*문자 크기 설정*/
 .text-container {
   width: 80vw;
   padding: 20px;
@@ -137,75 +100,17 @@ const goToSurveyList = async () => {
   }
 }
 
+/*SINCE 2025크기 설정*/
 .subtitle {
   font-size: 24px;
   font-weight: bold;
 }
 
+/*설명글 크기 설정*/
 .description {
   font-size: 18px;
   color: #ffffff;
   margin-top: 10vh;
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-
-.goToProduct-button {
-  display: flex;
-  width: 248px;
-  height: 72px;
-  padding: 16px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  border-radius: 16px;
-  background: #fff;
-  color: #fff;
-
-  text-shadow: 2px 2px 3px rgb(136 0 136 / 50%);
-  background: linear-gradient(
-      15deg,
-      #0044cc,
-      #3d6fde,
-      #3f47cc,
-      #3d6fde,
-      #fefefe84,
-      #3d6fde,
-      #3f47cc,
-      #3d6fde,
-      #0044cc
-    )
-    no-repeat;
-  border: 1px solid #fff;
-  background-size: 300%;
-  background-position: left center;
-  transition: background 0.3s ease;
-}
-
-.goToProduct-button:hover {
-  background-size: 320%;
-  background-position: right center;
-}
-
-.goToSurvey-button {
-  display: flex;
-  width: 248px;
-  height: 72px;
-  padding: 16px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 2px;
-  border-radius: 16px;
-  border: 1px solid #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.goToSurvey-button:hover {
-  background-color: rgba(255, 255, 255, 0.25);
 }
 
 /* From Uiverse.io by OMPRABHU8125 */
