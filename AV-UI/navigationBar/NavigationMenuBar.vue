@@ -19,7 +19,7 @@
     <v-btn
       v-if="
         googleAuthenticationStore.isGoogleAdmin ||
-        authenticationStore.isKakaoAdmin ||
+        kakaoAuthenticationStore.isKakaoAdmin ||
         naverAuthenticationStore.isNaverAdmin
       "
       text
@@ -39,7 +39,7 @@
     <!-- 로그인 후 화면-->
     <v-menu
       v-if="
-        authenticationStore.isAuthenticatedKakao ||
+        kakaoAuthenticationStore.isAuthenticatedKakao ||
         googleAuthenticationStore.isAuthenticatedGoogle ||
         naverAuthenticationStore.isAuthenticatedNaver
       "
@@ -63,7 +63,7 @@
     <v-menu
       v-if="
         googleAuthenticationStore.isGoogleAdmin ||
-        authenticationStore.isKakaoAdmin ||
+        kakaoAuthenticationStore.isKakaoAdmin ||
         naverAuthenticationStore.isNaverAdmin
       "
       close-on-content-click
@@ -86,10 +86,10 @@
 
     <v-btn
       v-if="
-        !authenticationStore.isAuthenticatedKakao &&
+        !kakaoAuthenticationStore.isAuthenticatedKakao &&
         !googleAuthenticationStore.isAuthenticatedGoogle &&
         !naverAuthenticationStore.isAuthenticatedNaver &&
-        !authenticationStore.isKakaoAdmin &&
+        !kakaoAuthenticationStore.isKakaoAdmin &&
         !googleAuthenticationStore.isGoogleAdmin &&
         !naverAuthenticationStore.isNaverAdmin
       "
@@ -111,15 +111,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAccountStore } from "../account/stores/accountStore";
-import { useAuthenticationStore } from "../authentication/stores/authenticationStore";
-import { useNaverAuthenticationStore } from "../naverAuthentication/stores/naverAuthenticationStore";
-import { useReviewStore } from "../review/stores/reviewStore";
-import { useGoogleAuthenticationStore } from "../googleAuthentication/stores/googleAuthenticationStore";
+import { useAccountStore } from "~/account/stores/accountStore";
+import { useKakaoAuthenticationStore } from "~/kakaoAuthentication/stores/kakaoAuthenticationStore";
+import { useNaverAuthenticationStore } from "~/naverAuthentication/stores/naverAuthenticationStore";
+import { useReviewStore } from "~/review/stores/reviewStore";
+import { useGoogleAuthenticationStore } from "~/googleAuthentication/stores/googleAuthenticationStore";
 
 // Pinia 스토어 사용
 const accountStore = useAccountStore();
-const authenticationStore = useAuthenticationStore();
+const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
 const reviewStore = useReviewStore();
@@ -191,9 +191,9 @@ const signOut = async () => {
     const loginType = sessionStorage.getItem("loginType");
 
     if (loginType === "KAKAO") {
-      await authenticationStore.requestKakaoLogoutToDjango();
-      authenticationStore.isAuthenticatedKakao = false;
-      authenticationStore.isKakaoAdmin = false;
+      await kakaoAuthenticationStore.requestKakaoLogoutToDjango();
+      kakaoAuthenticationStore.isAuthenticatedKakao = false;
+      kakaoAuthenticationStore.isKakaoAdmin = false;
     } else if (loginType === "GOOGLE") {
       await googleAuthenticationStore.requestGoogleLogoutToDjango();
       googleAuthenticationStore.isAuthenticatedGoogle = false;
@@ -212,7 +212,7 @@ const signOut = async () => {
 
       accountStore.isAuthenticatedNormal = false;
       accountStore.isNormalAdmin = false;
-      authenticationStore.isKakaoAdmin = false;
+      kakaoAuthenticationStore.isKakaoAdmin = false;
       googleAuthenticationStore.isGoogleAdmin = false;
       naverAuthenticationStore.isNaverAdmin = false;
     }
@@ -238,7 +238,7 @@ onMounted(() => {
   if (process.client) {
     const userToken = sessionStorage.getItem("userToken");
     if (userToken) {
-      authenticationStore.isAuthenticatedKakao = true;
+      kakaoAuthenticationStore.isAuthenticatedKakao = true;
     }
 
     const googleUserToken = sessionStorage.getItem("googleUserToken");
@@ -258,7 +258,7 @@ onMounted(() => {
 
     const adminToken = sessionStorage.getItem("adminToken");
     if (adminToken) {
-      authenticationStore.isKakaoAdmin = true;
+      kakaoAuthenticationStore.isKakaoAdmin = true;
       googleAuthenticationStore.isGoogleAdmin = true;
       naverAuthenticationStore.isNaverAdmin = true;
       accountStore.isNormalAdmin = true;
