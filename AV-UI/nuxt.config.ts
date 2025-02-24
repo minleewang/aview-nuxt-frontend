@@ -75,7 +75,7 @@ export default defineNuxtConfig({
   extends: [
     "./aiInterview/nuxt.config.ts",
     "./account/nuxt.config.ts",
-    "./authentication/nuxt.config.ts",
+    "./kakaoAuthentication/nuxt.config.ts",
     "./naverAuthentication/nuxt.config.ts",
     "./review/nuxt.config.ts",
     "./companyReport/nuxt.config.ts",
@@ -102,7 +102,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "~/aiInterview/index.ts",
     "~/account/index.ts",
-    "~/authentication/index.ts",
+    "~/kakaoAuthentication/index.ts",
     "~/naverAuthentication/index.ts",
     "~/review/index.ts",
     "~/companyReport/index.ts",

@@ -111,7 +111,7 @@
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useAccountStore } from "@/stores/accountStore";
-import { useAuthenticationStore } from "../../../authentication/stores/authenticationStore";
+import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 
@@ -130,7 +130,7 @@ const isPasswordCollect = ref(false);
 
 // Pinia store 상태
 const account = useAccountStore();
-const authentication = useAuthenticationStore();
+const kakaoAuthentication = useKakaoAuthenticationStore();
 const googleAuthentication = useGoogleAuthenticationStore();
 const naverAuthentication = useNaverAuthenticationStore();
 
