@@ -1,63 +1,24 @@
 <template>
   <v-app>
-    <!-- NavigationBar 고정 -->
-    <NavigationBar />
-    <main>
-      <!-- NuxtPage를 메인 영역으로 설정 -->
+    <v-main>
+      <!-- NavigationBar 고정 -->
+      <NavigationBar />
+      <div class="footer-container" style="color: black">
+        <p class="reserved-info">
+          2025-2026 AI-view Korea LLC. All Rights Reserved.
+        </p>
+      </div>
       <NuxtPage />
-    </main>
-    <div class="footer-container" style="color:black">
-      <p class="reserved-info">
-        2025-2026 AI-view Korea LLC. All Rights Reserved.
-      </p>
-    </div>
+    </v-main>
   </v-app>
 </template>
 
 <script setup>
 import { defineComponent } from "vue";
-import NavigationBar from "~/navigationBar/pages/NavigationMenuBar.vue";
+import NavigationBar from "~/navigationBar/NavigationMenuBar.vue";
 </script>
 
 <style>
-/* v-app 전체 영역 설정 */
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* 화면 전체 높이를 차지하도록 설정 */
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* 스크롤바 문제 방지 */
-}
-
-/* v-main을 flex로 설정하여 남은 공간 차지 */
-v-main {
-  flex-grow: 1; /* 메인 컨텐츠가 가능한 모든 공간을 차지 */
-}
-
-/* 전체적으로 스크롤을 막고, 필요 시만 스크롤 허용 */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden; /* 가로 스크롤 제거 */
-  overflow-y: auto; /* 세로 스크롤만 허용 */
-}
-
-/* 네비게이션바 관련 CSS */
-.menu-bar {
-  background: var(
-    --Gradient-Liner-1,
-    linear-gradient(94deg, #0a28b0 1.69%, #8094f4 116.61%)
-  );
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 999; /* 네비게이션바가 항상 맨 위에 위치 */
-}
-
 /* 푸터 설정 */
 .footer-container {
   background-color: rgba(255, 255, 255, 0.025);
