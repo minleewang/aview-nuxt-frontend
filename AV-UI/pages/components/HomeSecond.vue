@@ -3,7 +3,6 @@
     <div class="home-second-body">
       <div class="title-container">
         <p
-          class="title"
           data-aos="fade-up"
           data-aos-offset="400 "
           style="white-space: nowrap"
@@ -15,8 +14,8 @@
       <div class="content-area">
         <div class="content-container">
           <div class="content-title" data-aos="fade-up" data-aos-offset="400">
-            <p><span class="NOODLE-span">AIV</span>에서는</p>
-            <p>이런 서비스를 제공합니다.</p>
+            <p><span class="NOODLE-span">AIV</span></p>
+            <p>팀원을 소개합니다.</p>
           </div>
           <div class="image-container">
             <div class="image-card-container">
@@ -26,22 +25,10 @@
                 data-aos-offset="400"
               >
                 <div class="image-card">
-                  <v-img src="@/assets/images/fixed/home_bg2.jpg" cover>
-                    <div class="gradient-overlay"></div>
-                  </v-img>
-                  <div class="text-container">
-                    <div class="image-card-title">
-                      <p>GitHub 연동</p>
-                    </div>
-                    <div class="image-card-text">
-                      <p>
-                        GitHub와 연동을 통해 별도의 회원가입 없이 GitHub
-                        아이디만으로 프로젝트를 관리할 수 있습니다.
-                      </p>
-                    </div>
-                  </div>
+                  <v-img src="@/assets/images/fixed/kim.png" cover> </v-img>
                 </div>
               </v-card>
+
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
@@ -49,20 +36,18 @@
                 data-aos-offset="400"
               >
                 <div class="image-card">
-                  <v-img src="@/assets/images/fixed/home_bg2.jpg" cover>
-                    <div class="gradient-overlay"></div>
-                  </v-img>
-                  <div class="text-container">
-                    <div class="image-card-title">
-                      <p>생성된 보고서 검색</p>
-                    </div>
-                    <div class="image-card-text">
-                      <p>
-                        생성한 프로젝트 보고서를 쉽게 검색하여 확인할 수
-                        있습니다.
-                      </p>
-                    </div>
-                  </div>
+                  <v-img src="@/assets/images/fixed/choi.jpg" cover> </v-img>
+                </div>
+              </v-card>
+
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-delay="300"
+                data-aos-offset="400"
+              >
+                <div class="image-card">
+                  <v-img src="@/assets/images/fixed/min.jpg" cover> </v-img>
                 </div>
               </v-card>
               <v-card
@@ -72,43 +57,100 @@
                 data-aos-offset="400"
               >
                 <div class="image-card">
-                  <v-img src="@/assets/images/fixed/home_bg2.jpg" cover>
-                    <div class="gradient-overlay"></div>
-                  </v-img>
-                  <div class="text-container">
-                    <div class="image-card-title">
-                      <p>Backlog 생성</p>
-                    </div>
-                    <div class="image-card-text">
-                      <p>
-                        Github의 Repository와 Branches 별로 Backlog를 자동 생성
-                        및 관리할 수 있습니다.
-                      </p>
-                    </div>
-                  </div>
+                  <v-img src="@/assets/images/fixed/yang.jpg" cover> </v-img>
                 </div>
               </v-card>
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
-                data-aos-delay="600"
+                data-aos-delay="500"
                 data-aos-offset="400"
               >
                 <div class="image-card">
-                  <v-img src="@/assets/images/fixed/home_bg2.jpg" cover>
-                    <div class="gradient-overlay"></div>
-                  </v-img>
-                  <div class="text-container">
-                    <div class="image-card-title">
-                      <p>Project Report 생성</p>
-                    </div>
-                    <div class="image-card-text">
-                      <p>
-                        개발자들의 업무 생산성을 높이기 위해 Project Report의
-                        초안 작성 및 관리를 도와드립니다.
-                      </p>
-                    </div>
-                  </div>
+                  <v-img src="@/assets/images/fixed/wang.jpg" cover> </v-img>
+                </div>
+              </v-card>
+            </div>
+          </div>
+
+          <div class="text-container">
+            <div class="text-card-container">
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-offset="400"
+              >
+                <div class="text-card">
+                  <p>이름: 김현우</p>
+                  <p>
+                    GitHub:<a
+                      href="https://github.com/kimhyeonu4586"
+                      class="link"
+                      >@kimhyeonu4586</a
+                    >
+                  </p>
+                </div>
+              </v-card>
+
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-offset="400"
+              >
+                <div class="text-card">
+                  <p>이름: 최병준</p>
+                  <p>
+                    GitHub:<a
+                      href="https://github.com/ChoiByuengJun"
+                      class="link"
+                      >@ChoiByuengJun</a
+                    >
+                  </p>
+                </div>
+              </v-card>
+
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-offset="400"
+              >
+                <div class="text-card">
+                  <p>이름: 오민수</p>
+                  <p>
+                    GitHub:<a href="https://github.com/yooodleee" class="link"
+                      >@yooodleee</a
+                    >
+                  </p>
+                </div>
+              </v-card>
+
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-offset="400"
+              >
+                <div class="text-card">
+                  <p>이름: <span style="color: red">[팀장]</span>양의정</p>
+                  <p>
+                    GitHub:<a href="https://github.com/UiJungYang" class="link"
+                      >@UiJungYang6</a
+                    >
+                  </p>
+                </div>
+              </v-card>
+
+              <v-card
+                data-aos="fade-up"
+                data-aos-anchor=".content-title"
+                data-aos-offset="400"
+              >
+                <div class="text-card">
+                  <p>이름: 왕환민</p>
+                  <p>
+                    GitHub:<a href="https://github.com/minleewang" class="link"
+                      >@minleewang</a
+                    >
+                  </p>
                 </div>
               </v-card>
             </div>
@@ -138,6 +180,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+/*페이지 전체 틀 및 백그라운드 사진*/
 .home-second {
   width: 100%;
   height: 90vh;
@@ -149,58 +192,38 @@ export default defineComponent({
   align-items: center;
 }
 
+/*이미지들 크기 통제*/
 .home-second-body {
   width: 70%;
   height: 100%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
 }
 
+/*제목*/
 .title-container {
   width: 100%;
-  height: 20%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
+  height: 15%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  font-size: 4vh;
+  font-weight: bold;
   /* padding-bottom: 50px; */
 }
 
-.title-container p {
-  color: #000000;
-}
-
-.title {
-  font-size: 4vh;
-  font-weight: bold;
-}
-
-.sub-title {
-  font-size: 2.5vh;
-  font-weight: bold;
-}
-
+/*중앙 배치 영역 통제*/
 .content-area {
   width: 100%;
   height: 70%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  gap: 10px;
   /* padding-bottom: 150px; */
 }
-
+/*중앙 컨텐츠 내용 통제*/
 .content-container {
   width: 100%;
   height: 100%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   /* align-items: flex-end; */
@@ -208,7 +231,7 @@ export default defineComponent({
   justify-content: center;
   gap: 10px;
 }
-
+/*제목*/
 .content-title {
   width: 100%;
   height: 10%;
@@ -217,21 +240,18 @@ export default defineComponent({
   justify-content: center;
   margin-top: 5%;
 }
-
+/*제목 스타일*/
 .content-title p {
   color: #ffffff;
   font-size: 2.5vh;
   font-weight: bold;
 }
-
+/*이미지 틀 크기*/
 .image-container {
   width: 100%;
   height: 60%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
 }
-
+/*이미지 카드들 영역 관리*/
 .image-card-container {
   width: 100%;
   height: 100%;
@@ -240,13 +260,15 @@ export default defineComponent({
   gap: 30px;
 }
 
+/*이미지가 들어가는 카드 창 관리*/
 .v-card {
   width: 40%;
   height: 90%;
   border-radius: 25px;
-  background-color: #080808;
+  background-color: #877e7e00;
 }
 
+/*들어가는 이미지 관리*/
 .image-card {
   position: relative;
   width: 100%;
@@ -257,56 +279,36 @@ export default defineComponent({
   border-radius: 25px;
 }
 
-.gradient-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.5) 40%,
-    rgba(0, 0, 0, 0.7) 50%,
-    rgba(0, 0, 0, 0.8) 60%,
-    rgba(0, 0, 0, 0.9) 70%,
-    rgba(0, 0, 0, 1) 80%
-  );
-}
-
-.text-container {
-  position: absolute;
-  top: 70%;
-  left: 5%;
-  right: 5%;
-  transform: translateY(-50%);
-  padding: 2vh;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 2vh;
-}
-
-.image-card-title {
-  color: #fff;
-  font-size: 2.3vh;
-  font-weight: bold;
-  margin-bottom: 1vh;
-}
-
-.image-card-text p {
-  color: #fff;
-  font-size: 1.6vh;
-  margin: 0;
-  line-height: 1.6;
-  opacity: 0.9;
-}
-
+/*이미지 관리*/
 .v-img {
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease;
   border-radius: 25px;
+}
+
+.text-container {
+  width: 100%;
+  height: 60%;
+}
+
+.text-card {
+  position: relative;
+  top: 5%;
+  left: 5%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.text-card-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
 .image-card:hover .v-img {
@@ -315,5 +317,11 @@ export default defineComponent({
 
 .NOODLE-span {
   color: rgb(158, 221, 96);
+}
+
+.link {
+  text-decoration: none; /* 밑줄 제거 */
+  color: blue; /* 기본 파란색 제거 (선택사항) */
+  font-weight: bold; /* 글자 강조 (선택사항) */
 }
 </style>
