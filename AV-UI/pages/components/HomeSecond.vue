@@ -266,6 +266,8 @@ export default defineComponent({
   height: 90%;
   border-radius: 25px;
   background-color: #877e7e00;
+  border: none; /* 테두리 없애기 */
+  box-shadow: none;
 }
 
 /*들어가는 이미지 관리*/
