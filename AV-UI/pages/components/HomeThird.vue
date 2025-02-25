@@ -2,17 +2,17 @@
   <div class="home-third">
     <div class="home-third-body">
       <div class="content-container" data-aos="fade-left" data-aos-offset="400">
-        <v-card class="content-image" id="github-image"></v-card>
+        <v-card class="content-image" id="first-image"></v-card>
         <div class="text-container">
           <p class="number-icon">1</p>
           <div class="text-title-container">
-            <p class="text-title">GitHub연동</p>
-            <p class="text-subtitle">회원가입 필요 없음</p>
+            <p class="text-title">다양한 기업보고서</p>
+            <p class="text-subtitle">최신 기업 및 채용정보 확인</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              <span class="AIV-span">AIV</span>는 GitHub와 연동을 통해 회원가입
-              없이 GitHub 아이디만으로 프로젝트를 관리할 수 있습니다.
+              <span class="AIV-span">AIV</span>는 다양한 기업의 최신 정보를
+              제공합니다.
             </p>
           </div>
         </div>
@@ -26,16 +26,15 @@
         <div class="text-container">
           <p class="number-icon">2</p>
           <div class="text-title-container">
-            <p class="text-title">생성된 보고서 검색</p>
-            <p class="text-subtitle">쉬운 검색 확인</p>
+            <p class="text-title">실전 같은 모의면접</p>
+            <p class="text-subtitle">AI기반 맞춤 면접 질문 제공</p>
           </div>
           <div class="text-content-container">
-            <p class="text-content">
-              생성한 프로젝트 보고서를 쉽게 검색하여 확인할 수 있습니다.
-            </p>
+            <span class="AIV-span">AIV</span>는 AI를 기반으로 업계별, 직무별
+            맞춤형 질문을 제공하여 실전같은 면접질문을 제공합니다.
           </div>
         </div>
-        <v-card class="content-image" id="search-image"></v-card>
+        <v-card class="content-image" id="second-image"></v-card>
       </div>
 
       <div class="content-container" data-aos="fade-left" data-aos-offset="400">
@@ -43,13 +42,13 @@
         <div class="text-container">
           <p class="number-icon">3</p>
           <div class="text-title-container">
-            <p class="text-title">Backlog 생성</p>
-            <p class="text-subtitle">Backlog 자동 생성 및 관리 가능</p>
+            <p class="text-title">전문적 피드백</p>
+            <p class="text-subtitle">피드백을 통한 문제점 확인</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              GitHub의 Repository와 Branches 별로 Backlog를 자동 생성 및 관리할
-              수 있습니다.
+              정확한 피드백을 통해 문제점 확인하여 면접 스킬을 향상시킬 수
+              있습니다.
             </p>
           </div>
         </div>
@@ -103,9 +102,6 @@ export default defineComponent({
   width: 70%;
   height: 100%;
   display: flex;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   /* gap: 1%; */
@@ -126,16 +122,16 @@ export default defineComponent({
   border-radius: 25px;
 }
 
-#github-image {
-  background-image: url("@/assets/images/fixed/logo.png");
-  background-size: cover;
+#first-image {
+  background-image: url("@/assets/images/fixed/info.jpg");
+  background-size: 105% 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#search-image {
-  background-image: url("@/assets/images/fixed/logo.png");
-  background-size: cover;
+#second-image {
+  background-image: url("@/assets/images/fixed/interview.jpg");
+  background-size: 105% 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -166,7 +162,7 @@ export default defineComponent({
 .number-icon {
   font-size: 4vh;
   font-weight: bold;
-  color: #fc02f4d7;
+  color: #000000d7;
   background-color: #ffffff;
   width: 5vh;
   height: 5vh;
@@ -180,21 +176,21 @@ export default defineComponent({
 .text-title {
   font-size: 5vh;
   font-weight: bold;
-  color: #ffffff;
+  color: #000000;
 }
 
 .text-subtitle {
   font-size: 2.3vh;
   font-weight: bold;
-  color: #ffffff;
+  color: #000000;
 }
 
 .text-content {
   font-size: 2.2vh;
-  color: #ffffff;
+  color: #000000;
 }
 
 .AIV-span {
-  color: rgb(255, 240, 30);
+  color: rgb(30, 56, 255);
 }
 </style>

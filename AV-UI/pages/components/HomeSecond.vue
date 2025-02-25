@@ -264,10 +264,10 @@ export default defineComponent({
 .v-card {
   width: 40%;
   height: 90%;
-  border-radius: 25px;
   background-color: #877e7e00;
   border: none; /* 테두리 없애기 */
   box-shadow: none;
+  overflow: visible;
 }
 
 /*들어가는 이미지 관리*/
@@ -302,7 +302,7 @@ export default defineComponent({
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .text-card-container {
