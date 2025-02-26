@@ -22,6 +22,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="100"
                 data-aos-offset="400"
               >
                 <div class="image-card">
@@ -78,6 +79,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="100"
                 data-aos-offset="400"
               >
                 <div class="text-card">
@@ -95,6 +97,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="200"
                 data-aos-offset="400"
               >
                 <div class="text-card">
@@ -112,6 +115,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="300"
                 data-aos-offset="400"
               >
                 <div class="text-card">
@@ -127,6 +131,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="400"
                 data-aos-offset="400"
               >
                 <div class="text-card">
@@ -142,6 +147,7 @@
               <v-card
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
+                data-aos-delay="500"
                 data-aos-offset="400"
               >
                 <div class="text-card">
