@@ -7,7 +7,7 @@
       <HomeSecond />
     </section>
     <section id="HomeThird">
-      <HomeThird />
+      <HomeThird @scroll-to-home="goToUp" />
     </section>
   </div>
 </template>
@@ -26,20 +26,48 @@ export default defineComponent({
   },
   setup() {
     function goToHomeSecond() {
+      if (event) event.preventDefault();
+
       const element = document.getElementById("HomeSecond");
       if (element) {
         const offset = 50;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
+        // requestAnimationFrame을 사용해 부드러운 스크롤 유도
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
         });
       }
     }
+
+    function goToUp() {
+      if (event) event.preventDefault();
+
+      const element = document.getElementById("HomeMain");
+      if (element) {
+        const offset = 50;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
+
+        // requestAnimationFrame을 사용해 부드러운 스크롤 유도
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth",
+          });
+        });
+      }
+    }
+
     return {
       goToHomeSecond,
+      goToUp,
     };
   },
 });

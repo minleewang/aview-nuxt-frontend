@@ -1,5 +1,4 @@
 <template>
-  <!-- <a class="scroll" href="#">If you want to know more about NOODLE</a> -->
   <a class="scroll" href="#">Read more</a>
 </template>
 

@@ -38,7 +38,7 @@
       </div>
 
       <div class="content-container" data-aos="fade-left" data-aos-offset="400">
-        <v-card class="content-image" id="backlog-image"></v-card>
+        <v-card class="content-image" id="third-image"></v-card>
         <div class="text-container">
           <p class="number-icon">3</p>
           <div class="text-title-container">
@@ -72,18 +72,35 @@
             </p>
           </div>
         </div>
-        <v-card class="content-image" id="report-image"></v-card>
+        <v-card class="content-image" id="fourth-image"></v-card>
       </div>
     </div>
+    <ScrollUpAnimation class="scrollupanimation" @click="goToUp" />
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import AOS from "aos";
+import { defineComponent, getCurrentInstance } from "vue";
 import "aos/dist/aos.css";
+import ScrollUpAnimation from "./ScrollUpAnimation.vue";
 
 export default defineComponent({
   name: "HomeThird",
+  components: {
+    ScrollUpAnimation,
+  },
+  setup() {
+    const { emit } = getCurrentInstance();
+
+    function goToUp() {
+      emit("scroll-to-home");
+    }
+
+    return {
+      goToUp,
+    };
+  },
 });
 </script>
 
@@ -136,14 +153,14 @@ export default defineComponent({
   background-repeat: no-repeat;
 }
 
-#backlog-image {
+#third-image {
   background-image: url("@/assets/images/fixed/logo.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-#report-image {
+#fourth-image {
   background-image: url("@/assets/images/fixed/logo.png");
   background-size: cover;
   background-position: center;
@@ -192,5 +209,14 @@ export default defineComponent({
 
 .AIV-span {
   color: rgb(30, 56, 255);
+}
+
+.scrollupanimation {
+  position: absolute;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 6s ease 0s infinite;
+  animation-delay: 5s;
 }
 </style>
