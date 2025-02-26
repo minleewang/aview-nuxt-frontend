@@ -17,7 +17,6 @@ import { defineComponent } from "vue";
 import HomeMain from "./components/HomeMain.vue";
 import HomeSecond from "./components/HomeSecond.vue";
 import HomeThird from "./components/HomeThird.vue";
-
 export default defineComponent({
   components: {
     HomeMain,

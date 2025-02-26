@@ -62,13 +62,13 @@
         <div class="text-container">
           <p class="number-icon">4</p>
           <div class="text-title-container">
-            <p class="text-title">Project Report 생성</p>
-            <p class="text-subtitle">효율적인 업무 생산성</p>
+            <p class="text-title">영상 분석 확인 가능</p>
+            <p class="text-subtitle">면접 기록 영상 제공</p>
           </div>
           <div class="text-content-container">
-            <p class="text-content">개발자들의 업무 생산성을 높이기 위해</p>
+            <p class="text-content">시선 처리, 발화 습관 등을 파악할 수 있으며 </p>
             <p class="text-content">
-              Project Report의 초안 작성 및 관리를 도와드립니다.
+              이를 기반으로 빠른 면접 스킬을 향상할 수 있습니다.
             </p>
           </div>
         </div>
@@ -154,14 +154,14 @@ export default defineComponent({
 }
 
 #third-image {
-  background-image: url("@/assets/images/fixed/logo.png");
+  background-image: url("@/assets/images/fixed/feedback.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 #fourth-image {
-  background-image: url("@/assets/images/fixed/logo.png");
+  background-image: url("@/assets/images/fixed/videointerview.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
