@@ -11,7 +11,7 @@
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              <span class="AIV-span">AIV</span>는 다양한 기업의 최신 정보를
+              <span class="AIV-span">JOBSTICK</span>는 다양한 기업의 최신 정보를
               제공합니다.
             </p>
           </div>
@@ -30,8 +30,8 @@
             <p class="text-subtitle">AI기반 맞춤 면접 질문 제공</p>
           </div>
           <div class="text-content-container">
-            <span class="AIV-span">AIV</span>는 AI를 기반으로 업계별, 직무별
-            맞춤형 질문을 제공하여 실전같은 면접질문을 제공합니다.
+            <span class="AIV-span">JOBSTICK</span>는 AI를 기반으로 업계별,
+            직무별 맞춤형 질문을 제공하여 실전같은 면접질문을 제공합니다.
           </div>
         </div>
         <v-card class="content-image" id="second-image"></v-card>
@@ -66,7 +66,9 @@
             <p class="text-subtitle">면접 기록 영상 제공</p>
           </div>
           <div class="text-content-container">
-            <p class="text-content">시선 처리, 발화 습관 등을 파악할 수 있으며 </p>
+            <p class="text-content">
+              시선 처리, 발화 습관 등을 파악할 수 있으며
+            </p>
             <p class="text-content">
               이를 기반으로 빠른 면접 스킬을 향상할 수 있습니다.
             </p>

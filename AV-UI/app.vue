@@ -5,7 +5,7 @@
       <NavigationBar />
       <div class="footer-container" style="color: black">
         <p class="reserved-info">
-          2025-2026 AI-view Korea LLC. All Rights Reserved.
+          2025-2026 JOBSTICK Korea LLC. All Rights Reserved.
         </p>
       </div>
       <NuxtPage />

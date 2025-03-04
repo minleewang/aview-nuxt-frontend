@@ -3,11 +3,11 @@
     <v-btn text @click="goToHome" class="navbar-logo-btn">
       <v-img
         class="home-icon"
-        src="@/assets/images/fixed/logo.png"
-        alt="AIM LOGO"
+        src="@/assets/images/fixed/logo2.png"
+        alt="JOBSTICK LOGO"
         contain
-        height="80"
-        width="80"
+        height="50"
+        width="150"
         cover
       ></v-img>
     </v-btn>

@@ -83,7 +83,8 @@
         <!-- AIm 한줄 소개 -->
         <div class="introduction" style="color: black">
           <p>
-            기업 분석과&nbsp;AI 모의면접&nbsp;|&nbsp;취업 준비는 <b>AIV</b>에서
+            기업 분석과&nbsp;AI 모의면접&nbsp;|&nbsp;취업 준비는
+            <b>JOBSTICK</b>에서
           </p>
         </div>
 
@@ -137,7 +138,7 @@ const naverAuthentication = useNaverAuthenticationStore();
 // Google, Kakao, Naver 로그인 함수들
 const goToKakaoLogin = async () => {
   sessionStorage.setItem("loginType", "KAKAO");
-  await authentication.requestKakaoOauthRedirectionToDjango();
+  await kakaoAuthentication.requestKakaoLoginToDjango();
 };
 
 const goToGoogleLogin = async () => {
@@ -243,9 +244,9 @@ const checkPassword = async () => {
 
 .login_logo {
   height: 20vh;
-  margin-bottom: 3vh;
+  margin-bottom: -2vh;
   overflow: hidden;
-  background-image: url("@/assets/images/fixed/logo.png");
+  background-image: url("@/assets/images/fixed/logo1.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -256,12 +257,12 @@ const checkPassword = async () => {
   position: relative;
   z-index: 1;
   top: 70px;
-  width: 60vh;
+  width: 50vh;
   height: 70vh;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: #877e7e00;
   border-radius: 9vh;
-  padding: 0vh 8vh;
+  padding: 0vh 10vh;
   display: flex; /* Flexbox 활성화 */
   justify-content: center; /* 수평 방향 중앙 정렬 */
   align-items: center; /* 수직 방향 중앙 정렬 */

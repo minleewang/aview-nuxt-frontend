@@ -1,12 +1,23 @@
 <template>
   <div class="home-container">
     <div class="text-container">
+      <transition name="fade-down">
+        <v-img
+          v-if="showElements"
+          class="home-icon"
+          :class="{ visible: showElements }"
+          src="@/assets/images/fixed/logo1.png"
+          alt="JOBSTICK LOGO"
+          height="130"
+        ></v-img>
+      </transition>
+
       <h2 class="title typing-animation">
         <p style="text-transform: none; font-size: 56px">
           &nbsp;
           <!-- &nbsp은 공백을 의미,대신 줄바꿈은 일어나지 않음-->
           <span style="color: black; font-weight: bold"
-            >Artificial&nbsp;Intelligence - interView&nbsp;
+            >{{ typedText }}&nbsp;
           </span>
         </p>
 
@@ -16,18 +27,9 @@
       <p class="subtitle" style="color: black">SINCE 2025</p>
       <div style="margin-bottom: 24px"></div>
 
-      <!--메인화면 돌고있는 별-->
-      <div class="loader">
-        <div class="react-star">
-          <div class="nucleus"></div>
-          <div class="electron electron1"></div>
-          <div class="electron electron2"></div>
-          <div class="electron electron3"></div>
-        </div>
-      </div>
-
       <p class="description" style="color: black">
-        AIV는 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여 <br />
+        JOBSTICK은 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여
+        <br />
         보다 많은 사람들에게 양질의 정보를 공유하고 도움을 드릴 수 있도록 최선을
         다하겠습니다.
       </p>
@@ -39,7 +41,13 @@
 <script>
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { defineComponent, getCurrentInstance } from "vue";
+import {
+  defineComponent,
+  getCurrentInstance,
+  onMounted,
+  nextTick,
+  ref,
+} from "vue";
 import ScrollAnimation from "./ScrollAnimation.vue";
 
 export default defineComponent({
@@ -47,15 +55,43 @@ export default defineComponent({
   components: {
     ScrollAnimation,
   },
+
   setup() {
+    const fullText = ref("USE YOUR JOBSTICK!");
+    const typedText = ref("");
+    const typeIndex = ref(0);
+    const showElements = ref(false);
     const { emit } = getCurrentInstance();
+
+    function typeText() {
+      if (typeIndex.value < fullText.value.length) {
+        typedText.value += fullText.value.charAt(typeIndex.value);
+        typeIndex.value++;
+        setTimeout(typeText, 80);
+      } else {
+        showElements.value = true;
+        nextTick(() => {
+          AOS.refresh();
+        });
+      }
+    }
 
     function goToHomeSecond() {
       emit("scroll-to-home-second");
     }
 
+    onMounted(() => {
+      typeText();
+    });
+
     return {
+      fullText,
+      typedText,
+      typeIndex,
+      showElements,
+
       goToHomeSecond,
+      typeText,
     };
   },
 });
@@ -84,18 +120,24 @@ export default defineComponent({
 
 .scrollanimation {
   position: absolute;
-  bottom: 7vh;
+  bottom: 8vh;
   left: 50%;
   transform: translateX(-50%);
   animation: bounce 6s ease 0s infinite;
   animation-delay: 5s;
 }
 
+.home-icon {
+  animation: fadeDown 0.8s ease-out;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
 /*문자 크기 설정*/
 .text-container {
   width: 80vw;
   padding: 20px;
-  color: #fff;
 }
 
 .typing-animation
@@ -103,7 +145,7 @@ export default defineComponent({
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 3px solid white;
+  border-right: 5px solid white;
   animation: typing 2s steps(30), blink 0.5s step-end infinite alternate;
 }
 
@@ -119,7 +161,7 @@ export default defineComponent({
 }
 
 /*깜빡이는 모션*/
-/*커서 올리면 나오는 컨셉셉*/
+/*커서 올리면 나오는 컨셉*/
 @keyframes blink {
   from {
     border-color: transparent;
@@ -128,6 +170,20 @@ export default defineComponent({
   to {
     border-color: white;
   }
+}
+
+.fade-down-enter-active {
+  transition: all 0.8s ease-out;
+}
+
+.fade-down-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.fade-down-enter-to {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /*SINCE 2025크기 설정*/
@@ -151,127 +207,5 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   padding: 100px;
-}
-
-.react-star {
-  position: relative;
-  width: 15rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 15rem;
-  animation: rotate 3s infinite;
-}
-
-.nucleus {
-  position: absolute;
-
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: linear-gradient(#0738e8, cyan);
-  height: 2rem;
-  width: 2rem;
-  animation: rotate 1s linear infinite;
-}
-
-.electron {
-  position: absolute;
-  width: 15rem;
-  height: 6rem;
-  border-radius: 50%;
-  border: 0.3rem solid rgb(105, 0, 255);
-  animation: revolve 1s linear infinite;
-}
-
-.electron1::before,
-.electron2::before,
-.electron3::before {
-  content: "";
-  position: absolute;
-  top: 60%;
-  left: 100%;
-  transform: translate(-50%, -50%);
-  width: 1rem;
-  height: 1rem;
-  background-color: rgb(105, 0, 255);
-  border-radius: 50%;
-  animation: moveElectron 1s infinite;
-}
-
-.electron2 {
-  transform: rotate(60deg);
-  animation-delay: -0.66s;
-}
-
-.electron2::before {
-  animation-delay: -0.66s;
-}
-
-.electron3 {
-  transform: rotate(-60deg);
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg) scale3d(1.1, 1.1, 0);
-  }
-}
-
-@keyframes revolve {
-  0% {
-    border-color: rgb(105, 0, 255);
-    border-right: transparent;
-  }
-
-  25% {
-    border-color: #00ffff9c;
-    border-bottom-color: transparent;
-  }
-
-  50% {
-    border-color: rgb(105, 0, 255);
-    border-left-color: transparent;
-  }
-
-  75% {
-    border-color: #00ffff9c;
-    border-top-color: transparent;
-  }
-
-  100% {
-    border-color: rgb(105, 0, 255);
-    border-right-color: transparent;
-  }
-}
-
-@keyframes moveElectron {
-  0% {
-    top: 60%;
-    left: 100%;
-  }
-
-  25% {
-    top: 100%;
-    left: 60%;
-  }
-
-  50% {
-    top: 60%;
-    left: 0%;
-  }
-
-  75% {
-    top: 0%;
-    left: 60%;
-  }
-
-  100% {
-    top: 60%;
-    left: 100%;
-  }
 }
 </style>
