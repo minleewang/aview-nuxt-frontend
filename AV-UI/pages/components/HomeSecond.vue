@@ -7,14 +7,14 @@
           data-aos-offset="400 "
           style="white-space: nowrap"
         >
-          <span class="NOODLE-span">AIV</span> | 기업 핵심 정보 분석 및 AI
+          <span class="NOODLE-span">JOBSTICK</span> | 기업 핵심 정보 분석 및 AI
           모의면접
         </p>
       </div>
       <div class="content-area">
         <div class="content-container">
           <div class="content-title" data-aos="fade-up" data-aos-offset="400">
-            <p><span class="NOODLE-span">AIV</span></p>
+            <p><span class="NOODLE-span">JOBSTICK</span></p>
             <p>팀원을 소개합니다.</p>
           </div>
           <div class="image-container">
@@ -324,7 +324,7 @@ export default defineComponent({
 }
 
 .NOODLE-span {
-  color: rgb(158, 221, 96);
+  color: rgb(38, 38, 231);
 }
 
 .link {
