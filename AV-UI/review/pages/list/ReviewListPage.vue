@@ -1,5 +1,5 @@
 <template lang="">
-  <v-container max-width="800">
+  <v-container max-width="1600">
     <br />
     <h2>작성된 설문 조사 확인</h2>
     <br /><br />
@@ -9,6 +9,7 @@
       :items="pagedItems"
       v-model:pagination="pagination"
       class="elevation-1"
+      hide-default-footer
     >
       <template v-slot:item="{ item }">
         <tr @click="readRow(item)">
@@ -26,12 +27,14 @@
         </tr>
       </template>
     </v-data-table>
+
     <v-pagination
       v-model="pagination.page"
       :length="Math.ceil(reviewTitleList.length / perPage)"
       color="primary"
       @input="updateItems"
     />
+
     <v-container align="end">
       <v-btn class="ml-2" color="primary" @click="goToReviewRegisterPage"
         >설문조사 만들기
@@ -65,12 +68,12 @@ const pagination = ref({
   page: 1,
 });
 
-const reviewTitleList = computed(() => reviewStore.reviewTitleList);
+const reviewTitleList = computed(() => reviewStore.reviewTitleList || []);
 
 const pagedItems = computed(() => {
   const startIdx = (pagination.value.page - 1) * perPage.value;
   const endIdx = startIdx + perPage.value;
-  return reviewTitleList.value.slice(startIdx, endIdx);
+  return (reviewTitleList.value || []).slice(startIdx, endIdx);
 });
 
 const readRow = (item) => {
@@ -95,7 +98,7 @@ const updateItems = () => {
   // 페이지 변경 시 실행할 함수
 };
 
-onMounted(() => {
+/*onMounted(() => {
   reviewStore.requestReviewListToDjango();
-});
+});*/
 </script>

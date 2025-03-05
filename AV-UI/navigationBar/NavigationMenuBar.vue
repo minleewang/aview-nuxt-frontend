@@ -1,33 +1,18 @@
 <template>
   <v-app-bar color="transparent" app dark height="72" class="menu-bar">
     <v-btn text @click="goToHome" class="navbar-logo-btn">
-      <v-img
-        class="home-icon"
-        src="@/assets/images/fixed/logo2.png"
-        alt="JOBSTICK LOGO"
-        contain
-        height="50"
-        width="150"
-        cover
-      ></v-img>
+      <v-img class="home-icon"></v-img>
     </v-btn>
 
     <v-spacer></v-spacer>
 
     <v-btn text @click="goToHome" class="btn-text"> HOME </v-btn>
-
-    <v-btn
-      v-if="
+    <!--      v-if="
         googleAuthenticationStore.isGoogleAdmin ||
         kakaoAuthenticationStore.isKakaoAdmin ||
         naverAuthenticationStore.isNaverAdmin
-      "
-      text
-      @click="goToReviewListPage"
-      class="btn-text"
-    >
-      REVIEW
-    </v-btn>
+      "-->
+    <v-btn text @click="goToReviewListPage" class="btn-text"> REVIEW </v-btn>
 
     <v-btn text @click="goToProductList" class="btn-text">
       COMPANY REPORT
@@ -280,6 +265,15 @@ onMounted(() => {
   display: flex;
   align-items: center;
   margin-left: 80px !important;
+}
+
+.home-icon {
+  height: 50px;
+  width: 150px;
+  background-image: url("@/assets/images/fixed/logo2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .btn-text {
