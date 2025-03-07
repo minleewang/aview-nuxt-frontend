@@ -4,9 +4,9 @@ import { useAccountStore } from "./accountStore";
 
 export const accountAction = {
   async requestAccountIdToDjango(email: string): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/account/get-account-id",
         { email }
       );
@@ -16,9 +16,9 @@ export const accountAction = {
     }
   },
   async requestEmailDuplicationCheckToDjango(email: string): Promise<boolean> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res = await djangoAxiosInst.post(
+      const res = await djangoAxiosInstance.post(
         "/account/email-duplication-check",
         email
       );
@@ -40,9 +40,9 @@ export const accountAction = {
   async requestNicknameDuplicationCheckToDjango(
     nickname: string
   ): Promise<boolean> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res = await djangoAxiosInst.post(
+      const res = await djangoAxiosInstance.post(
         "/account/nickname-duplication-check",
         nickname
       );
@@ -64,19 +64,19 @@ export const accountAction = {
     email: string;
     nickname: string;
   }): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      await djangoAxiosInst.post("/account/register", accountInfo);
+      await djangoAxiosInstance.post("/account/register", accountInfo);
     } catch (error) {
       console.error("신규 계정 생성 실패:", error);
       throw error;
     }
   },
   async requestNicknameToDjango(email: string): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const accountStore = useAccountStore();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/account/nickname",
         email
       );
@@ -87,18 +87,18 @@ export const accountAction = {
     }
   },
   async requestAccountCheckToDjango(payload: any): Promise<boolean> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const { email, password } = payload;
 
     try {
       // await는 axios.post 호출 앞에 있어야 합니다.
-      const res = await djangoAxiosInst.post("/account/account-check", {
+      const res = await djangoAxiosInstance.post("/account/account-check", {
         email: email,
         password: password,
       });
 
       // res의 타입을 명시적으로 정의하고 싶다면, 아래와 같이 사용할 수 있습니다.
-      // const res: AxiosResponse = await djangoAxiosInst.post('/account/account-check', { email: email, password: password });
+      // const res: AxiosResponse = await djangoAxiosInstance.post('/account/account-check', { email: email, password: password });
 
       if (res.data.isDuplicate) {
         return true;
@@ -113,11 +113,11 @@ export const accountAction = {
   async requestWithdrawalToDjango(payload: {
     reason: string;
   }): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const userToken = sessionStorage.getItem("userToken");
     const { reason } = payload;
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/account/withdraw",
         { reason: reason, userToken: userToken }
       );
@@ -128,12 +128,15 @@ export const accountAction = {
     }
   },
   async requestGenderToDjango(email: string): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const accountStore = useAccountStore();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post("/account/gender", {
-        email,
-      });
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/account/gender",
+        {
+          email,
+        }
+      );
       accountStore.gender = res.data;
       return res.data;
     } catch (error) {
@@ -142,10 +145,10 @@ export const accountAction = {
     }
   },
   async requestBirthyearToDjango(email: string): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const accountStore = useAccountStore();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/account/birthyear",
         email
       );
@@ -160,9 +163,9 @@ export const accountAction = {
     email: string;
     newPassword: string;
   }): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      await djangoAxiosInst.post("/account/modify-password", {
+      await djangoAxiosInstance.post("/account/modify-password", {
         email: payload.email,
         newPassword: payload.newPassword,
       });
@@ -175,9 +178,9 @@ export const accountAction = {
     email: string;
     newNickname: string;
   }): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      await djangoAxiosInst.post("/account/modify-nickname", {
+      await djangoAxiosInstance.post("/account/modify-nickname", {
         email: payload.email,
         newNickname: payload.newNickname,
       });
@@ -187,19 +190,21 @@ export const accountAction = {
     }
   },
   async requestRoleTypeToDjango(email: string): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      return await djangoAxiosInst.post("/account/role-type", { email: email });
+      return await djangoAxiosInstance.post("/account/role-type", {
+        email: email,
+      });
     } catch (error) {
       console.error("roleType 취득 실패:", error);
       throw error;
     }
   },
   async requestProfileToDjango(email: string): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const accountStore = useAccountStore();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/account/profile",
         email
       );
