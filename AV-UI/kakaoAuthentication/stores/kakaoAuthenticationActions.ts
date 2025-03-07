@@ -2,23 +2,23 @@ import * as axiosUtility from "../../utility/axiosInstance";
 
 export const kakaoAuthenticationAction = {
   async requestKakaoLoginToDjango(): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
-      return djangoAxiosInst
+      return djangoAxiosInstance
         .get("/kakao-oauth/request-login-url")
         .then((res) => {
           console.log(`res: ${res}`);
           window.location.href = res.data.url;
         });
     } catch (error) {
-      console.log("requestKakaoLoginToDjango() 중 에러:", error);
+      console.log("requestKakaoOauthRedirectionToDjango() 중 에러:", error);
     }
   },
   async requestAccessToken(code: string): Promise<string | null> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const response = await djangoAxiosInst.post(
+      const response = await djangoAxiosInstance.post(
         "/kakao-oauth/redirect-access-token",
         code
       );
@@ -29,20 +29,20 @@ export const kakaoAuthenticationAction = {
     }
   },
   async requestLogout(userToken: string): Promise<void> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
-      await djangoAxiosInst.post("/kakaoAuthentication/logout", { userToken });
+      await djangoAxiosInstance.post("/authentication/logout", { userToken });
     } catch (error) {
       console.log("requestLogout() 중 에러:", error);
     }
   },
   async requestValidationUserToken(userToken: string): Promise<boolean> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
-      const response = await djangoAxiosInst.post(
-        "/kakaoAuthentication/validation",
+      const response = await djangoAxiosInstance.post(
+        "/authentication/validation",
         { userToken }
       );
 

@@ -6,6 +6,6 @@ export const useKakaoAuthenticationStore = defineStore(
   "kakaoAuthenticationStore",
   {
     state: kakaoAuthenticationState,
-    actions: kakaoAuthenticationAction
+    actions: kakaoAuthenticationAction,
   }
 );
