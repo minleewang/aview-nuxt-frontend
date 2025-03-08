@@ -9,6 +9,15 @@
     <section id="HomeThird">
       <HomeThird @scroll-to-home="goToUp" />
     </section>
+        <section id="HomeFour">
+      <HomeFour @scroll-to-home="goToUp" />
+    </section>
+    <section id="HomeFive">
+      <HomeFive @scroll-to-home="goToUp" />
+    </section>
+    <section id="HomeSix">
+      <HomeSix @scroll-to-home="goToUp" />
+    </section>
   </div>
 </template>
 
@@ -17,11 +26,19 @@ import { defineComponent } from "vue";
 import HomeMain from "./components/HomeMain.vue";
 import HomeSecond from "./components/HomeSecond.vue";
 import HomeThird from "./components/HomeThird.vue";
+import HomeFour from "./components/HomeFour.vue";
+import HomeFive from "./components/HomeFive.vue";
+import HomeSix from "./components/HomeSix.vue";
+
+
 export default defineComponent({
   components: {
     HomeMain,
     HomeSecond,
     HomeThird,
+    HomeFour,
+    HomeFive,
+    HomeSix 
   },
   setup() {
     function goToHomeSecond() {
