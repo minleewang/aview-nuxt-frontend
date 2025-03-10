@@ -109,13 +109,14 @@ export default defineComponent({
 <style scoped>
 .home-third {
   width: 100%;
-  height: 350vh;
+  height: 420vh; /* 기존 350vh에서 400vh로 증가 */
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
   background-size: cover;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
 }
+
 
 .home-third-body {
   width: 70%;
@@ -132,7 +133,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 100px;
 }
 
 .content-image {

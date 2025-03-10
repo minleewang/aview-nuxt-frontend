@@ -18,6 +18,9 @@
     <section id="HomeSix">
       <HomeSix @scroll-to-home="goToUp" />
     </section>
+    <section id="HomeSeven">
+      <HomeSeven @scroll-to-home="goToUp" />
+    </section>
   </div>
 </template>
 
@@ -29,6 +32,7 @@ import HomeThird from "./components/HomeThird.vue";
 import HomeFour from "./components/HomeFour.vue";
 import HomeFive from "./components/HomeFive.vue";
 import HomeSix from "./components/HomeSix.vue";
+import HomeSeven from "./components/HomeSeven.vue";
 
 
 export default defineComponent({
@@ -38,7 +42,9 @@ export default defineComponent({
     HomeThird,
     HomeFour,
     HomeFive,
-    HomeSix 
+    HomeSix,
+    HomeSeven
+
   },
   setup() {
     function goToHomeSecond() {
