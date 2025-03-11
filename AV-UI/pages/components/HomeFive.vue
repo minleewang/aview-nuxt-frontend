@@ -72,21 +72,21 @@ h1 {
 /* 그리드 아이템 스타일 */
 .grid-item {
   background-color: rgba(240, 240, 240, 0.9); /* 배경을 반투명하게 설정하여 배경 이미지가 살짝 보이도록 */
-  padding: 20px;
+  padding: 15px; /* 패딩을 조금 줄여서 설명 칸을 살짝 줄임 */
   text-align: center;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-size: 18px;
+  font-size: 16px; /* 글자 크기 약간 줄임 */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 300px; /* 고정 높이 설정 */
+  height: 260px; /* 고정 높이 약간 줄임 */
 }
 
 /* 제목 스타일 */
 .title {
-  font-size: 20px;
+  font-size: 18px; /* 제목 크기 줄임 */
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
@@ -95,11 +95,11 @@ h1 {
 
 /* 설명 텍스트 스타일 */
 .description {
-  font-size: 14px;
+  font-size: 15px; /* 설명 글자 크기를 살짝 키움 */
   color: #555;
   text-align: center;
   flex-grow: 1; /* 설명이 가능한 공간을 차지하도록 설정 */
-  margin-top: 20px;
+  margin-top: 10px; /* 마진을 약간 줄여서 설명 간격 줄임 */
 }
 
 /* 배경 스타일 */

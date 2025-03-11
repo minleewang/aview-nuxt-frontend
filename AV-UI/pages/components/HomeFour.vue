@@ -1,6 +1,8 @@
 <template>
   <div class="home-four">
+    <!-- h1 아래에 작은 텍스트 추가 -->
     <h1>면접 준비가 어렵고 막막하신 분들?</h1>
+    <p class="intro-text">dasd </p>
 
     <!-- 컨테이너로 사진과 설명을 정렬 -->
     <div class="content-container">
@@ -68,39 +70,51 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 15px; /* 패딩 */
+  padding: 240px 30px; /* 여백을 2배로 늘림 (원래 120px에서 240px로) */
   box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+}
+
+.intro-text {
+  color: #666; /* 색상 변경 */
+  font-size: 1.2rem; /* 글씨 크기 */
+  text-align: center;
+  margin-bottom: 20px; /* 하단 여백 */
 }
 
 h1 {
   color: #333;
   font-size: 3rem; /* 글씨 크기 */
   font-weight: bold;
-  margin-bottom: 30px; /* 하단 마진 */
+  margin-bottom: 20px; /* 하단 여백 */
+  margin-top: 10px; /* 상단 여백을 살짝 추가 */
   text-align: center;
 }
+
 
 .content-container {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap; /* 화면 크기에 따라 자동 배치 */
-  gap: 30px; /* 간격 설정 */
+  gap: 30px; /* 간격 */
+  margin-top: 160px; /* 설명과 좀 더 가까워지도록 상단 여백을 2배로 늘림 */
+  margin-bottom: 200px; /* 하단 여백을 좀 더 좁힘 (240px에서 200px로 변경) */
 }
 
-/* 설명 칸 전체 스타일 */
 .description-container {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* 간격 */
+  gap: 20px; /* 간격 */
   width: 28%; /* 크기 설정 */
   position: relative;
+  padding: 0 15px; /* 왼쪽, 오른쪽 패딩을 줄여서 간격을 더 가깝게 설정 */
+  box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
 }
 
 /* 오른쪽 설명 칸에 말풍선 스타일 */
 .description-container.left .description {
   background-color: #fff;
-  padding: 18px; /* 패딩 */
+  padding: 20px; /* 패딩 */
   border-radius: 12px; /* 둥근 모서리 */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 그림자 */
   position: relative;
@@ -153,6 +167,8 @@ h1 {
   justify-content: center;
   align-items: center; /* 이미지가 중앙에 위치하도록 설정 */
   position: relative;
+  padding: 0 10px; /* 왼쪽, 오른쪽 패딩을 줄여서 간격을 더 가깝게 설정 */
+  box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
 }
 
 .image-container img {
@@ -173,6 +189,7 @@ h1 {
   .description-container,
   .image-container {
     width: 100%; /* 작은 화면에서는 각 요소가 전체 너비를 차지하도록 */
+    padding: 0 20px; /* 작은 화면에서 왼쪽, 오른쪽 여백을 조금 더 추가 */
   }
 
   .image-container img {

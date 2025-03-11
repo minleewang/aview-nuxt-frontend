@@ -26,7 +26,9 @@ export default {
 .home-six {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #fafafa;
+  background: url("@/assets/images/fixed/home_bg2.jpg") center center; /* Page5에서 사용한 배경 이미지 적용 */
+  background-size: cover; /* 배경 이미지를 화면에 맞게 확대 */
+  background-attachment: fixed; /* 배경 이미지를 고정 */
   margin: 0;
   padding: 0;
   min-height: 100vh;

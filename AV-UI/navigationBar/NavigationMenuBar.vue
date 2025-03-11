@@ -260,7 +260,7 @@ onMounted(() => {
   ) !important;
 }
 
-/* AIM 로고 이미지 버튼 */
+/* 로고 이미지 버튼 */
 .navbar-logo-btn {
   display: flex;
   align-items: center;
