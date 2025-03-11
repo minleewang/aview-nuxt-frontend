@@ -7,7 +7,7 @@ export const accountAction = {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/account/get-account-id",
+        "/account/email",
         { email }
       );
       return res.data.accountId;

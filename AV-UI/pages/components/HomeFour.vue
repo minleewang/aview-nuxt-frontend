@@ -2,7 +2,6 @@
   <div class="home-four">
     <!-- h1 아래에 작은 텍스트 추가 -->
     <h1>면접 준비가 어렵고 막막하신 분들?</h1>
-    <p class="intro-text">dasd </p>
 
     <!-- 컨테이너로 사진과 설명을 정렬 -->
     <div class="content-container">
@@ -39,7 +38,9 @@
           <h2>면접 중에 말을 잘못하거나 말실수를 할까 봐 두려워요</h2>
         </div>
         <div class="description">
-          <h2>직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요</h2>
+          <h2>
+            직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요
+          </h2>
         </div>
       </div>
     </div>
@@ -47,7 +48,7 @@
 </template>
 
 <script>
-import imageSrc from '@/assets/images/fixed/aa.jpg'; // 이미지 경로를 import로 불러옵니다.
+import imageSrc from "@/assets/images/fixed/aa.jpg"; // 이미지 경로를 import로 불러옵니다.
 
 export default {
   name: "HomePage4",
@@ -90,7 +91,6 @@ h1 {
   text-align: center;
 }
 
-
 .content-container {
   display: flex;
   justify-content: space-between;
@@ -123,7 +123,7 @@ h1 {
 }
 
 .description-container.left .description::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: -12px; /* 왼쪽으로 삼각형 배치 */
@@ -145,7 +145,7 @@ h1 {
 }
 
 .description-container.right .description::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: -12px; /* 오른쪽으로 삼각형 배치 */

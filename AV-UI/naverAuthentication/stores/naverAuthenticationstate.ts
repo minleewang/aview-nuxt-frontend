@@ -1,4 +1,3 @@
 export const naverAuthenticationState = () => ({
-    isAuthenticatedNaver: false,
-    isNaverAdmin: false
+  isAuthenticatedNaver: false,
 });

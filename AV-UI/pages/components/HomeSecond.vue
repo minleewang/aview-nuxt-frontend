@@ -138,7 +138,7 @@
                   <p>이름: <span style="color: red">[팀장]</span>양의정</p>
                   <p>
                     GitHub:<a href="https://github.com/UiJungYang" class="link"
-                      >@UiJungYang6</a
+                      >@UiJungYang</a
                     >
                   </p>
                 </div>
