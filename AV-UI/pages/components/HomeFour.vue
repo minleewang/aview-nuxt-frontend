@@ -38,9 +38,7 @@
           <h2>면접 중에 말을 잘못하거나 말실수를 할까 봐 두려워요</h2>
         </div>
         <div class="description">
-          <h2>
-            직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요
-          </h2>
+          <h2>직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요</h2>
         </div>
       </div>
     </div>
@@ -48,7 +46,7 @@
 </template>
 
 <script>
-import imageSrc from "@/assets/images/fixed/aa.jpg"; // 이미지 경로를 import로 불러옵니다.
+import imageSrc from '@/assets/images/fixed/sc.png'; // 이미지 경로를 import로 불러옵니다.
 
 export default {
   name: "HomePage4",
@@ -71,23 +69,24 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 240px 30px; /* 여백을 2배로 늘림 (원래 120px에서 240px로) */
+  padding: 140px 30px; /* 여백을 좁혀서 요소들을 더 가깝게 만듦 */
   box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
 }
 
 .intro-text {
   color: #666; /* 색상 변경 */
-  font-size: 1.2rem; /* 글씨 크기 */
+  font-size: 2rem;
+  font-weight: bold; /* 글씨 크기 */
   text-align: center;
-  margin-bottom: 20px; /* 하단 여백 */
+  margin-bottom: 15px; /* 하단 여백을 조금 더 좁힘 */
 }
 
 h1 {
   color: #333;
-  font-size: 3rem; /* 글씨 크기 */
+  font-size: 2.5rem; /* 글씨 크기 축소 */
   font-weight: bold;
-  margin-bottom: 20px; /* 하단 여백 */
-  margin-top: 10px; /* 상단 여백을 살짝 추가 */
+  margin-bottom: 15px; /* 하단 여백을 줄임 */
+  margin-top: 0px; /* 상단 여백을 없앰 */
   text-align: center;
 }
 
@@ -96,37 +95,37 @@ h1 {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap; /* 화면 크기에 따라 자동 배치 */
-  gap: 30px; /* 간격 */
-  margin-top: 160px; /* 설명과 좀 더 가까워지도록 상단 여백을 2배로 늘림 */
-  margin-bottom: 200px; /* 하단 여백을 좀 더 좁힘 (240px에서 200px로 변경) */
+  gap: 10px; /* 간격을 더 좁혀서 가까워지도록 */
+  margin-top: 100px; /* 설명과 좀 더 가까워지도록 상단 여백을 축소 */
+  margin-bottom: 120px; /* 하단 여백을 좀 더 좁힘 */
 }
 
 .description-container {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* 간격 */
-  width: 28%; /* 크기 설정 */
+  gap: 10px; /* 간격을 줄여서 가까워지도록 */
+  width: 30%; /* 크기 설정을 조금 더 키움 */
   position: relative;
-  padding: 0 15px; /* 왼쪽, 오른쪽 패딩을 줄여서 간격을 더 가깝게 설정 */
+  padding: 0 10px; /* 왼쪽, 오른쪽 패딩을 줄여서 간격을 더 가깝게 설정 */
   box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
 }
 
 /* 오른쪽 설명 칸에 말풍선 스타일 */
 .description-container.left .description {
   background-color: #fff;
-  padding: 20px; /* 패딩 */
+  padding: 16px; /* 패딩을 조금 줄임 */
   border-radius: 12px; /* 둥근 모서리 */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 그림자 */
   position: relative;
-  font-size: 16px; /* 글씨 크기 */
+  font-size: 15px; /* 글씨 크기 조금 줄임 */
   color: #333;
 }
 
 .description-container.left .description::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
-  left: -12px; /* 왼쪽으로 삼각형 배치 */
+  left: -10px; /* 왼쪽으로 삼각형 배치 */
   transform: translateY(-50%);
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
@@ -136,19 +135,19 @@ h1 {
 /* 왼쪽 설명 칸에 말풍선 스타일 */
 .description-container.right .description {
   background-color: #fff;
-  padding: 18px; /* 패딩 */
+  padding: 14px; /* 패딩을 더 줄임 */
   border-radius: 12px; /* 둥근 모서리 */
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 그림자 */
   position: relative;
-  font-size: 16px; /* 글씨 크기 */
+  font-size: 15px; /* 글씨 크기 더 줄임 */
   color: #333;
 }
 
 .description-container.right .description::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
-  right: -12px; /* 오른쪽으로 삼각형 배치 */
+  right: -10px; /* 오른쪽으로 삼각형 배치 */
   transform: translateY(-50%);
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
@@ -157,11 +156,11 @@ h1 {
 
 /* 설명 제목 스타일 */
 .description h2 {
-  margin-bottom: 8px; /* 하단 마진 */
+  margin-bottom: 6px; /* 하단 마진을 더 좁힘 */
 }
 
 .image-container {
-  width: 28%; /* 이미지 크기 */
+  width: 30%; /* 이미지 크기를 조금 더 넓힘 */
   height: auto; /* 높이 자동 */
   display: flex;
   justify-content: center;
@@ -175,8 +174,8 @@ h1 {
   width: 100%; /* 이미지 크기를 칸 크기에 맞추기 */
   height: auto; /* 이미지 비율을 유지 */
   object-fit: contain; /* 이미지가 비율을 유지하면서 잘리지 않게 설정 */
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* 그림자 */
+  border-radius: 0; /* 테두리 제거 */
+  box-shadow: none; /* 그림자 제거 */
 }
 
 /* 반응형 웹 디자인: 화면이 좁을 경우 레이아웃을 자동으로 변경 */
