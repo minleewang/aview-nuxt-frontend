@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import image1 from '@/assets/images/fixed/in.jpg'; // 첫 번째 이미지
-import image2 from '@/assets/images/fixed/dc.jpg'; // 두 번째 이미지
-import image3 from '@/assets/images/fixed/cam.jpg'; // 세 번째 이미지
+import image1 from '@/assets/images/fixed/in.webp'; // 첫 번째 이미지
+import image2 from '@/assets/images/fixed/dc.webp'; // 두 번째 이미지
+import image3 from '@/assets/images/fixed/cam.webp'; // 세 번째 이미지
 
 export default {
   name: "HomePage7",
