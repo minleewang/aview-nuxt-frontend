@@ -137,19 +137,19 @@ const naverAuthentication = useNaverAuthenticationStore();
 
 // Google, Kakao, Naver 로그인 함수들
 const goToKakaoLogin = async () => {
-  sessionStorage.setItem("loginType", "KAKAO");
+  localStorage.setItem("loginType", "KAKAO");
   await kakaoAuthentication.requestKakaoLoginToDjango();
 };
 
 const goToGoogleLogin = async () => {
   // alert("현재 로그인 검수 중입니다.");
-  sessionStorage.setItem("loginType", "GOOGLE");
+  localStorage.setItem("loginType", "GOOGLE");
   await googleAuthentication.requestGoogleOauthRedirectionToDjango();
 };
 
 const goToNaverLogin = async () => {
   alert("현재 로그인 검수 중입니다.");
-  // sessionStorage.setItem('loginType', "NAVER");
+  // localStorage.setItem('loginType', "NAVER");
   // await naverAuthentication.requestNaverOauthRedirectionToDjango();
 };
 
