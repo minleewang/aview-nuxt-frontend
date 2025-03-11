@@ -7,12 +7,18 @@
     <v-spacer></v-spacer>
 
     <v-btn text @click="goToHome" class="btn-text"> HOME </v-btn>
-    <!--      v-if="
-        googleAuthenticationStore.isGoogleAdmin ||
-        kakaoAuthenticationStore.isKakaoAdmin ||
-        naverAuthenticationStore.isNaverAdmin
-      "-->
-    <v-btn text @click="goToReviewListPage" class="btn-text"> REVIEW </v-btn>
+    <v-btn
+      v-if="
+        kakaoAuthenticationStore.isAuthenticatedKakao ||
+        googleAuthenticationStore.isAuthenticatedGoogle ||
+        naverAuthenticationStore.isAuthenticatedNaver
+      "
+      text
+      @click="goToReviewListPage"
+      class="btn-text"
+    >
+      REVIEW
+    </v-btn>
 
     <v-btn text @click="goToProductList" class="btn-text">
       COMPANY REPORT
@@ -45,6 +51,8 @@
         </v-list-item>
       </v-list>
     </v-menu>
+
+    <!--추후 관리자 추가하여 교체예정-->
     <v-menu
       v-if="
         googleAuthenticationStore.isGoogleAdmin ||
@@ -68,15 +76,14 @@
         </v-list-item>
       </v-list>
     </v-menu>
+    <!--여기까지-->
 
+    <!--로그인/로그아웃 버튼-->
     <v-btn
       v-if="
         !kakaoAuthenticationStore.isAuthenticatedKakao &&
         !googleAuthenticationStore.isAuthenticatedGoogle &&
-        !naverAuthenticationStore.isAuthenticatedNaver &&
-        !kakaoAuthenticationStore.isKakaoAdmin &&
-        !googleAuthenticationStore.isGoogleAdmin &&
-        !naverAuthenticationStore.isNaverAdmin
+        !naverAuthenticationStore.isAuthenticatedNaver
       "
       text
       @click="signIn"
@@ -96,14 +103,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAccountStore } from "~/account/stores/accountStore";
 import { useKakaoAuthenticationStore } from "~/kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "~/naverAuthentication/stores/naverAuthenticationStore";
-import { useReviewStore } from "~/review/stores/reviewStore";
 import { useGoogleAuthenticationStore } from "~/googleAuthentication/stores/googleAuthenticationStore";
+import { useReviewStore } from "~/review/stores/reviewStore";
 
 // Pinia 스토어 사용
-const accountStore = useAccountStore();
 const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
@@ -112,6 +117,8 @@ const reviewStore = useReviewStore();
 const router = useRouter();
 
 // 데이터 선언
+
+// 관리자 페이지
 const adminPageList = ref([
   {
     title: "사용자 관리",
@@ -123,6 +130,7 @@ const adminPageList = ref([
   },
 ]);
 
+//내페이지 안에 있는 아이템 모음
 const myPageItems = ref([
   {
     title: "회원 정보",
@@ -149,61 +157,42 @@ const aiInterviewPageList = ref([
   },
 ]);
 
-const reviewId = ref(1);
-const isUserAuthenticated = ref(null);
-
-// 브라우저 환경에서만 실행되도록 수정
-if (process.client) {
-  isUserAuthenticated.value = sessionStorage.getItem("isUserAuthenticated");
-}
-
 // 라우터 이동 함수들
-const signIn = () => router.push("/account/login");
-const goToHome = () => router.push("/");
-const goToProductList = () => router.push("/companyReport/list");
-const goToCart = () => router.push("/cart/list");
-const goToOrder = () => router.push("/order/list");
-const goToMyPage = () => router.push("/account/mypage");
-const goToReviewListPage = () => router.push("/review/list");
+const signIn = () => router.push("/account/login"); //로그인 페이지
+const goToHome = () => router.push("/"); // 홈 메인페이지
+const goToProductList = () => router.push("/companyReport/list"); // company report 페이지
+const goToCart = () => router.push("/cart/list"); // 카트페이지
+const goToOrder = () => router.push("/order/list"); // 주문내역 페이지
+const goToMyPage = () => router.push("/account/mypage"); // 내페이지
+const goToReviewListPage = () => router.push("/review/list"); // 리뷰페이지
 const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
-// const goToAiInterviewPage = () => router.push('/ai-interview');
+// const goToAiInterviewPage = () => router.push('/ai-interview'); 나중에 확인
 const goToLlmTestPage = () => router.push("/ai-interview");
 
 // 로그아웃 처리
 const signOut = async () => {
-  if (process.client) {
-    const loginType = sessionStorage.getItem("loginType");
-
-    if (loginType === "KAKAO") {
-      await kakaoAuthenticationStore.requestKakaoLogoutToDjango();
+  console.log("로그아웃 클릭");
+  const userToken = localStorage.getItem("userToken");
+  const loginType = sessionStorage.getItem("loginType");
+  console.log(loginType);
+  if (userToken != null) {
+    if (loginType == "KAKAO") {
+      kakaoAuthenticationStore.requestLogout(userToken);
       kakaoAuthenticationStore.isAuthenticatedKakao = false;
-      kakaoAuthenticationStore.isKakaoAdmin = false;
-    } else if (loginType === "GOOGLE") {
-      await googleAuthenticationStore.requestGoogleLogoutToDjango();
+    } else if (loginType == "GOOGLE") {
+      googleAuthenticationStore.requestLogout(userToken);
       googleAuthenticationStore.isAuthenticatedGoogle = false;
-    } else if (loginType === "NAVER") {
-      await naverAuthenticationStore.requestNaverLogoutToDjango();
+    } else if (loginType == "NAVER") {
+      naverAuthenticationStore.requestLogout(userToken);
       naverAuthenticationStore.isAuthenticatedNaver = false;
-    } else if (loginType === "NORMAL") {
-      sessionStorage.removeItem("normalToken");
-      sessionStorage.removeItem("email");
-      sessionStorage.removeItem("loginType");
-      sessionStorage.removeItem("adminToken");
-
-      if (sessionStorage.getItem("fileKey")) {
-        sessionStorage.removeItem("fileKey");
-      }
-
-      accountStore.isAuthenticatedNormal = false;
-      accountStore.isNormalAdmin = false;
-      kakaoAuthenticationStore.isKakaoAdmin = false;
-      googleAuthenticationStore.isGoogleAdmin = false;
-      naverAuthenticationStore.isNaverAdmin = false;
     }
-
-    router.push("/");
+  } else {
+    console.log("userToken이 없습니다");
   }
+  localStorage.removeItem("userToken");
+  sessionStorage.removeItem("loginType");
+  router.push("/");
 };
 
 // 설문조사 페이지 이동
@@ -220,34 +209,32 @@ const goToReview = async () => {
 
 // 사용자 상태 복원
 onMounted(() => {
-  if (process.client) {
-    const userToken = sessionStorage.getItem("userToken");
-    if (userToken) {
-      kakaoAuthenticationStore.isAuthenticatedKakao = true;
-    }
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    kakaoAuthenticationStore.isAuthenticatedKakao = true;
+  }
 
-    const googleUserToken = sessionStorage.getItem("googleUserToken");
-    if (googleUserToken) {
-      googleAuthenticationStore.isAuthenticatedGoogle = true;
-    }
+  const googleUserToken = localStorage.getItem("googleUserToken");
+  if (googleUserToken) {
+    googleAuthenticationStore.isAuthenticatedGoogle = true;
+  }
 
-    const naverUserToken = sessionStorage.getItem("naverUserToken");
-    if (naverUserToken) {
-      naverAuthenticationStore.isAuthenticatedNaver = true;
-    }
+  const naverUserToken = localStorage.getItem("naverUserToken");
+  if (naverUserToken) {
+    naverAuthenticationStore.isAuthenticatedNaver = true;
+  }
 
-    const normalToken = sessionStorage.getItem("normalToken");
-    if (normalToken) {
-      accountStore.isAuthenticatedNormal = true;
-    }
+  const normalToken = localStorage.getItem("normalToken");
+  if (normalToken) {
+    accountStore.isAuthenticatedNormal = true;
+  }
 
-    const adminToken = sessionStorage.getItem("adminToken");
-    if (adminToken) {
-      kakaoAuthenticationStore.isKakaoAdmin = true;
-      googleAuthenticationStore.isGoogleAdmin = true;
-      naverAuthenticationStore.isNaverAdmin = true;
-      accountStore.isNormalAdmin = true;
-    }
+  const adminToken = localStorage.getItem("adminToken");
+  if (adminToken) {
+    kakaoAuthenticationStore.isKakaoAdmin = true;
+    googleAuthenticationStore.isGoogleAdmin = true;
+    naverAuthenticationStore.isNaverAdmin = true;
+    accountStore.isNormalAdmin = true;
   }
 });
 </script>
