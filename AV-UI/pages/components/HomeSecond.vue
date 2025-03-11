@@ -137,7 +137,7 @@
                 <div class="text-card">
                   <p>이름: <span style="color: red">[팀장]</span>양의정</p>
                   <p>
-                    GitHub:<a href="https://github.com/UiJungYang" class="link"
+                    GitHub:<a href="https://github.com/UiJungYang6" class="link"
                       >@UiJungYang</a
                     >
                   </p>
