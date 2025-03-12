@@ -2,7 +2,9 @@
   <div class="home-four">
     <!-- h1 아래에 작은 텍스트 추가 -->
     <h1>JOBSTICK의 주요 기능</h1>
-    <p class="intro-text">JOBSTICK을 통해 실전 면접에 필요한 여러 시스템을 이용해 보세요.</p>
+    <p class="intro-text">
+      JOBSTICK을 통해 실전 면접에 필요한 여러 시스템을 이용해 보세요.
+    </p>
 
     <!-- 큰 직사각형 컨테이너 안에 콘텐츠가 이동 -->
     <div class="content-container">
@@ -10,7 +12,10 @@
       <div v-if="currentIndex === 0" class="content-box">
         <div class="content-description">
           <h2>원하는 기업의 요구사항 정보 제공</h2>
-          <p>기업 뿐만이 아니라 다양한 분야, 직무별로 원하는 인재상 정보들 등 면접에 필요한 다양한 정보를 제공해드리고 있습니다.</p>
+          <p>
+            기업 뿐만이 아니라 다양한 분야, 직무별로 원하는 인재상 정보들 등
+            면접에 필요한 다양한 정보를 제공해드리고 있습니다.
+          </p>
         </div>
         <div class="content-image">
           <!-- 첫 번째 이미지 -->
@@ -22,7 +27,10 @@
       <div v-if="currentIndex === 1" class="content-box">
         <div class="content-description">
           <h2>ai를 이용한 정확한 피드백 제공</h2>
-          <p>혼자서 준비하는 면접의 가장 큰 어려움인 피드백을 ai를 통해 사용자에게 제공합니다.</p>
+          <p>
+            혼자서 준비하는 면접의 가장 큰 어려움인 피드백을 ai를 통해
+            사용자에게 제공합니다.
+          </p>
         </div>
         <div class="content-image">
           <!-- 두 번째 이미지 -->
@@ -34,7 +42,10 @@
       <div v-if="currentIndex === 2" class="content-box">
         <div class="content-description">
           <h2>모의 면접 녹화본 제공</h2>
-          <p>자신의 문제점과 불필요한 행동을 파악하여 빠르게 수정할 수 있도록 도와드립니다.</p>
+          <p>
+            자신의 문제점과 불필요한 행동을 파악하여 빠르게 수정할 수 있도록
+            도와드립니다.
+          </p>
         </div>
         <div class="content-image">
           <!-- 세 번째 이미지 -->
@@ -42,34 +53,54 @@
         </div>
       </div>
     </div>
+    <ScrollUpAnimation class="scrollupanimation" @click="goToUp" />
   </div>
 </template>
 
 <script>
-import image1 from '@/assets/images/fixed/in.webp'; // 첫 번째 이미지
-import image2 from '@/assets/images/fixed/dc.webp'; // 두 번째 이미지
-import image3 from '@/assets/images/fixed/cam.webp'; // 세 번째 이미지
+import AOS from "aos";
+import image1 from "@/assets/images/fixed/in.jpg"; // 첫 번째 이미지
+import image2 from "@/assets/images/fixed/dc.jpg"; // 두 번째 이미지
+import image3 from "@/assets/images/fixed/cam.jpg"; // 세 번째 이미지
+import ScrollUpAnimation from "./ScrollUpAnimation.vue";
+import "aos/dist/aos.css";
+import { defineComponent, ref, getCurrentInstance, onMounted } from "vue";
 
-export default {
-  name: "HomePage7",
-  data() {
+export default defineComponent({
+  name: "HomeSix",
+  components: {
+    ScrollUpAnimation,
+  },
+
+  setup() {
+    const { emit } = getCurrentInstance();
+
+    const images = [image1, image2, image3];
+    const currentIndex = ref(0);
+
+    function goToUp() {
+      emit("scroll-to-home");
+    }
+
+    function changeContent() {
+      setInterval(() => {
+        currentIndex.value = (currentIndex.value + 1) % 3; // currentIndex를 0, 1, 2로 순차적으로 변경
+      }, 4000);
+    }
+
+    onMounted(() => {
+      changeContent();
+    });
+
     return {
-      images: [image1, image2, image3], // 각 콘텐츠에 맞는 이미지 배열
-      currentIndex: 0, // 현재 보이는 칸의 인덱스
+      images,
+      currentIndex,
+
+      changeContent,
+      goToUp,
     };
   },
-  mounted() {
-    this.changeContent();
-  },
-  methods: {
-    // 4초마다 콘텐츠를 변경하는 함수
-    changeContent() {
-      setInterval(() => {
-        this.currentIndex = (this.currentIndex + 1) % 3; // currentIndex를 0, 1, 2로 순차적으로 변경
-      }, 4000); // 4초마다 실행
-    }
-  }
-};
+});
 </script>
 
 <style scoped>
@@ -152,6 +183,15 @@ h1 {
   display: flex;
   justify-content: center; /* 이미지 중앙 정렬 */
   align-items: center; /* 이미지 수직 중앙 정렬 */
+}
+
+.scrollupanimation {
+  position: absolute;
+  bottom: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 6s ease 0s infinite;
+  animation-delay: 5s;
 }
 
 .content-image img {
