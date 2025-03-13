@@ -7,9 +7,9 @@ export const reviewActions = {
   async requestCreateReviewFormToDjango(
     randomString: string
   ): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/creat-form",
         randomString
       );
@@ -25,9 +25,9 @@ export const reviewActions = {
     reviewTitle: string;
     reviewDescription: string;
   }): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/register-title-description",
         payload
       );
@@ -44,9 +44,9 @@ export const reviewActions = {
   async requestCreateQuestionToDjango(
     imageFormData: FormData
   ): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/register-question",
         imageFormData,
         {
@@ -66,9 +66,9 @@ export const reviewActions = {
     questionId: number;
     selection: string;
   }): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/register-selection",
         payload
       );
@@ -80,10 +80,10 @@ export const reviewActions = {
   },
 
   async requestReviewListToDjango() {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse<{ reviewTitleList: Review[] }> =
-        await djangoAxiosInst.get("/review/review-title-list");
+        await djangoAxiosInstance.get("/review/review-title-list");
       this.reviewTitleList = res.data.reviewTitleList;
     } catch (e) {
       console.error("requestReviewListToDjango() -> error:", e);
@@ -92,9 +92,9 @@ export const reviewActions = {
   },
 
   async requestReviewFormToDjango(randomString: string) {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse<Review> = await djangoAxiosInst.get(
+      const res: AxiosResponse<Review> = await djangoAxiosInstance.get(
         `/review/read-review-form/${randomString}`
       );
       this.reviewForm = res.data;
@@ -107,9 +107,9 @@ export const reviewActions = {
   async requestSubmitReviewToDjango(payload: {
     submitForm: [];
   }): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/submit-review",
         payload
       );
@@ -121,9 +121,9 @@ export const reviewActions = {
   },
 
   async requestRandomStringToDjango(reviewId: number): Promise<any> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/randomstring",
         reviewId
       );
@@ -135,9 +135,9 @@ export const reviewActions = {
   },
 
   async requestReviewResultToDjango(reviewId: number) {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse<Review> = await djangoAxiosInst.get(
+      const res: AxiosResponse<Review> = await djangoAxiosInstance.get(
         `/review/review-result/${reviewId}`
       );
       this.resultForm = res.data;
@@ -150,9 +150,9 @@ export const reviewActions = {
   async requestCheckIsFirstSubmit(accountId: {
     accountId: string;
   }): Promise<AxiosResponse> {
-    const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      const res: AxiosResponse = await djangoAxiosInst.post(
+      const res: AxiosResponse = await djangoAxiosInstance.post(
         "/review/check-first-submit",
         accountId
       );
