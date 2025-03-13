@@ -508,13 +508,10 @@ function changePage(page) {
 
 const getDefaultImageUrl = () => {
   try {
-    return new URL(
-      `/assets/images/fixed/AIM_BI_Simple_Grey2.png`,
-      import.meta.url
-    ).href;
+    return new URL(`/assets/images/fixed/logo2.png`, import.meta.url).href;
   } catch (error) {
     console.error("Error loading default image:", error);
-    return "/assets/images/fixed/AIM_BI_Simple_Grey2.png";
+    return "/assets/images/fixed/logo2.png";
   }
 };
 
