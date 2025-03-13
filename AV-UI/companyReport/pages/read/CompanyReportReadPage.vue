@@ -621,8 +621,7 @@ async function getCompanyInfo() {
 
 const getImageUrl = (imageName) => {
   if (!imageName) {
-    return new URL(`/assets/images/fixed/AIM_BI_Simple.png`, import.meta.url)
-      .href;
+    return new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
   }
 
   const imageUrl = new URL(
@@ -636,10 +635,7 @@ const getImageUrl = (imageName) => {
   if (
     img.src == "http://localhost:3000/_nuxt/companyReport/pages/list/undefined"
   ) {
-    img.src = new URL(
-      `/assets/images/fixed/AIM_BI_Simple.png`,
-      import.meta.url
-    ).href;
+    img.src = new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
   }
 
   return img.src;
