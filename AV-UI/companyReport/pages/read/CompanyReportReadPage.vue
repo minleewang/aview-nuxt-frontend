@@ -279,8 +279,12 @@
           <span>목록으로 돌아가기</span>
         </v-btn>
       </v-col>
-      <v-col cols="auto">              
-        <button  v-if="isAdmin" class="delete_button" @click="deleteCompanyReport">
+      <v-col cols="auto">
+        <button
+          v-if="isAdmin"
+          class="delete_button"
+          @click="deleteCompanyReport"
+        >
           <span class="delete_button_text">삭제</span>
           <span class="delete_button_icon"
             ><svg
@@ -293,10 +297,21 @@
               <title></title>
               <path
                 d="M112,112l20,320c.95,18.49,14.4,32,32,32H348c17.67,0,30.87-13.51,32-32l20-320"
-                style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
+                style="
+                  fill: none;
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
               ></path>
               <line
-                style="stroke:#fff;stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+                style="
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-miterlimit: 10;
+                  stroke-width: 32px;
+                "
                 x1="80"
                 x2="432"
                 y1="112"
@@ -304,30 +319,55 @@
               ></line>
               <path
                 d="M192,112V72h0a23.93,23.93,0,0,1,24-24h80a23.93,23.93,0,0,1,24,24h0v40"
-                style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
+                style="
+                  fill: none;
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
               ></path>
               <line
-                style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
+                style="
+                  fill: none;
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
                 x1="256"
                 x2="256"
                 y1="176"
                 y2="400"
               ></line>
               <line
-                style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
+                style="
+                  fill: none;
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
                 x1="184"
                 x2="192"
                 y1="176"
                 y2="400"
               ></line>
               <line
-                style="fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px"
+                style="
+                  fill: none;
+                  stroke: #fff;
+                  stroke-linecap: round;
+                  stroke-linejoin: round;
+                  stroke-width: 32px;
+                "
                 x1="328"
                 x2="320"
                 y1="176"
                 y2="400"
-              ></line></svg>
-            </span>
+              ></line>
+            </svg>
+          </span>
         </button>
       </v-col>
       <button v-if="isAdmin" class="pushable" @click="goToModifyPage">
@@ -381,7 +421,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useCompanyReportStore } from "../../stores/companyReportStore";
 import * as d3 from "d3";
 import { useAccountStore } from "../../../account/stores/accountStore";
-import { useAuthenticationStore } from "../../../authentication/stores/authenticationStore";
+import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useUserLogStore } from "../../../userLog/store/userLogStore";
@@ -395,7 +435,7 @@ const companyReportId = ref(route.params.id);
 
 const companyReportStore = useCompanyReportStore();
 const accountStore = useAccountStore();
-const authenticationStore = useAuthenticationStore();
+const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const userLogStore = useUserLogStore();
@@ -429,7 +469,7 @@ const companyReport = ref(null);
 
 function checkAdmin() {
   if (
-    authenticationStore.isKakaoAdmin ||
+    kakaoAuthenticationStore.isKakaoAdmin ||
     naverAuthenticationStore.isNaverAdmin ||
     googleAuthenticationStore.isGoogleAdmin ||
     accountStore.isNormalAdmin
@@ -440,7 +480,7 @@ function checkAdmin() {
 
 function checkAuthenticated() {
   if (
-    authenticationStore.isAuthenticatedKakao ||
+    kakaoAuthenticationStore.isAuthenticatedKakao ||
     naverAuthenticationStore.isAuthenticatedNaver ||
     googleAuthenticationStore.isAuthenticatedGoogle
   ) {
@@ -449,7 +489,7 @@ function checkAuthenticated() {
 }
 
 async function checkPurchased() {
-  if (companyReportStore.topList.includes(Number(companyReportId.value))){
+  if (companyReportStore.topList.includes(Number(companyReportId.value))) {
     isPurchased.value = true;
   }
 
@@ -581,17 +621,22 @@ async function getCompanyInfo() {
 
 const getImageUrl = (imageName) => {
   if (!imageName) {
-    return new URL(`/assets/images/fixed/AIM_BI_Simple.png`, import.meta.url).href;
+    return new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
   }
-  
-  const imageUrl = new URL(`/assets/images/uploadImages/${imageName}`, import.meta.url).href;
+
+  const imageUrl = new URL(
+    `/assets/images/uploadImages/${imageName}`,
+    import.meta.url
+  ).href;
 
   const img = new Image();
   img.src = imageUrl;
   // 이미지가 존재하지 않는 경우 기본 이미지로 설정
-  if(img.src=="http://localhost:3000/_nuxt/companyReport/pages/list/undefined") {
-    img.src = new URL(`/assets/images/fixed/AIM_BI_Simple.png`, import.meta.url).href;
-    };
+  if (
+    img.src == "http://localhost:3000/_nuxt/companyReport/pages/list/undefined"
+  ) {
+    img.src = new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
+  }
 
   return img.src;
 };

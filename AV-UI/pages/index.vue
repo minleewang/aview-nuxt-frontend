@@ -7,13 +7,13 @@
       <HomeSecond />
     </section>
     <section id="HomeThird">
-      <HomeThird @scroll-to-home="goToUp" />
+      <HomeThird />
     </section>
     <section id="HomeFour">
-      <HomeFour @scroll-to-home="goToUp" />
+      <HomeFour />
     </section>
     <section id="HomeFive">
-      <HomeFive @scroll-to-home="goToUp" />
+      <HomeFive />
     </section>
     <section id="HomeSix">
       <HomeSix @scroll-to-home="goToUp" />
@@ -37,10 +37,10 @@ export default defineComponent({
     HomeThird,
     HomeFour,
     HomeFive,
-    HomeSix
+    HomeSix,
   },
   setup() {
-    function goToHomeSecond(event) {
+    function goToHomeSecond() {
       if (event) event.preventDefault();
 
       const element = document.getElementById("HomeSecond");
@@ -60,7 +60,7 @@ export default defineComponent({
       }
     }
 
-    function goToUp(event) {
+    function goToUp() {
       if (event) event.preventDefault();
 
       const element = document.getElementById("HomeMain");

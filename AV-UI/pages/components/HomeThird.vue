@@ -77,32 +77,14 @@
         <v-card class="content-image" id="fourth-image"></v-card>
       </div>
     </div>
-    <ScrollUpAnimation class="scrollupanimation" @click="goToUp" />
   </div>
 </template>
 
 <script>
-import AOS from "aos";
-import { defineComponent, getCurrentInstance } from "vue";
-import "aos/dist/aos.css";
-import ScrollUpAnimation from "./ScrollUpAnimation.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "HomeThird",
-  components: {
-    ScrollUpAnimation,
-  },
-  setup() {
-    const { emit } = getCurrentInstance();
-
-    function goToUp() {
-      emit("scroll-to-home");
-    }
-
-    return {
-      goToUp,
-    };
-  },
 });
 </script>
 
@@ -116,7 +98,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
 }
-
 
 .home-third-body {
   width: 70%;
@@ -212,14 +193,5 @@ export default defineComponent({
 
 .AIV-span {
   color: rgb(30, 56, 255);
-}
-
-.scrollupanimation {
-  position: absolute;
-  bottom: 7vh;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: bounce 6s ease 0s infinite;
-  animation-delay: 5s;
 }
 </style>

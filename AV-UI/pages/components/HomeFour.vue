@@ -38,7 +38,9 @@
           <h2>면접 중에 말을 잘못하거나 말실수를 할까 봐 두려워요</h2>
         </div>
         <div class="description">
-          <h2>직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요</h2>
+          <h2>
+            직장, 학업, 일상 생활 등 다른 일들로 면접 준비를 할 시간이 부족해요
+          </h2>
         </div>
       </div>
     </div>
@@ -46,10 +48,10 @@
 </template>
 
 <script>
-import imageSrc from '@/assets/images/fixed/sc.png'; // 이미지 경로를 import로 불러옵니다.
+import imageSrc from "@/assets/images/fixed/sc.png"; // 이미지 경로를 import로 불러옵니다.
 
 export default {
-  name: "HomePage4",
+  name: "HomeFour",
   data() {
     return {
       imageSrc, // 가져온 이미지 경로를 데이터로 사용
@@ -122,7 +124,7 @@ h1 {
 }
 
 .description-container.left .description::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: -10px; /* 왼쪽으로 삼각형 배치 */
@@ -144,7 +146,7 @@ h1 {
 }
 
 .description-container.right .description::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: -10px; /* 오른쪽으로 삼각형 배치 */
