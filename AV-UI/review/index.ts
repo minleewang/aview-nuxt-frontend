@@ -17,7 +17,7 @@ export default defineNuxtModule({
 					path: "/review/register",
 					file: resolve(
 						themeDir,
-						"review/pages/register/reviewRegisterPage.vue"
+						"review/pages/register/ReviewRegisterPage.vue"
 					),
 				},
                 {
