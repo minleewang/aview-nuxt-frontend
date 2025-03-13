@@ -4,9 +4,7 @@
       <v-row>
         <v-col cols="12">
           <v-card>
-            <v-card-title>
-              🛒 내 장바구니
-            </v-card-title>
+            <v-card-title> 🛒 내 장바구니 </v-card-title>
             <v-card-text>
               <v-table>
                 <thead>
@@ -106,7 +104,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useCartStore } from "../../cart/stores/cartStore";
-import { useOrderStore } from '../../order/stores/orderStore';
+import { useOrderStore } from "../../order/stores/orderStore";
 // import { useUserLogStore } from '@/stores/userLogStore';
 import { useRouter } from "vue-router";
 
@@ -144,18 +142,23 @@ const isCheckoutDisabled = computed(() => selectedItems.value.length === 0);
 
 const getImageUrl = (imageName) => {
   if (!imageName) {
-    return new URL(`/assets/images/fixed/AIM_BI_Simple.png`, import.meta.url).href;
+    return new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
   }
-  
-  const imageUrl = new URL(`/assets/images/uploadImages/${imageName}`, import.meta.url).href;
+
+  const imageUrl = new URL(
+    `/assets/images/uploadImages/${imageName}`,
+    import.meta.url
+  ).href;
 
   const img = new Image();
   img.src = imageUrl;
   // console.log(img.src)
   // 이미지가 존재하지 않는 경우 기본 이미지로 설정
-  if(img.src=="http://localhost:3000/_nuxt/companyReport/pages/list/undefined") {
-    img.src = new URL(`/assets/images/fixed/AIM_BI_Simple.png`, import.meta.url).href;
-    };
+  if (
+    img.src == "http://localhost:3000/_nuxt/companyReport/pages/list/undefined"
+  ) {
+    img.src = new URL(`/assets/images/fixed/logo1.png`, import.meta.url).href;
+  }
 
   return img.src;
 };
@@ -214,9 +217,7 @@ async function proceedToOrder() {
 
     // 선택한 항목의 total 값을 amount로 쿼리 파라미터로 전달
     const amount = selectedItemsTotal.value;
-    router.push({ path: '/payments/test/page', query: { amount } });  // 결제 페이지 경로로 이동
-
-    
+    router.push({ path: "/payments/test/page", query: { amount } }); // 결제 페이지 경로로 이동
   } catch (error) {
     console.error("Order creation failed:", error);
   }
@@ -224,7 +225,7 @@ async function proceedToOrder() {
 
 async function fetchCartList() {
   try {
-    const email = sessionStorage.getItem('email')
+    const email = sessionStorage.getItem("email");
     const response = await cartStore.requestCartListToDjango(email);
     cartItems.value = response;
   } catch (error) {
