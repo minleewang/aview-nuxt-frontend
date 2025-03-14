@@ -3,7 +3,10 @@ import * as axiosUtility from "../../utility/axiosInstance";
 export const kakaoAuthenticationAction = {
   async requestKakaoLoginToDjango(): Promise<void> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
-
+    console.log(
+      "🛠 djangoAxiosInstance baseURL:",
+      djangoAxiosInstance.defaults.baseURL
+    ); // ✅ 추가
     try {
       return djangoAxiosInstance
         .get("/kakao-oauth/request-login-url")
