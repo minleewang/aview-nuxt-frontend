@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     "./order/nuxt.config.ts",
     "./payments/nuxt.config.ts",
     "./management/nuxt.config.ts",
+    "./githubAuthentication/nuxt.config.ts",
   ],
   css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css"],
 
@@ -111,6 +112,7 @@ export default defineNuxtConfig({
     "~/order/index.ts",
     "~/payments/index.ts",
     "~/management/index.ts",
+    "~/githubAuthentication/index.ts",
   ],
   components: {
     dirs: [
