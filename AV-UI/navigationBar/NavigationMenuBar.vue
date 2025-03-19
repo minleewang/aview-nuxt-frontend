@@ -54,11 +54,7 @@
 
     <!--추후 관리자 추가하여 교체예정-->
     <v-menu
-      v-if="
-        googleAuthenticationStore.isGoogleAdmin ||
-        kakaoAuthenticationStore.isKakaoAdmin ||
-        naverAuthenticationStore.isNaverAdmin
-      "
+      v-if="githubAuthenticationStore.isAuthenticated"
       close-on-content-click
     >
       <template v-slot:activator="{ props }">
@@ -106,12 +102,14 @@ import { useRouter } from "vue-router";
 import { useKakaoAuthenticationStore } from "~/kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "~/naverAuthentication/stores/naverAuthenticationStore";
 import { useGoogleAuthenticationStore } from "~/googleAuthentication/stores/googleAuthenticationStore";
+import { useGithubAuthenticationStore } from "~/githubAuthentication/stores/githubAuthenticationStore";
 import { useReviewStore } from "~/review/stores/reviewStore";
 
 // Pinia 스토어 사용
 const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
+const githubAuthenticationStore = useGithubAuthenticationStore();
 const reviewStore = useReviewStore();
 
 const router = useRouter();
