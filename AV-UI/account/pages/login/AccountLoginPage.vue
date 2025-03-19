@@ -103,6 +103,10 @@
         <v-btn class="naver-login-btn" @click="goToNaverLogin">
           <!-- 네이버 로그인 -->
         </v-btn>
+
+        <v-btn class="admin-login-btn" @click="goToAdminLogin" block>
+          관리자 로그인
+        </v-btn>
       </div>
     </div>
   </v-container>
@@ -151,6 +155,11 @@ const goToNaverLogin = async () => {
   alert("현재 로그인 검수 중입니다.");
   // localStorage.setItem('loginType', "NAVER");
   // await naverAuthentication.requestNaverOauthRedirectionToDjango();
+};
+
+//github관리자 로그인
+const goToAdminLogin = () => {
+  router.push("/account/admin-code");
 };
 
 // Computed properties (Pinia 상태에 기반한 계산된 속성)
@@ -238,8 +247,8 @@ const checkPassword = async () => {
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  background: url("@/assets/images/fixed/login_bg6.png") no-repeat center center;
-  background-size: cover;
+  background: url("@/assets/images/fixed/login_bg6.jpg") no-repeat center center;
+  background-size: contain;
 }
 
 .login_logo {
@@ -390,5 +399,18 @@ const checkPassword = async () => {
 :deep(.v-field--error:not(.v-field--disabled) .v-label.v-field-label) {
   color: rgba(0, 0, 255) !important;
   /* 에러 상태의 레이블 색상을 초록색으로 변경 */
+}
+
+/* 관리자 로그인 버튼 스타일링 */
+.admin-login-btn {
+  width: 100%;
+  max-width: 300px; /* 최대 너비 설정 */
+  height: 50px;
+  background-color: #4caf50; /* 관리자 버튼 색상 */
+  color: white;
+  font-weight: bold;
+  border-radius: 1.4vh;
+  margin-bottom: 20px; /* 카카오 로그인 버튼과의 간격 */
+  cursor: pointer;
 }
 </style>
