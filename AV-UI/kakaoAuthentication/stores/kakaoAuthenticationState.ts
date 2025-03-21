@@ -1,3 +1,3 @@
 export const kakaoAuthenticationState = () => ({
-  isAuthenticatedKakao: false,
+  isAuthenticated: false,
 });

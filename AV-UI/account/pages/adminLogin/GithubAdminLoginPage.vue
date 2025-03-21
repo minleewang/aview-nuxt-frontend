@@ -5,12 +5,25 @@
         <v-col cols="auto" style="padding-bottom: 90px">
           <v-card width="460">
             <v-card-text class="text-center px-12 py-16">
-              <div class="text-h4 font-weight-black mb-10">GitHub Oauth 로그인</div>
+              <div class="text-h4 font-weight-black mb-10">
+                GitHub Oauth 로그인
+              </div>
               <div class="d-flex">
-                <v-img :src="githubIconSrc" width="120" class="mx-auto mb-6"></v-img>
+                <v-img
+                  :src="githubIconSrc"
+                  width="120"
+                  class="mx-auto mb-6"
+                ></v-img>
               </div>
 
-              <v-btn block x-large rounded color="gray lighten-1" class="mt-6" @click="goToAdminCodeInput">
+              <v-btn
+                block
+                x-large
+                rounded
+                color="gray lighten-1"
+                class="mt-6"
+                @click="goToAdminCodeInput"
+              >
                 로그인
               </v-btn>
             </v-card-text>
@@ -22,22 +35,22 @@
 </template>
 
 <script setup>
-import logoSrc from '@/assets/images/fixed/logo.png';
-import githubIconSrc from '@/assets/images/fixed/icon-github.svg';
+import logoSrc from "@/assets/images/fixed/logo1.png";
+import githubIconSrc from "@/assets/images/fixed/icon-github.svg";
 
-import { useGithubAuthenticationStore } from '../../../githubAuthentication/stores/githubAuthenticationStore';
+import { useGithubAuthenticationStore } from "../../../githubAuthentication/stores/githubAuthenticationStore";
 
 // Pinia store 상태
 const githubAuthentication = useGithubAuthenticationStore();
 
 // 관리자 코드 입력 페이지로 이동
 const goToAdminCodeInput = () => {
-  router.push('/account/admin-code');
+  router.push("/account/admin-code");
 };
 
 // Github 로그인 함수
 const goToGithubLogin = async () => {
-  console.log('goToGithubLogin')
+  console.log("goToGithubLogin");
   await githubAuthentication.requestGithubLoginToDjango();
 };
 </script>
