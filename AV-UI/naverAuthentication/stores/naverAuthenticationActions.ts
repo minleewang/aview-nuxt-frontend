@@ -39,10 +39,10 @@ export const naverAuthenticationAction = {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const accessToken = sessionStorage.getItem("naverAccessToken");
-      const userInfoResponse: AxiosResponse<any> = await djangoAxiosInstance.post(
-        "/naver_oauth/naver/user-info",
-        { access_token: accessToken }
-      );
+      const userInfoResponse: AxiosResponse<any> =
+        await djangoAxiosInstance.post("/naver_oauth/naver/user-info", {
+          access_token: accessToken,
+        });
 
       const naverUserInfo = userInfoResponse.data.user_info;
       return naverUserInfo;
@@ -68,7 +68,7 @@ export const naverAuthenticationAction = {
 
       sessionStorage.removeItem("naverAccessToken");
       sessionStorage.setItem("naverUserToken", response.data.userToken);
-      this.isAuthenticatedNaver = true;
+      this.isAuthenticated = true;
       return response.data;
     } catch (error) {
       console.error("Error adding naver redis access token:", error);
@@ -83,7 +83,7 @@ export const naverAuthenticationAction = {
       });
       // console.log('naverOauth logout res:', res.data.isSuccess)
       if (res.data.isSuccess === true) {
-        this.isAuthenticatedNaver = false;
+        this.isAuthenticated = false;
       }
     } catch (error) {
       console.error("requestNaverLogoutToDjango() 중 에러 발생:", error);

@@ -1,3 +1,3 @@
 export const googleAuthenticationState = () => ({
-  isAuthenticatedGoogle: false,
+  isAuthenticated: false,
 });

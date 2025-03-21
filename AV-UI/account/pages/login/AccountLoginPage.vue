@@ -163,15 +163,11 @@ const goToAdminLogin = () => {
 };
 
 // Computed properties (Pinia 상태에 기반한 계산된 속성)
-const isAuthenticatedKakao = computed(
-  () => authentication.isAuthenticatedKakao
-);
-const isAuthenticatedNormal = computed(() => account.isAuthenticatedNormal);
+const isAuthenticatedKakao = computed(() => authentication.isAuthenticated);
 const loginType = computed(() => account.loginType);
-const isKakaoAdmin = computed(() => account.isKakaoAdmin);
 // const isAuthenticatedGoogle = computed(() => googleAuthentication.isAuthenticatedGoogle);
 const isAuthenticatedNaver = computed(
-  () => naverAuthentication.isAuthenticatedNaver
+  () => naverAuthentication.isAuthenticated
 );
 
 // Methods
@@ -179,9 +175,9 @@ const goToHome = () => {
   router.push("/");
 };
 
-const goToSignUp = () => {
-  router.push("/account/register/normal");
-};
+//const goToSignUp = () => {
+//  router.push("/account/register/normal");
+//};
 
 const onSubmit = async () => {
   if (!form.value) return;

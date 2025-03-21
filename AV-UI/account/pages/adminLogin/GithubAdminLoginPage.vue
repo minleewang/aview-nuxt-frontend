@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import logoSrc from '@/assets/images/fixed/logo.png';
+import logoSrc from '@/assets/images/fixed/logo1.png';
 import githubIconSrc from '@/assets/images/fixed/icon-github.svg';
 
 import { useGithubAuthenticationStore } from '../../../githubAuthentication/stores/githubAuthenticationStore';
