@@ -20,7 +20,7 @@ const setRedirectKakaoData = async () => {
   const userToken = await kakaoAuthenticationStore.requestAccessToken({ code });
 
   localStorage.setItem("userToken", userToken);
-  kakaoAuthenticationStore.isAuthenticatedKakao = true;
+  kakaoAuthenticationStore.isAuthenticated = true;
 
   router.push("/");
 };
