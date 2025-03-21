@@ -9,9 +9,9 @@
     <v-btn text @click="goToHome" class="btn-text"> HOME </v-btn>
     <v-btn
       v-if="
-        kakaoAuthenticationStore.isAuthenticatedKakao ||
-        googleAuthenticationStore.isAuthenticatedGoogle ||
-        naverAuthenticationStore.isAuthenticatedNaver
+        kakaoAuthenticationStore.isAuthenticated ||
+        googleAuthenticationStore.isAuthenticated ||
+        naverAuthenticationStore.isAuthenticated
       "
       text
       @click="goToReviewListPage"
@@ -30,9 +30,9 @@
     <!-- 로그인 후 화면-->
     <v-menu
       v-if="
-        kakaoAuthenticationStore.isAuthenticatedKakao ||
-        googleAuthenticationStore.isAuthenticatedGoogle ||
-        naverAuthenticationStore.isAuthenticatedNaver
+        kakaoAuthenticationStore.isAuthenticated ||
+        googleAuthenticationStore.isAuthenticated ||
+        naverAuthenticationStore.isAuthenticated
       "
       close-on-content-click
     >
@@ -77,9 +77,10 @@
     <!--로그인/로그아웃 버튼-->
     <v-btn
       v-if="
-        !kakaoAuthenticationStore.isAuthenticatedKakao &&
-        !googleAuthenticationStore.isAuthenticatedGoogle &&
-        !naverAuthenticationStore.isAuthenticatedNaver
+        !kakaoAuthenticationStore.isAuthenticated &&
+        !googleAuthenticationStore.isAuthenticated &&
+        !naverAuthenticationStore.isAuthenticated &&
+        !githubAuthenticationStore.isAuthenticated
       "
       text
       @click="signIn"
@@ -103,6 +104,7 @@ import { useKakaoAuthenticationStore } from "~/kakaoAuthentication/stores/kakaoA
 import { useNaverAuthenticationStore } from "~/naverAuthentication/stores/naverAuthenticationStore";
 import { useGoogleAuthenticationStore } from "~/googleAuthentication/stores/googleAuthenticationStore";
 import { useGithubAuthenticationStore } from "~/githubAuthentication/stores/githubAuthenticationStore";
+import { useAuthenticationStore } from "~/authentication/stores/authenticationStore";
 import { useReviewStore } from "~/review/stores/reviewStore";
 
 // Pinia 스토어 사용
@@ -110,6 +112,7 @@ const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
 const githubAuthenticationStore = useGithubAuthenticationStore();
+const authenticationStore = useAuthenticationStore();
 const reviewStore = useReviewStore();
 
 const router = useRouter();
@@ -172,29 +175,20 @@ const goToLlmTestPage = () => router.push("/ai-interview");
 const signOut = async () => {
   console.log("로그아웃 클릭");
   const userToken = localStorage.getItem("userToken");
-  const loginType = localStorage.getItem("loginType");
-  console.log(loginType);
+  //const loginType = localStorage.getItem("loginType");
+  //console.log(loginType);
   if (userToken != null) {
-    if (loginType == "KAKAO") {
-      kakaoAuthenticationStore.requestLogout(userToken);
-      kakaoAuthenticationStore.isAuthenticatedKakao = false;
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("loginType");
-    } else if (loginType == "GOOGLE") {
-      googleAuthenticationStore.requestLogout(userToken);
-      googleAuthenticationStore.isAuthenticatedGoogle = false;
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("loginType");
-    } else if (loginType == "NAVER") {
-      naverAuthenticationStore.requestLogout(userToken);
-      naverAuthenticationStore.isAuthenticatedNaver = false;
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("loginType");
-    }
+    authenticationStore.requestLogout(userToken);
   } else {
     console.log("userToken이 없습니다");
   }
-
+  authenticationStore.isAuthenticated = false;
+  kakaoAuthenticationStore.isAuthenticated = false;
+  naverAuthenticationStore.isAuthenticated = false;
+  githubAuthenticationStore.isAuthenticated = false;
+  googleAuthenticationStore.isAuthenticated = false;
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("loginType");
   router.push("/");
 };
 
@@ -218,7 +212,7 @@ onMounted(async () => {
     const isValid = await kakaoAuthenticationStore.requestValidationUserToken(
       kakaoUserToken
     );
-    kakaoAuthenticationStore.isAuthenticatedKakao = isValid;
+    kakaoAuthenticationStore.isAuthenticated = isValid;
   }
 
   //const googleUserToken = localStorage.getItem("userToken");
