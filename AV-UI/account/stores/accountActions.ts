@@ -96,10 +96,7 @@ export const accountAction = {
         email: email,
         password: password,
       });
-
-      // res의 타입을 명시적으로 정의하고 싶다면, 아래와 같이 사용할 수 있습니다.
-      // const res: AxiosResponse = await djangoAxiosInstance.post('/account/account-check', { email: email, password: password });
-
+// 왜 이런 시련이...
       if (res.data.isDuplicate) {
         return true;
       } else {
