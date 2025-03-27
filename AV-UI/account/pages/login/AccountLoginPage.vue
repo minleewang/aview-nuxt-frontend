@@ -127,6 +127,7 @@
                 "
                 >동의</v-btn
               >
+              <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
