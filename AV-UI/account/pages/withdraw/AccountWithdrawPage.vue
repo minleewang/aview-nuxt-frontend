@@ -77,7 +77,11 @@ const closeDialog = () => {
   dialog.value = false;
   //kakaoAuthenticationStore.requestLogout();
   //naverAuthenticationStore.requestLogout();
-  authentication.requestLogout();
+  authentication.isAuthenticated = false;
+  naverAuthenticationStore.isAuthenticated = false;
+  kakaoAuthenticationStore.isAuthenticated = false;
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("loginType");
   router.push("/");
 };
 </script>
