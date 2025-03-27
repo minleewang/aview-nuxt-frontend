@@ -207,9 +207,8 @@ const goToGoogleLogin = async () => {
 };
 
 const goToNaverLogin = async () => {
-  alert("현재 로그인 검수 중입니다.");
-  // localStorage.setItem('loginType', "NAVER");
-  // await naverAuthentication.requestNaverOauthRedirectionToDjango();
+  localStorage.setItem("loginType", "NAVER");
+  await naverAuthentication.requestNaverLoginToDjango();
 };
 
 //github관리자 로그인
