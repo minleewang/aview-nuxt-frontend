@@ -119,8 +119,6 @@
               <p>본 약관은 2025년 3월 1일부터 시행됩니다.</p>
             </v-card-text>
             <v-card-actions>
-              <v-card-spacer></v-card-spacer>
-
               <v-btn
                 color="primary"
                 @click="
