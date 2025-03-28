@@ -119,8 +119,6 @@
               <p>본 약관은 2025년 3월 1일부터 시행됩니다.</p>
             </v-card-text>
             <v-card-actions>
-              <v-card-spacer></v-card-spacer>
-
               <v-btn
                 color="primary"
                 @click="
@@ -129,6 +127,7 @@
                 "
                 >동의</v-btn
               >
+              <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -207,9 +206,8 @@ const goToGoogleLogin = async () => {
 };
 
 const goToNaverLogin = async () => {
-  alert("현재 로그인 검수 중입니다.");
-  // localStorage.setItem('loginType', "NAVER");
-  // await naverAuthentication.requestNaverOauthRedirectionToDjango();
+  localStorage.setItem("loginType", "NAVER");
+  await naverAuthentication.requestNaverLoginToDjango();
 };
 
 //github관리자 로그인
