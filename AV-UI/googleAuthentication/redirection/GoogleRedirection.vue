@@ -7,25 +7,25 @@ import { onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 import { useAccountStore } from "../../account/stores/accountStore";
-import { useNaverAuthenticationStore } from "../stores/naverAuthenticationStore";
+import { useGoogleAuthenticationStore } from "../../googleAuthentication/stores/googleAuthenticationStore";
 
 const accountStore = useAccountStore();
-const naverAuthenticationStore = useNaverAuthenticationStore();
+const googleAuthenticationStore = useGoogleAuthenticationStore();
 
 const router = useRouter();
 const route = useRoute();
 
-const setRedirectNaverData = async () => {
+const setRedirectGoogleData = async () => {
   const code = route.query.code;
-  const userToken = await naverAuthenticationStore.requestAccessToken({ code });
+  const userToken = await googleAuthenticationStore.requestAccessToken({ code });
 
   localStorage.setItem("userToken", userToken);
-  naverAuthenticationStore.isAuthenticated = true;
+  googleAuthenticationStore.isAuthenticated = true;
 
   router.push("/");
 };
 
 onMounted(async () => {
-  await setRedirectNaverData();
+  await setRedirectGoogleData();
 });
 </script>
