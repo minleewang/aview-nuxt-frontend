@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import { googleAuthenticationState } from "./googleAuthenticationState";
-import { googleAuthenticationActions } from "./googleAuthenticationActions";
+import { googleAuthenticationAction } from "./googleAuthenticationActions";
 
 export const useGoogleAuthenticationStore = defineStore(
-  "GoogleAuthenticationStore",
+  "googleAuthenticationStore",
   {
     state: googleAuthenticationState,
-    actions: googleAuthenticationActions,
+    actions: googleAuthenticationAction,
   }
 );
