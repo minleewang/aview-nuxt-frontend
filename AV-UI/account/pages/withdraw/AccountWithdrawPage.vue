@@ -62,14 +62,17 @@ const isButtonEnabled = computed(() => selectedReason.value !== null);
 // 탈퇴 신청 처리
 const submitWithdrawal = () => {
   const reasonString = selectedReason.value ? String(selectedReason.value) : "";
-  accountStore
-    .requestWithdrawalToDjango({ reason: reasonString })
-    .then(() => {
-      dialog.value = true;
-    })
-    .catch((err) => {
-      console.error("탈퇴 신청 실패:", err);
-    });
+  kakaoAuthenticationStore.requestKakaoWithdrawToDjango();
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("loginType");
+  //accountStore
+  //.requestWithdrawalToDjango({ reason: reasonString })
+  //.then(() => {
+  //  dialog.value = true;
+  //})
+  //.catch((err) => {
+  //  console.error("탈퇴 신청 실패:", err);
+  //});
 };
 
 // 다이얼로그 닫기 처리 및 로그아웃

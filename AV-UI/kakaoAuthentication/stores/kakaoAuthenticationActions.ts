@@ -14,6 +14,29 @@ export const kakaoAuthenticationAction = {
       console.log("requestKakaoOauthRedirectionToDjango() 중 에러:", error);
     }
   },
+
+  async requestKakaoWithdrawToDjango(): Promise<void> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+    const userToken = localStorage.getItem("userToken");
+    try {
+      const res = await djangoAxiosInstance.post(
+        `/kakao-oauth/request-withdraw-url`,
+        {},
+        { headers: { Authorization: `Bearer ${userToken}` } }
+      );
+      console.log("카카오 탈퇴 응답:", res.data);
+
+      if (res.data && res.data.url && res.data.url.id) {
+        alert("카카오 계정 탈퇴가 완료되었습니다.");
+        window.location.href = "/"; // 탈퇴 후 홈으로 이동
+      } else {
+        console.error("❌ 탈퇴 실패 - 잘못된 응답:", res.data);
+      }
+    } catch (error) {
+      console.error("🚨 카카오 탈퇴 요청 중 오류 발생:", error);
+    }
+  },
+
   async requestAccessToken(code: string): Promise<string | null> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
