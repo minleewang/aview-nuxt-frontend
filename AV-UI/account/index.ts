@@ -60,10 +60,17 @@ export default defineNuxtModule({
             themeDir,
             "account/pages/adminLogin/GithubAdminLoginPage.vue"
           ),
+        },
+        {
+          name: "PrivacyAgreementPage",
+          path: "/account/privacy",
+          file: resolve(
+            themeDir,
+            "account/pages/login/PrivacyAgreementPage.vue"
+          ),
         }
       );
     });
-
     nuxt.hook("imports:dirs", (dirs) => {
       dirs.push(resolve(__dirname, "store"));
     });
