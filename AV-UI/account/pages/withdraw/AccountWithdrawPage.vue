@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { useAccountStore } from "@/stores/accountStore";
+import { useAccountStore } from "../../../account/stores/accountStore";
 import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 import { useAuthenticationStore } from "../../../authentication/stores/authenticationStore";
@@ -63,10 +63,9 @@ const isButtonEnabled = computed(() => selectedReason.value !== null);
 const submitWithdrawal = () => {
   const reasonString = selectedReason.value ? String(selectedReason.value) : "";
   kakaoAuthenticationStore.requestKakaoWithdrawToDjango();
+  accountStore.requestWithdrawalToDjango({ reason: reasonString });
   localStorage.removeItem("userToken");
   localStorage.removeItem("loginType");
-  //accountStore
-  //.requestWithdrawalToDjango({ reason: reasonString })
   //.then(() => {
   //  dialog.value = true;
   //})
