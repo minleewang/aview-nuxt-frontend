@@ -32,6 +32,7 @@ import { ref, computed } from "vue";
 import { useAccountStore } from "../../../account/stores/accountStore";
 import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
+import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useAuthenticationStore } from "../../../authentication/stores/authenticationStore";
 import { useRouter } from "vue-router";
 import { naverAuthenticationState } from "~/naverAuthentication/stores/naverAuthenticationState";
@@ -53,6 +54,7 @@ const dialog = ref(false);
 const accountStore = useAccountStore();
 const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
+const googleAuthenticationStore = useGoogleAuthenticationStore();
 const authentication = useAuthenticationStore();
 const router = useRouter();
 
@@ -62,17 +64,28 @@ const isButtonEnabled = computed(() => selectedReason.value !== null);
 // 탈퇴 신청 처리
 const submitWithdrawal = () => {
   const reasonString = selectedReason.value ? String(selectedReason.value) : "";
-  kakaoAuthenticationStore.requestKakaoWithdrawToDjango();
+  const loginType = localStorage.getItem('loginType'); // 현재 로그인 타입 가져오기
+
+  if (loginType === 'kakao') {
+    kakaoAuthenticationStore.requestKakaoWithdrawToDjango();
+  } else if (loginType === 'google') {
+    googleAuthenticationStore.requestGoogleWithdrawToDjango();
+  } else if (loginType === 'naver') {
+    naverAuthenticationStore.requestNaverWithdrawToDjango?.(); 
+    // naver 탈퇴 함수가 있을 경우에만 호출
+  }
+
+  // 공통 탈퇴 요청 (우리 서버 DB에서 탈퇴)
   accountStore.requestWithdrawalToDjango({ reason: reasonString });
+
+  // 로컬 저장소 정리
   localStorage.removeItem("userToken");
   localStorage.removeItem("loginType");
-  //.then(() => {
-  //  dialog.value = true;
-  //})
-  //.catch((err) => {
-  //  console.error("탈퇴 신청 실패:", err);
-  //});
+
+  // 완료 다이얼로그 띄우기
+  dialog.value = true;
 };
+
 
 // 다이얼로그 닫기 처리 및 로그아웃
 const closeDialog = () => {
@@ -82,6 +95,7 @@ const closeDialog = () => {
   authentication.isAuthenticated = false;
   naverAuthenticationStore.isAuthenticated = false;
   kakaoAuthenticationStore.isAuthenticated = false;
+  googleAuthenticationStore.isAuthenticated = false;
   localStorage.removeItem("userToken");
   localStorage.removeItem("loginType");
   router.push("/");
