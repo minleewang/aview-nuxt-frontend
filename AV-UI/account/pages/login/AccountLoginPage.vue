@@ -12,15 +12,17 @@
         <v-divider class="mt-5 mb-7" :thickness="3"></v-divider>
 
         <!-- 카카오 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
-        <v-btn class="kakao-login-btn" @click="goToPrivacyAgreementPage">
+        <v-btn class="kakao-login-btn" @click="goToPrivacyAgreementPage('KAKAO')">
           <!-- 카카오 로그인 -->
         </v-btn>
 
-        <v-btn class="google-login-btn" @click="goToGoogleLogin">
+        <!-- 구글 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
+        <v-btn class="google-login-btn" @click="goToPrivacyAgreementPage('GOOGLE')">
           <!-- Google 로그인 -->
         </v-btn>
 
-        <v-btn class="naver-login-btn" @click="goToNaverLogin">
+        <!-- 네이버 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
+        <v-btn class="naver-login-btn" @click="goToPrivacyAgreementPage('NAVER')">
           <!-- 네이버 로그인 -->
         </v-btn>
 
@@ -41,68 +43,13 @@ import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores
 // Vue Router
 const router = useRouter();
 
-// Pinia Store
-const kakaoAuthentication = useKakaoAuthenticationStore();
-const googleAuthentication = useGoogleAuthenticationStore();
-const naverAuthentication = useNaverAuthenticationStore();
-
-// 개인정보 동의 페이지로 이동
-const goToPrivacyAgreementPage = () => {
-  router.push("/account/privacy");
+// 로그인 타입 설정을 위한 변수
+const goToPrivacyAgreementPage = (loginType) => {
+  localStorage.setItem("loginType", loginType);  // 로그인 타입을 저장
+  router.push("/account/privacy");  // 개인정보 동의 페이지로 이동
 };
 
-// 로그인 함수들
-const goToGoogleLogin = async () => {
-  localStorage.setItem("loginType", "GOOGLE");
-  try {
-    // 구글 로그인 요청
-    const response = await googleAuthentication.requestGoogleLoginToDjango();
-    if (response.success) {
-      // 로그인 성공 시 이동할 페이지
-      router.push("/dashboard");
-    } else {
-      // 로그인 실패 처리
-      console.error("Google login failed", response.error);
-    }
-  } catch (error) {
-    console.error("Error during Google login:", error);
-  }
-};
-
-const goToKakaoLogin = async () => {
-  localStorage.setItem("loginType", "KAKAO");
-  try {
-    // 카카오 로그인 요청
-    const response = await kakaoAuthentication.requestKakaoLoginToDjango();
-    if (response.success) {
-      // 로그인 성공 시 이동할 페이지
-      router.push("/dashboard");
-    } else {
-      // 로그인 실패 처리
-      console.error("Kakao login failed", response.error);
-    }
-  } catch (error) {
-    console.error("Error during Kakao login:", error);
-  }
-};
-
-const goToNaverLogin = async () => {
-  localStorage.setItem("loginType", "NAVER");
-  try {
-    // 네이버 로그인 요청
-    const response = await naverAuthentication.requestNaverLoginToDjango();
-    if (response.success) {
-      // 로그인 성공 시 이동할 페이지
-      router.push("/dashboard");
-    } else {
-      // 로그인 실패 처리
-      console.error("Naver login failed", response.error);
-    }
-  } catch (error) {
-    console.error("Error during Naver login:", error);
-  }
-};
-
+// 관리자 로그인
 const goToAdminLogin = () => {
   router.push("/account/admin-code");
 };

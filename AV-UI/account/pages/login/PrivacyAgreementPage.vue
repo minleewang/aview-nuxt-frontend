@@ -25,7 +25,6 @@
               수 있으며, 계속 사용할 경우 변경된 약관에 동의한 것으로
               간주됩니다.
             </p>
-
             <p><strong>제 3 조 (개인정보의 수집 및 이용)</strong></p>
             <p>
               ① 본 서비스는 면접 연습 및 모의 면접 서비스 제공을 위해 다음과
@@ -111,10 +110,16 @@
             <p><strong>부칙</strong></p>
             <p>본 약관은 2025년 3월 1일부터 시행됩니다.</p>
 
-            <!-- 개인정보 동의 후 카카오 로그인 시작 버튼 -->
-            <v-btn @click="goToKakaoLogin" color="primary"
-              >동의 후 카카오 로그인</v-btn
-            >
+            <!-- 동의 후 로그인 버튼들 -->
+            <v-btn @click="agreeAndLogin('KAKAO')" color="primary" v-if="loginType === 'KAKAO'">
+              동의 후 카카오 로그인
+            </v-btn>
+            <v-btn @click="agreeAndLogin('GOOGLE')" color="primary" v-if="loginType === 'GOOGLE'">
+              동의 후 구글 로그인
+            </v-btn>
+            <v-btn @click="agreeAndLogin('NAVER')" color="primary" v-if="loginType === 'NAVER'">
+              동의 후 네이버 로그인
+            </v-btn>
           </v-card-text>
         </v-card>
       </v-col>
@@ -123,17 +128,38 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
+import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
+import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 
+// 로그인 타입을 읽어오기 위한 변수
 const router = useRouter();
 const kakaoAuthentication = useKakaoAuthenticationStore();
+const googleAuthentication = useGoogleAuthenticationStore();
+const naverAuthentication = useNaverAuthenticationStore();
 
-const goToKakaoLogin = async () => {
-  localStorage.setItem("loginType", "KAKAO");
-  await kakaoAuthentication.requestKakaoLoginToDjango();
+// localStorage에서 로그인 타입을 가져옴
+let loginType = localStorage.getItem("loginType");
+
+// 로그인 타입이 없으면 기본값을 설정 (기본값을 카카오로 설정했음)
+if (!loginType) {
+  loginType = "KAKAO"; // 카카오를 기본 로그인 타입으로 설정
+}
+
+// 동의 후 로그인 진행 함수
+const agreeAndLogin = async (loginType) => {
+  if (loginType === "KAKAO") {
+    await kakaoAuthentication.requestKakaoLoginToDjango();
+  } else if (loginType === "GOOGLE") {
+    await googleAuthentication.requestGoogleLoginToDjango();
+  } else if (loginType === "NAVER") {
+    await naverAuthentication.requestNaverLoginToDjango();
+  }
 };
-
-const isAuthenticatedKakao = computed(() => authentication.isAuthenticated);
-const loginType = computed(() => account.loginType);
 </script>
+
+<style scoped>
+/* 기본 스타일 생략 */
+</style>
