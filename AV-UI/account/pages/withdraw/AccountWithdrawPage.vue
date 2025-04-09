@@ -15,14 +15,14 @@
       </v-btn>
     </v-form>
     <v-dialog v-model="dialog" max-width="500">
-      <v-card>
-        <v-card-title class="headline">알림</v-card-title>
-        <v-card-text>회원 탈퇴가 완료되었습니다.</v-card-text>
+      <!-- <v-card> -->
+        <!-- <v-card-title class="headline">알림</v-card-title> -->
+        <!-- <v-card-text>회원 탈퇴가 완료되었습니다.</v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green darken-1" text @click="closeDialog">확인</v-btn>
         </v-card-actions>
-      </v-card>
+      <!-- </v-card> -->
     </v-dialog>
   </v-container>
 </template>
@@ -66,11 +66,11 @@ const submitWithdrawal = () => {
   const reasonString = selectedReason.value ? String(selectedReason.value) : "";
   const loginType = localStorage.getItem('loginType'); // 현재 로그인 타입 가져오기
 
-  if (loginType === 'kakao') {
+  if (loginType === 'KAKAO') {
     kakaoAuthenticationStore.requestKakaoWithdrawToDjango();
-  } else if (loginType === 'google') {
+  } else if (loginType === 'GOOGLE') {
     googleAuthenticationStore.requestGoogleWithdrawToDjango();
-  } else if (loginType === 'naver') {
+  } else if (loginType === 'NAVER') {
     naverAuthenticationStore.requestNaverWithdrawToDjango?.(); 
     // naver 탈퇴 함수가 있을 경우에만 호출
   }
