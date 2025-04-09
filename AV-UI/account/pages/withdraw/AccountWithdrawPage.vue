@@ -71,8 +71,7 @@ const submitWithdrawal = () => {
   } else if (loginType === 'GOOGLE') {
     googleAuthenticationStore.requestGoogleWithdrawToDjango();
   } else if (loginType === 'NAVER') {
-    naverAuthenticationStore.requestNaverWithdrawToDjango?.(); 
-    // naver 탈퇴 함수가 있을 경우에만 호출
+    naverAuthenticationStore.requestNaverWithdrawToDjango(); 
   }
 
   // 공통 탈퇴 요청 (우리 서버 DB에서 탈퇴)
