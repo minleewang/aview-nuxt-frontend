@@ -14,24 +14,22 @@
           ><strong>※ 사전 공지 ※</strong></v-card-title
         ><br />
         <li class="li">
-          본 면접은 특정 기업 및 직무에 맞추어진 면접이 아닌
-          <strong>인성 면접</strong>임을 알려드립니다.
+          본 면접은 특정 기업 및 직무에 맞추어진 면접인인
+          <strong>TECH-INTERVIEW</strong>임을 알려드립니다.
         </li>
-        <br />
-        <li class="li">총 <strong>5개</strong>의 질문이 제공됩니다.</li>
-        <br />
-        <li class="li">
-          면접 질문 당 답변 제한 시간은 <strong>1분 30초</strong>입니다. 시간
-          내에 작성 부탁드립니다.
-        </li>
+
+        <!--<li class="li">-->
+        <!--면접 질문 당 답변 제한 시간은 <strong>1분 30초</strong>입니다. 시간
+          내에 작성 부탁드립니다.-->
+        <!--</li>-->
         <br /> </v-container
       ><br />
       <v-card-text
         ><strong
-          >면접 서비스를 시작하시려면 아래 버튼을 눌러주세요.</strong
+          >시작에 앞서 체크리스트를 작성하여 주십시오.</strong
         ></v-card-text
       >
-      <v-btn @click="startInterview" color="primary">START</v-btn>
+      <v-btn @click="startQuestion" color="primary">작성하기</v-btn>
     </v-container>
     <v-container v-if="start" align="center">
       <div v-if="visible" class="interview-container">
@@ -183,8 +181,8 @@ onBeforeUnmount(() => {
 });
 
 // Methods
-const startInterview = () => {
-  start.value = true;
+const startQuestion = () => {
+  router.push("/ai-interview/question");
 };
 
 const getAIQuestions = async () => {
@@ -451,7 +449,7 @@ useHead({
 }
 
 .li {
-  margin-left: 3%;
+  margin-left: 2%;
 }
 .timer {
   font-size: 15px;
