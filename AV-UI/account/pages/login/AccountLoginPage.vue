@@ -12,17 +12,26 @@
         <v-divider class="mt-5 mb-7" :thickness="3"></v-divider>
 
         <!-- 카카오 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
-        <v-btn class="kakao-login-btn" @click="goToPrivacyAgreementPage('KAKAO')">
+        <v-btn
+          class="kakao-login-btn"
+          @click="goToPrivacyAgreementPage('KAKAO')"
+        >
           <!-- 카카오 로그인 -->
         </v-btn>
 
         <!-- 구글 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
-        <v-btn class="google-login-btn" @click="goToPrivacyAgreementPage('GOOGLE')">
+        <v-btn
+          class="google-login-btn"
+          @click="goToPrivacyAgreementPage('GOOGLE')"
+        >
           <!-- Google 로그인 -->
         </v-btn>
 
         <!-- 네이버 로그인 버튼 클릭 시 개인정보 동의 페이지로 이동 -->
-        <v-btn class="naver-login-btn" @click="goToPrivacyAgreementPage('NAVER')">
+        <v-btn
+          class="naver-login-btn"
+          @click="goToPrivacyAgreementPage('NAVER')"
+        >
           <!-- 네이버 로그인 -->
         </v-btn>
 
@@ -45,8 +54,8 @@ const router = useRouter();
 
 // 로그인 타입 설정을 위한 변수
 const goToPrivacyAgreementPage = (loginType) => {
-  localStorage.setItem("loginType", loginType);  // 로그인 타입을 저장
-  router.push("/account/privacy");  // 개인정보 동의 페이지로 이동
+  localStorage.setItem("loginType", loginType); // 로그인 타입을 저장
+  router.push("/account/privacy"); // 개인정보 동의 페이지로 이동
 };
 
 // 관리자 로그인
@@ -58,14 +67,14 @@ const goToAdminLogin = () => {
 <style scoped>
 .container {
   max-width: 100vw;
-  height: 110vh;
+  min-height: 89vh;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: white;
-  background: url("@/assets/images/fixed/login_bg6.jpg") no-repeat center center;
-  background-size: contain;
+  background: url("@/assets/images/fixed/login_bg61.jpg") no-repeat center
+    center;
+  background-size: 900px auto;
 }
 
 .login_logo {
