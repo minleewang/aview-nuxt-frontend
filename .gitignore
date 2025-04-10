@@ -314,3 +314,7 @@ node_modules
 *.log
 
 # End of https://www.toptal.com/developers/gitignore/api/nuxtjs
+
+
+# model/vosk-model-small-ko-0.22 HCLr.fst
+HCLr.fst
