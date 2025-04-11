@@ -18,10 +18,9 @@
           <strong>TECH-INTERVIEW</strong>임을 알려드립니다.
         </li>
 
-        <!--<li class="li">-->
-        <!--면접 질문 당 답변 제한 시간은 <strong>1분 30초</strong>입니다. 시간
-          내에 작성 부탁드립니다.-->
-        <!--</li>-->
+        <li class="li">
+          모의면접에는 <strong>마이크, 카메라</strong>의 사용이 필요합니다.
+        </li>
         <br /> </v-container
       ><br />
       <v-card-text
@@ -69,16 +68,20 @@
       </div>
     </v-container>
 
-    <v-container v-if="start && !visible" class="input-area">
+    <v-container v-if="start && !visible" clas="input-area">
       <textarea
         v-model="userInput"
-        placeholder="메시지를 입력하세요..."
+        placeholder="메세지를 입력하세요..."
         @keydown.enter.exact.prevent="handleEnterKey"
         @keydown.shift.enter="handleShiftEnter"
-        @input="adjustTextareaHeight"
         :disabled="finished || isLoading"
         ref="messageInput"
       ></textarea>
+
+      <button class="send-button" @click="startSTT" :disabled="recognizing">
+        말하기
+      </button>
+
       <button
         class="send-button"
         @click="sendMessage"
@@ -87,6 +90,10 @@
         입력
       </button>
     </v-container>
+
+    <div v-if="sttLog" class="stt-log">
+      <p><strong>STT 결과:</strong> {{ sttLog }}</p>
+    </div>
   </main>
 </template>
 
@@ -133,6 +140,11 @@ const timeLimit = 90;
 const remainingTime = ref(timeLimit);
 const timer = ref(null);
 
+//음성인식
+const recognizing = ref(false);
+let recognition;
+const sttLog = ref("");
+
 // Watchers
 watch(start, (newVal) => {
   if (newVal === true) {
@@ -155,7 +167,58 @@ onMounted(async () => {
     alert("로그인이 필요합니다.");
     router.push("/account/login");
   }
+
+  if (sessionStorage.getItem("startInterview") === "true") {
+    start.value = true;
+    sessionStorage.removeItem("startInterview");
+  }
 });
+
+//음성인식
+onMounted(() => {
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
+    return;
+  }
+
+  // ✅ 음성 인식 인스턴스 생성
+  recognition = new SpeechRecognition();
+  recognition.lang = "ko-KR";
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    recognizing.value = true;
+    console.log("🎤 음성 인식 시작");
+  };
+
+  recognition.onend = () => {
+    recognizing.value = false;
+    console.log("🛑 음성 인식 종료");
+  };
+
+  recognition.onerror = (e) => {
+    console.error("🎙 음성 인식 오류", e);
+    recognizing.value = false;
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    console.log("🎙 인식된 음성:", transcript);
+
+    userInput.value += transcript;
+    sttLog.value = transcript;
+  };
+});
+
+const startSTT = () => {
+  if (recognition && !recognizing.value) {
+    recognition.start();
+  }
+};
+//여기까지
 
 const startTimer = () => {
   clearInterval(timer.value);
