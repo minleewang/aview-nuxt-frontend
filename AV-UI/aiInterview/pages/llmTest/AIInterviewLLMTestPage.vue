@@ -33,7 +33,7 @@
     <v-container v-if="start" align="center">
       <div v-if="visible" class="interview-container">
         <v-icon>mdi-account-tie</v-icon><br />
-        <v-text v-html="startMessage"></v-text>
+        <div v-html="startMessage"></div>
       </div>
       <div v-if="!visible" class="interview-container">
         <v-icon>mdi-account-tie</v-icon>
@@ -69,29 +69,12 @@
     </v-container>
 
     <v-container v-if="start && !visible" clas="input-area">
-      <textarea
-        v-model="userInput"
-        placeholder="메세지를 입력하세요..."
-        @keydown.enter.exact.prevent="handleEnterKey"
-        @keydown.shift.enter="handleShiftEnter"
-        :disabled="finished || isLoading"
-        ref="messageInput"
-      ></textarea>
-
       <button class="send-button" @click="startSTT" :disabled="recognizing">
         말하기
       </button>
-
-      <button
-        class="send-button"
-        @click="sendMessage"
-        :disabled="finished || isLoading"
-      >
-        입력
-      </button>
     </v-container>
 
-    <div v-if="sttLog" class="stt-log">
+    <div v-if="sttLog !== ''" class="stt-log">
       <p><strong>STT 결과:</strong> {{ sttLog }}</p>
     </div>
   </main>
@@ -111,54 +94,58 @@ const accountStore = useAccountStore();
 const router = useRouter();
 
 // Component State
-const accountId = ref("");
-const start = ref(false);
-const finished = ref(false);
-const visible = ref(true);
-const userInput = ref("");
-const aiOutput = ref("");
+const accountId = ref(""); //로그인 확인
+const start = ref(false); //면접 시작
+const finished = ref(false); //면접 끝
+const visible = ref(true); //시작안내에서 면접 질문 표시 돌리기기
+const userInput = ref(""); //유저응답
+const currentAIMessage = ref(""); //ai응답
+const chatHistory = ref([{ type: "ai", content: "" }]); //대화 흐름저장
+const isLoading = ref(false); //로딩확인
+const sendCount = ref(0); //질문갯수 확인
+const maxMessages = 5; //최대질문 갯수 5개
+const aiResponseList = ref([]); //ai질문 데이터 저장
+const questionIndex = ref(0); //몇번쨰 질문인지 저장
+const intentList = ["대처 능력", "소통 능력", "프로젝트 경험", "자기 개발"]; //질문주제
+const intentIndex = ref(0); //몇번째 주제인지 저장
 const startMessage =
   "<h2>안녕하세요. AI 모의 면접 서비스입니다.</h2><br><strong><span>제한 시간 내에 답변 작성 부탁드립니다.</span><br><span>지금부터 면접을 시작하겠습니다.</span></strong>";
-const currentAIMessage = ref("");
-const chatHistory = ref([{ type: "ai", content: "" }]);
-const isLoading = ref(false);
-const sendCount = ref(0);
-const maxMessages = 5;
-const aiResponseList = ref([]);
-const questionIndex = ref(0);
-const intentList = ["대처 능력", "소통 능력", "프로젝트 경험", "자기 개발"];
-const intentIndex = ref(0);
+//면접시작 알림 메세지지
 
+//질문 문장단위 줄바꿈
 const formattedAIMessage = computed(() => {
   return currentAIMessage.value.replace(/([.?])/g, "$1<br>");
 });
 
-// Computed Properties
+// 질문개수 초과 여부
 const isCheckoutDisabled = computed(() => sendCount.value >= maxMessages);
 
-const timeLimit = 90;
-const remainingTime = ref(timeLimit);
-const timer = ref(null);
+const timeLimit = 90; //응답 시간제한
+const remainingTime = ref(timeLimit); //응답 후 남은 시간
+const timer = ref(null); //타이머
 
 //음성인식
-const recognizing = ref(false);
-let recognition;
-const sttLog = ref("");
+const recognizing = ref(false); //음성인식 상태여부
+let recognition; //SpeechRecognition 인스턴스
+const sttLog = ref(""); //STT결과 저장
 
-// Watchers
+//면접이 시작되는걸 감지
+//showStartMessage() 출력
 watch(start, (newVal) => {
   if (newVal === true) {
     showStartMessage();
   }
 });
 
+//false가 되면 getAIQuestions()를 실행
 watch(visible, (newVal) => {
   if (newVal === false) {
     getAIQuestions();
   }
 });
 
-// Lifecycle Hooks
+// usertoken을 확인하여 로그인 상태 확인
+// 체크리스트 작성하여 제출하면 sessionstorage확인 후 제거
 onMounted(async () => {
   const userToken = localStorage.getItem("userToken");
   if (userToken) {
@@ -220,6 +207,7 @@ const startSTT = () => {
 };
 //여기까지
 
+//면접 시 타이머
 const startTimer = () => {
   clearInterval(timer.value);
   remainingTime.value = timeLimit;
@@ -235,42 +223,47 @@ const startTimer = () => {
   }, 1000);
 };
 
+//ai가 새로운 질문이 나오면 답변타이머 시작
 watch(currentAIMessage, () => {
   startTimer();
 });
 
+//타이머 정리
 onBeforeUnmount(() => {
   clearInterval(timer.value);
 });
 
-// Methods
+// AiInterviewQuestionPage.vue로 이동
 const startQuestion = () => {
   router.push("/ai-interview/question");
 };
 
 const getAIQuestions = async () => {
   if (aiResponseList.value.length === 0) {
-    const questionId = Math.floor(Math.random() * 3061) + 1;
+    //질문 저장돼 있으면 요청안함
+    const questionId = Math.floor(Math.random() * 3061) + 1; //질문ID생성 후 랜덤
     aiResponseList.value = await aiInterviewStore.requestFirstQuestionToDjango({
       questionId: questionId,
-    });
+    }); //back으로 질문ID 보내고 질문 받아옴
   }
-  currentAIMessage.value =
+  currentAIMessage.value = //받아온 질문 저장
     aiResponseList.value.firstQuestion ||
-    "질문을 불러오는 데 실패하였습니다. 다시 시도해주세요.";
-  // intentIndex.value++;
-  chatHistory.value.push({ type: "ai", content: currentAIMessage.value });
+    "질문을 불러오는 데 실패하였습니다. 다시 시도해주세요."; //없는경우
+  // intentIndex.value++; 주제 저장
+  chatHistory.value.push({ type: "ai", content: currentAIMessage.value }); //chatHIstory에 질문 추가
 
   const chunks = chunkText(currentAIMessage.value, 1);
-  streamText(chunks);
+  streamText(chunks); //질문 출력
 };
 
+//질문을 마크다운 형태로 HTML로 변환 렌더링
 const renderMessageContent = (message) => {
   if (message.type !== "user") {
     return `<h2>${markdownIt().render(message.content)}</h2>`;
   }
 };
 
+//타자치는 느낌 애니메이션
 const chunkText = (text, chunkSize) => {
   const chunks = [];
   for (let i = 0; i < text.length; i += chunkSize) {
@@ -480,18 +473,20 @@ const sendMessage = async () => {
   }, 1000);
 };
 
+//2.5초 뒤에 안내문 닫고 질문 시작
 const showStartMessage = () => {
   setTimeout(() => {
     visible.value = false;
   }, 2500);
 };
 
+//면접페이지에 들어오면 출력되는 제목
 useHead({
   title: `AI 모의면접 & 인성면접 | `,
   meta: [
     {
       name: "description",
-      content: "AI 모의면접, AI 인성면접 🎯AIM에서 확인해보세요.",
+      content: "AI 모의면접, AI 인성면접 🎯jobstcik에서 확인해보세요.",
     },
     {
       hid: "keywords",
