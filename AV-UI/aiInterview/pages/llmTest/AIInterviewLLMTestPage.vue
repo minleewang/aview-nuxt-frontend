@@ -73,6 +73,7 @@
         말하기
       </button>
     </v-container>
+    <button @click="speakCurrentMessage">🗣 AI 질문 듣기</button>
 
     <div v-if="sttLog !== ''" class="stt-log">
       <p><strong>STT 결과:</strong> {{ sttLog }}</p>
@@ -263,13 +264,12 @@ const renderMessageContent = (message) => {
   }
 };
 
-//타자치는 느낌 애니메이션
-const chunkText = (text, chunkSize) => {
-  const chunks = [];
-  for (let i = 0; i < text.length; i += chunkSize) {
-    chunks.push(text.substring(i, i + chunkSize));
-  }
-  return chunks;
+//TTS
+const speak = (text) => {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "KO-KR";
+  synth.speak(utterance);
 };
 
 const streamText = async (chunks) => {
@@ -475,6 +475,7 @@ const sendMessage = async () => {
 
 //2.5초 뒤에 안내문 닫고 질문 시작
 const showStartMessage = () => {
+  speak("안녕하세요. AI 모의 면접을 시작하겠습니다.");
   setTimeout(() => {
     visible.value = false;
   }, 2500);
@@ -533,6 +534,7 @@ useHead({
 .input-area {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   width: 50%;
   margin-bottom: 0;
