@@ -17,7 +17,7 @@
         ></v-checkbox>
         <v-checkbox v-model="answers" label="App" value="app"></v-checkbox>
         <v-checkbox v-model="answers" label="Web" value="web"></v-checkbox>
-        <v-checkbox v-model="answers" label="AI" value="Ai"></v-checkbox>
+        <v-checkbox v-model="answers" label="AI" value="ai"></v-checkbox>
         <v-checkbox
           v-model="answers"
           label="Embeddeed"
@@ -50,10 +50,12 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 
 const answers = ref([]);
 const career = ref();
+const router = useRouter();
+const isSubmitting = ref(false);
 
 //사용자가 값 입력했는지 여부 확인
 const hasUnsavedData = () => {
@@ -70,6 +72,9 @@ const handleBeforeUnload = (e) => {
 
 //라우터 이동 감지
 onBeforeRouteLeave((to, from, next) => {
+  if (isSubmitting.value) {
+    return next();
+  }
   if (hasUnsavedData()) {
     const confirmed = window.confirm(
       "이 페이지를 벗어나면 입력한 내용이 사라집니다. 계속하시겠습니까?"
@@ -90,11 +95,18 @@ onBeforeUnmount(() => {
 });
 
 const submit = () => {
+  if (answers.value.length == 0 || !career.value) {
+    alert("기술과 경력을 모두 선택하세요");
+    return;
+  }
   console.log("선택한 기술:", answers.value);
   console.log("선택한 경력:", career.value);
   alert(
     `선택한 기술: ${answers.value.join(", ")}\n 선택한 경력: ${career.value}`
   );
+  isSubmitting.value = true;
+  sessionStorage.setItem("startInterview", "true");
+  router.push({ path: "/ai-interview", state: { start: "true" } });
 };
 </script>
 
@@ -120,23 +132,10 @@ const submit = () => {
 }
 
 .card-container {
-  display: flex;
-  flex-wrap: nowrap; /* ✅ 한 줄 유지 */
-  justify-content: space-between; /* 또는 space-evenly */
-  gap: 0px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
   padding: 40px;
-  font-size: 20px;
-  width: 100%; /* ✅ 카드 너비에 맞게 퍼지도록 */
-  overflow-x: auto;
-}
-
-/*화면이 축소한 경우*/
-.card-container :deep(.v-label) {
-  flex: 1 1 auto; /* ✅ 각 체크박스가 공간에 맞게 줄어듦 */
-  min-width: 150px; /* ✅ 너무 작아지지 않도록 최소 너비 */
-  max-width: 200px; /* ✅ 너무 커지지 않도록 최대 너비 */
-  white-space: nowrap;
 }
 
 .radio-container {
