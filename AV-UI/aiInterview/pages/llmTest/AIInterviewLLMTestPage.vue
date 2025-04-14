@@ -69,15 +69,18 @@
     </v-container>
 
     <v-container v-if="start && !visible" clas="input-area">
-      <button class="send-button" @click="startSTT" :disabled="recognizing">
-        말하기
-      </button>
-    </v-container>
-    <button @click="speakCurrentMessage">🗣 AI 질문 듣기</button>
+      <div class="button-group">
+        <button class="send-button" @click="startSTT" :disabled="recognizing">
+          말하기
+        </button>
 
-    <div v-if="sttLog !== ''" class="stt-log">
-      <p><strong>STT 결과:</strong> {{ sttLog }}</p>
-    </div>
+        <button @click="speakCurrentMessage">🗣 AI 질문 듣기</button>
+      </div>
+
+      <div v-if="sttLog !== ''" class="stt-log">
+        <p><strong>STT 결과:</strong> {{ sttLog }}</p>
+      </div>
+    </v-container>
   </main>
 </template>
 
@@ -137,6 +140,21 @@ watch(start, (newVal) => {
     showStartMessage();
   }
 });
+
+//2.5초 뒤에 안내문 닫고 질문 시작
+const showStartMessage = () => {
+  const synth = window.speechSynthesis;
+  const utterance = new SpeechSynthesisUtterance(
+    "안녕하세요. AI 모의 면접을 시작하겠습니다. 제한 시간 내에 답변 작성 부탁드립니다. 지금부터 면접을 시작하겠습니다."
+  );
+  utterance.lang = "KO-KR";
+
+  utterance.onend = () => {
+    visible.value = false;
+  };
+
+  synth.speak(utterance);
+};
 
 //false가 되면 getAIQuestions()를 실행
 watch(visible, (newVal) => {
@@ -473,14 +491,6 @@ const sendMessage = async () => {
   }, 1000);
 };
 
-//2.5초 뒤에 안내문 닫고 질문 시작
-const showStartMessage = () => {
-  speak("안녕하세요. AI 모의 면접을 시작하겠습니다.");
-  setTimeout(() => {
-    visible.value = false;
-  }, 2500);
-};
-
 //면접페이지에 들어오면 출력되는 제목
 useHead({
   title: `AI 모의면접 & 인성면접 | `,
@@ -538,6 +548,14 @@ useHead({
   gap: 20px;
   width: 50%;
   margin-bottom: 0;
+}
+
+/*말하기 버튼, 질문듣기 버튼*/
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 textarea {
