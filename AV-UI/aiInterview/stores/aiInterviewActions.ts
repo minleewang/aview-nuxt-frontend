@@ -3,17 +3,23 @@ import { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 export const aiInterviewActions = {
-  // async requestGetQuestionListToDjango(sessionId: number): Promise<AxiosResponse> {
-  //     const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+  async requestGetQuestionListToDjango(
+    sessionId: number
+  ): Promise<AxiosResponse> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
-  //     try {
-  //         const res: AxiosResponse = await djangoAxiosInst.post('/interview/get-session', sessionId)
-  //         return res.data
-  //     } catch (err) {
-  //         console.error('requestGetQuestionListToDjango() -> error:', err)
-  //         throw err
-  //     }
-  // },
+    try {
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/get-session",
+        sessionId
+      );
+      return res.data;
+    } catch (err) {
+      console.error("requestGetQuestionListToDjango() -> error:", err);
+      throw err;
+    }
+  },
+
   async requestFirstQuestionToDjango(
     questionId: number
   ): Promise<AxiosResponse> {
@@ -22,7 +28,7 @@ export const aiInterviewActions = {
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/get-first-question",
-        questionId
+        { questionId }
       );
       return res.data;
     } catch (err) {
