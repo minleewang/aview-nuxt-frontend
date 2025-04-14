@@ -77,6 +77,8 @@
         <button @click="speakCurrentMessage">🗣 AI 질문 듣기</button>
       </div>
 
+      <v-btn color="primary" @click="onAnswerComplete">답변 완료</v-btn>
+
       <div v-if="sttLog !== ''" class="stt-log">
         <p><strong>STT 결과:</strong> {{ sttLog }}</p>
       </div>
@@ -86,7 +88,7 @@
 
 <script setup>
 import { ref, watch, computed, onMounted } from "vue";
-import { useAiInterviewStore } from "@/stores/aiInterviewStore"; // Pinia store import
+import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
 import { useAccountStore } from "../../../account/stores/accountStore";
 import markdownIt from "markdown-it";
 import { useRouter } from "vue-router";
@@ -257,22 +259,33 @@ const startQuestion = () => {
   router.push("/ai-interview/question");
 };
 
+//버튼에 연결하여 다음으로 넘김
+const onAnswerComplete = async () => {
+  clearInterval(timer.value);
+  await sendMessage();
+};
+
+//질문
 const getAIQuestions = async () => {
   if (aiResponseList.value.length === 0) {
-    //질문 저장돼 있으면 요청안함
-    const questionId = Math.floor(Math.random() * 3061) + 1; //질문ID생성 후 랜덤
-    aiResponseList.value = await aiInterviewStore.requestFirstQuestionToDjango({
-      questionId: questionId,
-    }); //back으로 질문ID 보내고 질문 받아옴
-  }
-  currentAIMessage.value = //받아온 질문 저장
-    aiResponseList.value.firstQuestion ||
-    "질문을 불러오는 데 실패하였습니다. 다시 시도해주세요."; //없는경우
-  // intentIndex.value++; 주제 저장
-  chatHistory.value.push({ type: "ai", content: currentAIMessage.value }); //chatHIstory에 질문 추가
+    const questionId = Math.floor(Math.random() * 200) + 1;
 
-  const chunks = chunkText(currentAIMessage.value, 1);
-  streamText(chunks); //질문 출력
+    // ✅ 숫자만 넘기기
+    aiResponseList.value = await aiInterviewStore.requestFirstQuestionToDjango(
+      questionId
+    );
+  }
+
+  currentAIMessage.value =
+    aiResponseList.value.firstQuestion ||
+    "질문을 불러오는 데 실패하였습니다. 다시 시도해주세요.";
+
+  chatHistory.value.push({ type: "ai", content: currentAIMessage.value });
+  speak(currentAIMessage.value, () => {
+    const chunks = chunkText(currentAIMessage.value, 1);
+    streamText(chunks);
+    startTimer();
+  });
 };
 
 //질문을 마크다운 형태로 HTML로 변환 렌더링
@@ -287,6 +300,9 @@ const speak = (text) => {
   const synth = window.speechSynthesis;
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "KO-KR";
+  utterance.rate = 0.9;
+  utterance.pitch = 1.1;
+  utterance.volume = 1;
   synth.speak(utterance);
 };
 
@@ -354,7 +370,7 @@ const sendMessage = async () => {
 
   setTimeout(async () => {
     if (aiResponseList.value.length === 0) {
-      const questionId = Math.floor(Math.random() * 3061) + 1;
+      const questionId = Math.floor(Math.random() * 200) + 1;
       aiResponseList.value =
         await aiInterviewStore.requestFirstQuestionToDjango({
           questionId: questionId,
@@ -445,6 +461,7 @@ const sendMessage = async () => {
             Math.random() * tempQuestionList.length
           );
           currentAIMessage.value = tempQuestionList[randomIndex];
+          speak(currentAIMessage.value);
         }
         if (nextIntent == "소통 능력") {
           const tempQuestionList = [
