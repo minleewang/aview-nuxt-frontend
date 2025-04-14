@@ -64,8 +64,8 @@ import { useRouter } from 'vue-router'
 import { useAccountStore } from '@/account/stores/accountStore'
 import { useKakaoAuthenticationStore } from '@/kakaoAuthentication/stores/kakaoAuthenticationStore'
 import { useNaverAuthenticationStore } from '@/naverAuthentication/stores/naverAuthenticationStore'
-//import { useGoogleAuthenticationStore } from '@/googleAuthentication/stores/googleAuthenticationStore'
-//import { useAuthenticationStore } from '@/authentication/stores/authenticationStore'
+import { useGoogleAuthenticationStore } from '@/googleAuthentication/stores/googleAuthenticationStore'
+import { useAuthenticationStore } from '@/authentication/stores/authenticationStore'
 
 const step = ref('reason')
 const selectedReason = ref(null)
@@ -76,8 +76,8 @@ const router = useRouter()
 const accountStore = useAccountStore()
 const kakaoStore = useKakaoAuthenticationStore()
 const naverStore = useNaverAuthenticationStore()
-//const googleStore = useGoogleAuthenticationStore()
-//const authStore = useAuthenticationStore()
+const googleStore = useGoogleAuthenticationStore()
+const authStore = useAuthenticationStore()
 
 const reasons = ref([
   { label: '서비스 품질 불만족', value: 'SERVICE_DISSATISFACTION' },
