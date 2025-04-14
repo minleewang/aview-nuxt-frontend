@@ -62,7 +62,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useAccountStore } from '@/account/stores/accountStore'
-//import { useKakaoAuthenticationStore } from '@/kakaoAuthentication/stores/kakaoAuthenticationStore'
+import { useKakaoAuthenticationStore } from '@/kakaoAuthentication/stores/kakaoAuthenticationStore'
 //import { useNaverAuthenticationStore } from '@/naverAuthentication/stores/naverAuthenticationStore'
 //import { useGoogleAuthenticationStore } from '@/googleAuthentication/stores/googleAuthenticationStore'
 //import { useAuthenticationStore } from '@/authentication/stores/authenticationStore'
@@ -74,7 +74,7 @@ const dialog = ref(false)
 const router = useRouter()
 
 const accountStore = useAccountStore()
-//const kakaoStore = useKakaoAuthenticationStore()
+const kakaoStore = useKakaoAuthenticationStore()
 //const naverStore = useNaverAuthenticationStore()
 //const googleStore = useGoogleAuthenticationStore()
 //const authStore = useAuthenticationStore()
