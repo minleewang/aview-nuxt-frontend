@@ -163,10 +163,11 @@ h1 {
   margin-bottom: 10px;
 }
 .content-image {
-  width: 50%; /* 오른쪽 절반은 이미지 영역 */
   display: flex;
-  justify-content: center; /* 이미지 중앙 정렬 */
-  align-items: center; /* 이미지 수직 중앙 정렬 */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100px;  /* 강제로 영역 확보 */
 }
 .scrollupanimation {
   position: absolute;
@@ -177,28 +178,45 @@ h1 {
   animation-delay: 5s;
 }
 .content-image img {
-  width: 100%; /* 이미지의 너비를 100%로 설정 */
-  height: 100%; /* 이미지의 높이를 100%로 설정 */
-  object-fit: cover; /* 이미지가 비율을 유지하면서 영역을 완전히 덮도록 설정 */
-  transform: scale(1.05); /* 이미지를 미세하게 확대하여 공백을 덮도록 설정 */
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 추가 */
+  display: block;  /* 추가 */
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: contain;
 }
 /* 반응형 웹 디자인: 화면이 좁을 경우 레이아웃을 자동으로 변경 */
 @media (max-width: 768px) {
   .content-container {
-    width: 100%; /* 작은 화면에서는 전체 너비를 차지하도록 */
-    height: auto; /* 작은 화면에서는 높이를 자동으로 맞춤 */
+    width: 100%;
+    height: auto;
   }
   .content-box {
-    flex-direction: column; /* 작은 화면에서는 텍스트와 이미지를 세로로 배치 */
+    position: static !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto !important;
+    padding: 15px;
   }
   .content-description,
   .content-image {
-    width: 100%; /* 작은 화면에서는 텍스트와 이미지가 모두 100% 크기를 차지하도록 */
+    width: 100%;
+    text-align: center;
+  }
+  .content-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
   }
   .content-image img {
-    height: auto; /* 이미지 비율을 유지하도록 설정 */
+    display: block;
+    width: 90%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
+    border: 1px solid red; /* 디버깅용 */
   }
 }
+
 </style>
