@@ -100,8 +100,8 @@ export default defineComponent({
 <style scoped>
 /* 홈화면 설정*/
 .home-container {
-  /* 수정: 절대 위치 대신 상대적 위치 사용 */
-  width: 100vw; /*너비*/
+  width: 100%; /*너비*/
+  max-width: 100vw; /*너비*/
   height: 100vh; /*높이*/
   display: flex; /*flexbox레이아웃 모델 사용*/
   justify-content: center; /*수평 중앙*/
@@ -199,6 +199,11 @@ export default defineComponent({
   font-size: 18px;
   color: #ffffff;
   margin-top: 10vh;
+}
+
+html,
+body {
+  overflow-x: hidden !important;
 }
 
 /*모바일적용 */

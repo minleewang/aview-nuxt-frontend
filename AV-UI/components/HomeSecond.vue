@@ -2,11 +2,7 @@
   <div class="home-second">
     <div class="home-second-body">
       <div class="title-container">
-        <p
-          data-aos="fade-up"
-          data-aos-offset="400 "
-          style="white-space: nowrap"
-        >
+        <p data-aos="fade-up" data-aos-offset="400 ">
           <span class="title-span">JOBSTICK</span> | 기업 핵심 정보 분석 및 AI
           모의면접
         </p>

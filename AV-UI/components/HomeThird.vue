@@ -19,7 +19,7 @@
       </div>
 
       <div
-        class="content-container reverse"
+        class="content-container"
         data-aos="fade-right"
         data-aos-offset="400"
       >
@@ -55,7 +55,7 @@
       </div>
 
       <div
-        class="content-container reverse"
+        class="content-container"
         data-aos="fade-right"
         data-aos-offset="400"
       >
@@ -113,28 +113,19 @@ export default defineComponent({
 
 .content-container {
   width: 100%;
-  height: 30%;
-  width: 100%;
-  max-width: 450px;
-  height: 280px; /* 명확한 고정값 */
-  border-radius: 25px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 100px;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 60px;
 }
 
 .content-image {
   width: 50%;
-  height: 60%;
+  height: 300px;
+  max-height: 400px;
   border-radius: 25px;
-}
-
-.content-container.reverse {
-  flex-direction: row-reverse;
+  overflow: hidden;
 }
 
 #first-image {
@@ -167,11 +158,11 @@ export default defineComponent({
 
 .text-container {
   width: 50%;
-  height: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 30px;
+  flex-wrap: wrap;
+  word-break: keep-all;
+  gap: 10px;
 }
 
 .number-icon {
@@ -215,15 +206,19 @@ export default defineComponent({
     width: 90%;
   }
 
-  .content-container.reverse {
-    flex-direction: column;
-  }
-
   .content-container {
     flex-direction: column;
     height: auto;
     gap: 20px;
     margin-bottom: 40px;
+  }
+
+  .content-container > .content-image {
+    order: 0;
+  }
+
+  .content-container > .text-container {
+    order: 1;
   }
 
   .content-image {
