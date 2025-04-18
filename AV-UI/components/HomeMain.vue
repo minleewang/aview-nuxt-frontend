@@ -200,4 +200,38 @@ export default defineComponent({
   color: #ffffff;
   margin-top: 10vh;
 }
+
+/*모바일적용 */
+@media screen and (max-width: 768px) {
+  .home-container {
+    background-position: center;
+    background-size: cover;
+  }
+
+  .home-icon {
+    height: 80px; /* 줄임 */
+  }
+
+  .text-container {
+    width: 90vw;
+    padding: 10px;
+  }
+
+  .typing-animation p {
+    font-size: 32px !important;
+  }
+
+  .subtitle {
+    font-size: 18px;
+  }
+
+  .description {
+    font-size: 16px;
+    margin-top: 5vh;
+  }
+
+  .scrollanimation {
+    bottom: 5vh;
+  }
+}
 </style>
