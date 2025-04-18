@@ -201,11 +201,6 @@ export default defineComponent({
   margin-top: 10vh;
 }
 
-html,
-body {
-  overflow-x: hidden !important;
-}
-
 /*모바일적용 */
 @media screen and (max-width: 768px) {
   .home-container {
