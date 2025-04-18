@@ -63,7 +63,7 @@
           <p class="number-icon">4</p>
           <div class="text-title-container">
             <p class="text-title">영상 분석 확인 가능</p>
-            <p class="text-subtitle">면접 기록 영상 제공</p>
+            <p class="text-subtitle">면접 피드백 제공</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
