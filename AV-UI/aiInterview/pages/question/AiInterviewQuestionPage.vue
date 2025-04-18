@@ -1,52 +1,56 @@
 <template>
   <div class="container">
     <v-card class="pa-6 custom-card" elevation="10">
-      <v-card-title class="text-h6 card-title"
-        >원하는 기술을 모두 선택해주세요</v-card-title
-      >
-      <v-card-text class="card-container">
-        <v-checkbox
-          v-model="answers"
-          label="Frontend"
-          value="frontend"
-        ></v-checkbox>
-        <v-checkbox
-          v-model="answers"
-          label="Backend"
-          value="backend"
-        ></v-checkbox>
-        <v-checkbox v-model="answers" label="App" value="app"></v-checkbox>
-        <v-checkbox v-model="answers" label="Web" value="web"></v-checkbox>
-        <v-checkbox v-model="answers" label="AI" value="ai"></v-checkbox>
-        <v-checkbox
-          v-model="answers"
-          label="Embeddeed"
-          value="embeddeed"
-        ></v-checkbox>
-        <v-checkbox
-          v-model="answers"
-          label="DevOps"
-          value="devops"
-        ></v-checkbox>
-      </v-card-text>
-      <v-card-title class="text-h6">경력을 선택해주세요</v-card-title>
-      <v-card-text class="radio-container">
-        <v-radio-group v-model="career">
-          <div class="radio-inline">
-            <v-radio label="신입" value="new" />
-            <v-radio label="1년" value="first" />
-            <v-radio label="2년" value="second" />
-            <v-radio label="3년" value="third" />
-            <v-radio label="4년 이상" value="other" />
-          </div>
-        </v-radio-group>
-      </v-card-text>
-      <v-card-actions>
+      <!-- 스크롤 가능한 영역 -->
+      <div class="card-scrollable">
+        <v-card-title class="text-h6 card-title">
+          원하는 기술을 모두 선택해주세요
+        </v-card-title>
+        <v-card-text class="card-container">
+          <v-checkbox v-model="answers" label="Frontend" value="frontend" />
+          <v-checkbox v-model="answers" label="Backend" value="backend" />
+          <v-checkbox v-model="answers" label="App" value="app" />
+          <v-checkbox v-model="answers" label="Web" value="web" />
+          <v-checkbox v-model="answers" label="AI" value="ai" />
+          <v-checkbox v-model="answers" label="Embeddeed" value="embeddeed" />
+          <v-checkbox v-model="answers" label="DevOps" value="devops" />
+        </v-card-text>
+
+        <v-card-title class="text-h6">경력을 선택해주세요</v-card-title>
+        <v-card-text class="radio-container">
+          <v-radio-group v-model="career">
+            <div class="radio-inline">
+              <v-radio label="신입" value="new" />
+              <v-radio label="1년" value="first" />
+              <v-radio label="2년" value="second" />
+              <v-radio label="3년" value="third" />
+              <v-radio label="4년 이상" value="other" />
+            </div>
+          </v-radio-group>
+        </v-card-text>
+      </div>
+
+      <!-- 고정된 제출 버튼 -->
+      <v-card-actions class="justify-end">
         <v-btn color="primary" @click="submit">제출</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
+
+<style scoped>
+.custom-card {
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-scrollable {
+  overflow-y: auto;
+  flex: 1;
+}
+</style>
+
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
