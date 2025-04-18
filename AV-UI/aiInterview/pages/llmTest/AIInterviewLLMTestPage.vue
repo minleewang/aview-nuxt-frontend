@@ -6,7 +6,101 @@
       height="100%"
       class="control-margin"
     >
-      <br /><br /><br />
+      <!-- 필터가 열리고 닫히는 부분 -->
+      <v-slide-y-transition>
+        <v-row class="filter-tags-container">
+          <v-col cols="12">
+            <v-row class="align-center mb-4">
+              <v-col cols="1" class="filter-group-title">
+                <strong>기술</strong>
+              </v-col>
+              <v-col cols="11">
+                <v-chip-group
+                  v-if="!resetChips"
+                  v-model="selectedKeywords"
+                  multiple
+                  column
+                >
+                  <v-btn
+                    @click="clearSelectedKeywords"
+                    class="reset-chip"
+                    style="
+                      background-color: white;
+                      border-radius: 20px;
+                      height: 33px;
+                      margin-right: 10px;
+                      margin-top: 3px;
+                      box-shadow: none;
+                      border: 1px solid lightgray;
+                    "
+                  >
+                    <v-icon left>mdi-refresh</v-icon>
+                    초기화
+                  </v-btn>
+                  <v-chip
+                    v-for="(keyword, index) in keywords"
+                    :key="index"
+                    :value="keyword"
+                    outlined
+                    :class="{
+                      'chip-selected': selectedKeywords.includes(keyword),
+                    }"
+                    class="filter-chip"
+                  >
+                    {{ keyword }}
+                  </v-chip>
+                </v-chip-group>
+              </v-col>
+            </v-row>
+            <!-- 키워드 선택 제목과 키워드 필터를 같은 열에 배치 -->
+            <v-row class="align-center mb-4">
+              <v-col cols="1" class="filter-group-title">
+                <strong>경력</strong>
+              </v-col>
+              <v-col cols="11">
+                <v-chip-group
+                  v-if="!resetCareer"
+                  v-model="selectedCareers"
+                  class="career-select-group"
+                  multiple
+                  column
+                >
+                  <v-btn
+                    @click="clearSelectedCareer"
+                    class="reset-career"
+                    style="
+                      background-color: white;
+                      border-radius: 20px;
+                      height: 33px;
+                      margin-right: 10px;
+                      margin-top: 3px;
+                      box-shadow: none;
+                      border: 1px solid lightgray;
+                    "
+                  >
+                    <v-icon left>mdi-refresh</v-icon>
+                    초기화
+                  </v-btn>
+                  <v-chip
+                    v-for="(career, index) in careers"
+                    :key="index"
+                    :value="career"
+                    outlined
+                    :class="{
+                      'chip-selected': selectedCareers.includes(career),
+                    }"
+                    class="career-chip"
+                  >
+                    {{ career }}
+                  </v-chip>
+                </v-chip-group>
+              </v-col>
+            </v-row>
+            <!-- 카테고리 선택 제목과 카테고리 필터를 같은 열에 배치 -->
+          </v-col>
+        </v-row>
+      </v-slide-y-transition>
+
       <h2>안녕하십니까? AI 모의 면접 서비스입니다.</h2>
       <br />
       <v-container class="draw-line" align="start">
@@ -28,7 +122,7 @@
           >시작에 앞서 체크리스트를 작성하여 주십시오.</strong
         ></v-card-text
       >
-      <v-btn @click="startQuestion" color="primary">작성하기</v-btn>
+      <v-btn @click="startQuestion" color="primary">제출하기</v-btn>
     </v-container>
     <v-container v-if="start" align="center">
       <div v-if="visible" class="interview-container">
@@ -116,7 +210,20 @@ const intentList = ["대처 능력", "소통 능력", "프로젝트 경험", "�
 const intentIndex = ref(0); //몇번째 주제인지 저장
 const startMessage =
   "<h2>안녕하세요. AI 모의 면접 서비스입니다.</h2><br><strong><span>제한 시간 내에 답변 작성 부탁드립니다.</span><br><span>지금부터 면접을 시작하겠습니다.</span></strong>";
-//면접시작 알림 메세지지
+//면접시작 알림 메세지
+const selectedKeywords = ref([]);
+//기술 모음
+const keywords = ref([
+  "Backend",
+  "Frontend",
+  "App·Web",
+  "AI",
+  "Embeddeed",
+  "DevOps",
+]);
+//경력 모음
+const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]);
+const selectedCareers = ref([]); //선택된 경력 리스트
 
 //질문 문장단위 줄바꿈
 const formattedAIMessage = computed(() => {
@@ -181,6 +288,32 @@ onMounted(async () => {
     sessionStorage.removeItem("startInterview");
   }
 });
+
+//기술 초기화 클릭시 초기화
+function clearSelectedKeywords() {
+  if (selectedKeywords.value.length == 0);
+
+  selectedKeywords.value.splice(0, selectedKeywords.value.length);
+  resetChips.value = true;
+  selectedKeywords.value = [];
+  nextTick(() => {
+    selectedKeywords.value.splice(0, selectedKeywords.value.length);
+    resetChips.value = false;
+  });
+}
+
+//경력 초기화 클릭시 초기화
+function clearSelectedCareer() {
+  if (selectedCareers.value.length == 0);
+
+  selectedCareers.value.splice(0, selectedCareers.value.length);
+  resetCareer.value = true;
+  selectedCareers.value = [];
+  nextTick(() => {
+    selectedCareers.value.splice(0, selectedCareers.value.length);
+    resetCareer.value = false;
+  });
+}
 
 //음성인식
 onMounted(() => {
@@ -256,7 +389,21 @@ onBeforeUnmount(() => {
 
 // AiInterviewQuestionPage.vue로 이동
 const startQuestion = () => {
-  router.push("/ai-interview/question");
+  if (
+    selectedKeywords.value.length === 0 ||
+    selectedCareers.value.length === 0
+  ) {
+    alert("기술과 경력을 모두 선택해 주세요.");
+    return;
+  }
+  const KeywordText = selectedKeywords.value.join(",");
+  const careerText = selectedCareers.value.join(",");
+
+  const message = `선택한 기술: ${KeywordText}\n선택된 경력: ${careerText}`;
+
+  if (confirm(message)) {
+    start.value = true;
+  }
 };
 
 //버튼에 연결하여 다음으로 넘김
@@ -573,6 +720,17 @@ useHead({
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+/* 필터 칩 스타일링 */
+.filter-chip {
+  margin: 5px;
+  font-size: 14px;
+}
+
+.chip-selected {
+  background-color: #8094f4; /* 선택된 칩의 배경색을 초록색으로 변경 */
+  color: white; /* 텍스트 색상을 하얀색으로 변경 */
 }
 
 textarea {

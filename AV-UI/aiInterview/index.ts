@@ -27,14 +27,6 @@ export default defineNuxtModule({
           ),
         },
         {
-          name: "AiInterviewQuestionPage",
-          path: "/ai-interview/question",
-          file: resolve(
-            themeDir,
-            "aiInterview/pages/question/AiInterviewQuestionPage.vue"
-          ),
-        },
-        {
           name: "AIInterviewAnswerResult",
           path: "/ai-interview/result/:accountId",
           file: resolve(

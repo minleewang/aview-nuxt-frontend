@@ -7,14 +7,14 @@
           data-aos-offset="400 "
           style="white-space: nowrap"
         >
-          <span class="NOODLE-span">JOBSTICK</span> | 기업 핵심 정보 분석 및 AI
+          <span class="title-span">JOBSTICK</span> | 기업 핵심 정보 분석 및 AI
           모의면접
         </p>
       </div>
       <div class="content-area">
         <div class="content-container">
           <div class="content-title" data-aos="fade-up" data-aos-offset="400">
-            <p><span class="NOODLE-span">JOBSTICK</span></p>
+            <p><span class="title-span">JOBSTICK</span></p>
             <p>팀원을 소개합니다.</p>
           </div>
           <div class="image-container">
@@ -25,8 +25,21 @@
                 data-aos-delay="100"
                 data-aos-offset="400"
               >
-                <div class="image-card">
-                  <v-img src="@/assets/images/fixed/kim.png" cover> </v-img>
+                <div class="card-inner">
+                  <div class="card-face card-front">
+                    <v-img src="@/assets/images/fixed/kim.png" cover />
+                  </div>
+                  <div class="card-face card-back">
+                    <div class="text-card">
+                      <p>이름: 김현우</p>
+                      <p>
+                        GitHub:
+                        <a href="https://github.com/kimhyeonu4586" class="link"
+                          >@kimhyeonu4586</a
+                        >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </v-card>
 
@@ -175,12 +188,22 @@ import { defineComponent, onMounted, onBeforeUnmount, ref } from "vue";
 export default defineComponent({
   name: "HomeSecond",
   setup() {
+    const flippedCards = ref([false, false, false, false, false]);
+
+    function flipCard(index) {
+      flippedCards.value[index] = !flippedCards.value[index];
+    }
     onMounted(() => {
       AOS.init({
         duration: 1000,
         once: false,
       });
     });
+
+    return {
+      flippedCards,
+      flipCard,
+    };
   },
 });
 </script>
@@ -323,7 +346,7 @@ export default defineComponent({
   transform: scale(1.05);
 }
 
-.NOODLE-span {
+.title-span {
   color: rgb(38, 38, 231);
 }
 
@@ -331,5 +354,88 @@ export default defineComponent({
   text-decoration: none; /* 밑줄 제거 */
   color: blue; /* 기본 파란색 제거 (선택사항) */
   font-weight: bold; /* 글자 강조 (선택사항) */
+}
+
+.flip-card {
+  perspective: 1000px;
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+  /* 💡 여기 추가 */
+  overflow: visible !important;
+  transform-style: preserve-3d;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+  transform-style: preserve-3d;
+  /* 💡 transform-origin 추가로 시각 중심 잡기 */
+  transform-origin: center center;
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+/*모바일 전용*/
+@media screen and (max-width: 768px) {
+  .home-second {
+    height: auto; /* 화면이 작을 땐 고정 높이 말고 자동 높이 */
+    background-position: center;
+    padding-bottom: 50px; /* 여백 추가 */
+  }
+
+  .home-second-body {
+    width: 90%;
+  }
+
+  .title-container {
+    font-size: 2.5vh;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .content-title p {
+    font-size: 2vh;
+    text-align: center;
+  }
+
+  .image-card-container,
+  .text-card-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .v-card {
+    width: 45% !important; /* 두 개씩 한 줄 */
+    height: auto;
+  }
+
+  .image-card,
+  .v-img {
+    height: 150px;
+  }
+
+  .text-card {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .text-card p {
+    margin: 5px 0;
+  }
 }
 </style>
