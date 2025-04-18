@@ -142,4 +142,26 @@ h1 {
   flex-grow: 1; /* 설명이 가능한 공간을 차지하도록 설정 */
   margin-top: 10px; /* 마진을 약간 줄여서 설명 간격 줄임 */
 }
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .grid-item {
+    height: auto; /* 고정 높이 해제 */
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
 </style>
