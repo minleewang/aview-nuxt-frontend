@@ -3,7 +3,7 @@ import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   app: {
     head: {
-      // title: 'AIM',
+      // title: 'JOBSTICK',
       titleTemplate: "%s JOBSTICK",
       meta: [
         // 페이지 인코딩 설정
