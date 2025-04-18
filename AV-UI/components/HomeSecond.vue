@@ -20,16 +20,18 @@
           <div class="image-container">
             <div class="image-card-container">
               <v-card
+                flat
+                class="flip-card-container"
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
                 data-aos-delay="100"
                 data-aos-offset="400"
               >
                 <div class="card-inner">
-                  <div class="card-face card-front">
+                  <div class="card-front">
                     <v-img src="@/assets/images/fixed/kim.png" cover />
                   </div>
-                  <div class="card-face card-back">
+                  <div class="card-back">
                     <div class="text-card">
                       <p>이름: 김현우</p>
                       <p>
@@ -44,132 +46,110 @@
               </v-card>
 
               <v-card
+                flat
+                class="flip-card-container"
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
                 data-aos-delay="200"
                 data-aos-offset="400"
               >
-                <div class="image-card">
-                  <v-img src="@/assets/images/fixed/choi.jpg" cover> </v-img>
+                <div class="card-inner">
+                  <div class="card-front">
+                    <v-img src="@/assets/images/fixed/choi.jpg" cover> </v-img>
+                  </div>
+                  <div class="card-back">
+                    <div class="text-card">
+                      <p>이름: 최병준</p>
+                      <p>
+                        GitHub:<a
+                          href="https://github.com/ChoiByuengJun"
+                          class="link"
+                          >@ChoiByuengJun</a
+                        >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </v-card>
 
               <v-card
+                flat
+                class="flip-card-container"
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
                 data-aos-delay="300"
                 data-aos-offset="400"
               >
-                <div class="image-card">
-                  <v-img src="@/assets/images/fixed/min.jpg" cover> </v-img>
+                <div class="card-inner">
+                  <div class="card-front">
+                    <v-img src="@/assets/images/fixed/yang.jpg" cover> </v-img>
+                  </div>
+                  <div class="card-back">
+                    <div class="text-card">
+                      <p>이름: <span style="color: red">[팀장]</span>양의정</p>
+                      <p>
+                        GitHub:<a
+                          href="https://github.com/UiJungYang6"
+                          class="link"
+                          >@UiJungYang</a
+                        >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </v-card>
+
               <v-card
+                flat
+                class="flip-card-container"
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
                 data-aos-delay="400"
                 data-aos-offset="400"
               >
-                <div class="image-card">
-                  <v-img src="@/assets/images/fixed/yang.jpg" cover> </v-img>
+                <div class="card-inner">
+                  <div class="card-front">
+                    <v-img src="@/assets/images/fixed/min.jpg" cover> </v-img>
+                  </div>
+                  <div class="card-back">
+                    <div class="text-card">
+                      <p>이름: 오민수</p>
+                      <p>
+                        GitHub:<a
+                          href="https://github.com/yooodleee"
+                          class="link"
+                          >@yooodleee</a
+                        >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </v-card>
+
               <v-card
+                flat
+                class="flip-card-container"
                 data-aos="fade-up"
                 data-aos-anchor=".content-title"
                 data-aos-delay="500"
                 data-aos-offset="400"
               >
-                <div class="image-card">
-                  <v-img src="@/assets/images/fixed/wang.jpg" cover> </v-img>
-                </div>
-              </v-card>
-            </div>
-          </div>
-
-          <div class="text-container">
-            <div class="text-card-container">
-              <v-card
-                data-aos="fade-up"
-                data-aos-anchor=".content-title"
-                data-aos-delay="100"
-                data-aos-offset="400"
-              >
-                <div class="text-card">
-                  <p>이름: 김현우</p>
-                  <p>
-                    GitHub:<a
-                      href="https://github.com/kimhyeonu4586"
-                      class="link"
-                      >@kimhyeonu4586</a
-                    >
-                  </p>
-                </div>
-              </v-card>
-
-              <v-card
-                data-aos="fade-up"
-                data-aos-anchor=".content-title"
-                data-aos-delay="200"
-                data-aos-offset="400"
-              >
-                <div class="text-card">
-                  <p>이름: 최병준</p>
-                  <p>
-                    GitHub:<a
-                      href="https://github.com/ChoiByuengJun"
-                      class="link"
-                      >@ChoiByuengJun</a
-                    >
-                  </p>
-                </div>
-              </v-card>
-
-              <v-card
-                data-aos="fade-up"
-                data-aos-anchor=".content-title"
-                data-aos-delay="300"
-                data-aos-offset="400"
-              >
-                <div class="text-card">
-                  <p>이름: 오민수</p>
-                  <p>
-                    GitHub:<a href="https://github.com/yooodleee" class="link"
-                      >@yooodleee</a
-                    >
-                  </p>
-                </div>
-              </v-card>
-
-              <v-card
-                data-aos="fade-up"
-                data-aos-anchor=".content-title"
-                data-aos-delay="400"
-                data-aos-offset="400"
-              >
-                <div class="text-card">
-                  <p>이름: <span style="color: red">[팀장]</span>양의정</p>
-                  <p>
-                    GitHub:<a href="https://github.com/UiJungYang6" class="link"
-                      >@UiJungYang</a
-                    >
-                  </p>
-                </div>
-              </v-card>
-
-              <v-card
-                data-aos="fade-up"
-                data-aos-anchor=".content-title"
-                data-aos-delay="500"
-                data-aos-offset="400"
-              >
-                <div class="text-card">
-                  <p>이름: 왕환민</p>
-                  <p>
-                    GitHub:<a href="https://github.com/minleewang" class="link"
-                      >@minleewang</a
-                    >
-                  </p>
+                <div class="card-inner">
+                  <div class="card-front">
+                    <v-img src="@/assets/images/fixed/wang.jpg" cover> </v-img>
+                  </div>
+                  <div class="card-back">
+                    <div class="text-card">
+                      <p>이름: 왕환민</p>
+                      <p>
+                        GitHub:<a
+                          href="https://github.com/minleewang"
+                          class="link"
+                          >@minleewang</a
+                        >
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </v-card>
             </div>
@@ -188,11 +168,6 @@ import { defineComponent, onMounted, onBeforeUnmount, ref } from "vue";
 export default defineComponent({
   name: "HomeSecond",
   setup() {
-    const flippedCards = ref([false, false, false, false, false]);
-
-    function flipCard(index) {
-      flippedCards.value[index] = !flippedCards.value[index];
-    }
     onMounted(() => {
       AOS.init({
         duration: 1000,
@@ -200,10 +175,7 @@ export default defineComponent({
       });
     });
 
-    return {
-      flippedCards,
-      flipCard,
-    };
+    return {};
   },
 });
 </script>
@@ -212,19 +184,24 @@ export default defineComponent({
 /*페이지 전체 틀 및 백그라운드 사진*/
 .home-second {
   width: 100%;
-  height: 100vh;
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
   background-size: cover;
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+  padding-bottom: 100px;
 }
 
 /*이미지들 크기 통제*/
 .home-second-body {
   width: 70%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 
 /*제목*/
@@ -278,25 +255,26 @@ export default defineComponent({
 /*이미지 틀 크기*/
 .image-container {
   width: 100%;
-  height: 60%;
+  display: flex;
+  justify-content: center;
 }
 /*이미지 카드들 영역 관리*/
 .image-card-container {
   width: 100%;
-  height: 100%;
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 30px;
 }
 
 /*이미지가 들어가는 카드 창 관리*/
 .v-card {
-  width: 40%;
-  height: 90%;
-  background-color: #877e7e00;
-  border: none; /* 테두리 없애기 */
+  width: 200px;
+  height: 260px; /* 명확한 높이 지정 */
+  background-color: transparent;
   box-shadow: none;
   overflow: visible;
+  border: none;
 }
 
 /*들어가는 이미지 관리*/
@@ -356,24 +334,19 @@ export default defineComponent({
   font-weight: bold; /* 글자 강조 (선택사항) */
 }
 
-.flip-card {
-  perspective: 1000px;
-  cursor: pointer;
-  height: 100%;
-  position: relative;
-  /* 💡 여기 추가 */
-  overflow: visible !important;
-  transform-style: preserve-3d;
+/*클릭 시 화면 뒤집힘*/
+.flip-card-container:hover .card-inner {
+  transform: rotateY(180deg);
+  border-radius: 25px;
 }
 
 .card-inner {
-  position: relative;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s ease-in-out;
-  transform-style: preserve-3d;
-  /* 💡 transform-origin 추가로 시각 중심 잡기 */
-  transform-origin: center center;
+  position: relative;
+  border-radius: 25px;
 }
 
 .card-front,
@@ -386,56 +359,59 @@ export default defineComponent({
   left: 0;
 }
 
+.card-front {
+  z-index: 2;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
 .card-back {
   transform: rotateY(180deg);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  justify-content: center;
 }
+/*여기까지*/
+
 /*모바일 전용*/
-@media screen and (max-width: 768px) {
-  .home-second {
-    height: auto; /* 화면이 작을 땐 고정 높이 말고 자동 높이 */
-    background-position: center;
-    padding-bottom: 50px; /* 여백 추가 */
-  }
-
-  .home-second-body {
-    width: 90%;
-  }
-
-  .title-container {
-    font-size: 2.5vh;
-    text-align: center;
-    padding-top: 20px;
-  }
-
-  .content-title p {
-    font-size: 2vh;
-    text-align: center;
-  }
-
-  .image-card-container,
-  .text-card-container {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-  }
-
+@media screen and (max-width: 1280px) {
   .v-card {
-    width: 45% !important; /* 두 개씩 한 줄 */
+    width: 30% !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .v-card {
+    width: 45% !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .v-card {
+    width: 90% !important;
     height: auto;
+    min-height: 220px; /* ✅ 최소 높이 지정 */
   }
 
-  .image-card,
   .v-img {
-    height: 150px;
+    height: 100%;
+    min-height: 220px; /* ✅ 이미지가 사라지지 않도록 */
+    object-fit: cover;
   }
 
-  .text-card {
-    font-size: 14px;
-    padding: 10px;
+  .flip-card-container {
+    min-height: 220px; /* ✅ 카드 전체도 최소 높이 확보 */
   }
 
-  .text-card p {
-    margin: 5px 0;
+  .card-inner {
+    min-height: 220px;
+  }
+
+  .card-front,
+  .card-back {
+    min-height: 220px;
   }
 }
 </style>
