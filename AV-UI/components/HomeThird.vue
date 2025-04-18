@@ -19,7 +19,7 @@
       </div>
 
       <div
-        class="content-container"
+        class="content-container reverse"
         data-aos="fade-right"
         data-aos-offset="400"
       >
@@ -55,7 +55,7 @@
       </div>
 
       <div
-        class="content-container"
+        class="content-container reverse"
         data-aos="fade-right"
         data-aos-offset="400"
       >
@@ -91,12 +91,15 @@ export default defineComponent({
 <style scoped>
 .home-third {
   width: 100%;
-  height: 420vh; /* 기존 350vh에서 400vh로 증가 */
+  min-height: 100vh;
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
   background-size: cover;
   background-attachment: fixed;
   display: flex;
   justify-content: center;
+  position: relative;
+  z-index: 0; /* 항상 home-second 아래 */
+  padding-top: 100px; /* 여백을 줘서 겹침 방지 */
 }
 
 .home-third-body {
@@ -111,6 +114,13 @@ export default defineComponent({
 .content-container {
   width: 100%;
   height: 30%;
+  width: 100%;
+  max-width: 450px;
+  height: 280px; /* 명확한 고정값 */
+  border-radius: 25px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,6 +131,10 @@ export default defineComponent({
   width: 50%;
   height: 60%;
   border-radius: 25px;
+}
+
+.content-container.reverse {
+  flex-direction: row-reverse;
 }
 
 #first-image {
@@ -193,5 +207,54 @@ export default defineComponent({
 
 .AIV-span {
   color: rgb(30, 56, 255);
+}
+
+/*모바일 전용*/
+@media screen and (max-width: 600px) {
+  .home-third-body {
+    width: 90%;
+  }
+
+  .content-container.reverse {
+    flex-direction: column;
+  }
+
+  .content-container {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .content-image {
+    width: 100%;
+    height: 200px;
+    background-size: cover !important;
+  }
+
+  .text-container {
+    width: 100%;
+    gap: 15px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .number-icon {
+    font-size: 3.5vh;
+    width: 4.5vh;
+    height: 4.5vh;
+  }
+
+  .text-title {
+    font-size: 3.5vh;
+  }
+
+  .text-subtitle {
+    font-size: 2vh;
+  }
+
+  .text-content {
+    font-size: 2vh;
+  }
 }
 </style>
