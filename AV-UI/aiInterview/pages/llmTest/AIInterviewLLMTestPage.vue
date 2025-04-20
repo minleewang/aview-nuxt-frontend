@@ -6,10 +6,11 @@
       height="100%"
       class="control-margin"
     >
-      <!-- 필터가 열리고 닫히는 부분 -->
+      <!-- 기술 선택 부분: 필터가 열리고 닫히는 부분 -->
       <v-slide-y-transition>
         <v-row class="filter-tags-container">
           <v-col cols="12">
+            <!-- 기술 -->
             <v-row class="align-center mb-4">
               <v-col cols="1" class="filter-group-title">
                 <strong>기술</strong>
@@ -17,11 +18,10 @@
               <v-col cols="11">
                 <v-chip-group
                   v-if="!resetChips"
-                  v-model="selectedKeywords"
-                  multiple
+                  v-model="selectedKeyword"
                   column
                 >
-                  <v-btn
+                  <!--<v-btn   // 초기화 버튼 일단 주석처리함
                     @click="clearSelectedKeywords"
                     class="reset-chip"
                     style="
@@ -33,26 +33,24 @@
                       box-shadow: none;
                       border: 1px solid lightgray;
                     "
-                  >
+                  > 
                     <v-icon left>mdi-refresh</v-icon>
                     초기화
-                  </v-btn>
+                  </v-btn> -->
                   <v-chip
                     v-for="(keyword, index) in keywords"
                     :key="index"
                     :value="keyword"
-                    outlined
-                    :class="{
-                      'chip-selected': selectedKeywords.includes(keyword),
-                    }"
-                    class="filter-chip"
+                    :class="selectedKeyword === keyword ? 'selected-chip' : 'unselected-chip'"
+                    class="keyword-chip"
+                    clickable
                   >
                     {{ keyword }}
                   </v-chip>
                 </v-chip-group>
               </v-col>
             </v-row>
-            <!-- 키워드 선택 제목과 키워드 필터를 같은 열에 배치 -->
+            <!-- 경력 선택 부분: 기술과 같은 열에 배치 -->
             <v-row class="align-center mb-4">
               <v-col cols="1" class="filter-group-title">
                 <strong>경력</strong>
@@ -60,12 +58,11 @@
               <v-col cols="11">
                 <v-chip-group
                   v-if="!resetCareer"
-                  v-model="selectedCareers"
+                  v-model="selectedCareer"
                   class="career-select-group"
-                  multiple
-                  column
+                  column 
                 >
-                  <v-btn
+                  <!--<v-btn  
                     @click="clearSelectedCareer"
                     class="reset-career"
                     style="
@@ -80,16 +77,14 @@
                   >
                     <v-icon left>mdi-refresh</v-icon>
                     초기화
-                  </v-btn>
+                  </v-btn> -->
                   <v-chip
                     v-for="(career, index) in careers"
                     :key="index"
                     :value="career"
-                    outlined
-                    :class="{
-                      'chip-selected': selectedCareers.includes(career),
-                    }"
+                    :class="selectedCareer === career ? 'selected-chip' : 'unselected-chip'"
                     class="career-chip"
+                    clickable
                   >
                     {{ career }}
                   </v-chip>
@@ -120,10 +115,12 @@
       <v-card-text
         ><strong
           >시작에 앞서 체크리스트를 작성하여 주십시오.</strong
-        ></v-card-text
-      >
+        ></v-card-text>
+      <!-- 제출 버튼 -->
       <v-btn @click="startQuestion" color="primary">제출하기</v-btn>
     </v-container>
+
+     <!-- 면접 진행 UI (생략 없이 유지) -->
     <v-container v-if="start" align="center">
       <div v-if="visible" class="interview-container">
         <v-icon>mdi-account-tie</v-icon><br />
@@ -162,6 +159,7 @@
       </div>
     </v-container>
 
+    <!-- 답변 입력 영역 -->
     <v-container v-if="start && !visible" clas="input-area">
       <div class="button-group">
         <button class="send-button" @click="startSTT" :disabled="recognizing">
@@ -212,6 +210,7 @@ const startMessage =
   "<h2>안녕하세요. AI 모의 면접 서비스입니다.</h2><br><strong><span>제한 시간 내에 답변 작성 부탁드립니다.</span><br><span>지금부터 면접을 시작하겠습니다.</span></strong>";
 //면접시작 알림 메세지
 const selectedKeywords = ref([]);
+
 //기술 모음
 const keywords = ref([
   "Backend",
@@ -221,9 +220,11 @@ const keywords = ref([
   "Embeddeed",
   "DevOps",
 ]);
+const selectedKeyword = ref(""); // 기술 단일 선택 (중복선택X)
+
 //경력 모음
 const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]);
-const selectedCareers = ref([]); //선택된 경력 리스트
+const selectedCareer = ref("");  // 경력 단일 선택 (중복선택X)
 
 //질문 문장단위 줄바꿈
 const formattedAIMessage = computed(() => {
@@ -389,17 +390,16 @@ onBeforeUnmount(() => {
 
 // AiInterviewQuestionPage.vue로 이동
 const startQuestion = () => {
-  if (
-    selectedKeywords.value.length === 0 ||
-    selectedCareers.value.length === 0
-  ) {
+  if (!selectedKeyword.value ||
+      !selectedCareer.value
+   ) {
     alert("기술과 경력을 모두 선택해 주세요.");
     return;
   }
-  const KeywordText = selectedKeywords.value.join(",");
-  const careerText = selectedCareers.value.join(",");
+  //const KeywordText = selectedKeywords.value.join(",");
+  //const careerText = selectedCareers.value.join(",");
 
-  const message = `선택한 기술: ${KeywordText}\n선택된 경력: ${careerText}`;
+  const message = `선택한 기술: ${selectedKeyword.value}\n선택된 경력: ${selectedCareer.value}`;
 
   if (confirm(message)) {
     start.value = true;
@@ -728,10 +728,21 @@ useHead({
   font-size: 14px;
 }
 
-.chip-selected {
-  background-color: #8094f4; /* 선택된 칩의 배경색을 초록색으로 변경 */
-  color: white; /* 텍스트 색상을 하얀색으로 변경 */
+.selected-chip {
+  background-color: #6366f1 !important;
+  color: white !important;
 }
+
+.unselected-chip {
+  background-color: #e0e0e0 !important;
+  color: black !important;
+}
+
+/*
+.chip-selected {
+  background-color: #8094f4; /* 선택된 칩의 배경색을 초록색으로 변경 
+  color: white; /* 텍스트 색상을 하얀색으로 변경
+} */
 
 textarea {
   flex-grow: 1;
