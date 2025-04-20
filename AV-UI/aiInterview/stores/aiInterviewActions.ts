@@ -3,15 +3,19 @@ import { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 export const aiInterviewActions = {
-  async requestCreateInterviewToDjango(
-    sessionId: number
-  ): Promise<AxiosResponse> {
+  async requestCreateInterviewToDjango(payload: {
+    userToken: number,
+    jobCategory: string,
+    experienceLevel: string
+  }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/create",
-        { sessionId }
+        {
+          payload
+        }
       );
       return res.data;
     } catch (err) {
@@ -21,38 +25,65 @@ export const aiInterviewActions = {
   },
 
   async requestListInterviewToDjango(
-    interviewText: string
-  ): Promise<AxiosResponse> {
+    userToken: string,
+    page: number = 1,
+    perPage: number = 10
+  ): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/list",
-        { interviewText }
+        { userToken, page, perPage }
       );
       return res.data;
     } catch (err) {
-      console.error("requestListInterviewToDjango() -> error:", err);
+      console.error("requestListInterviewToDjango() → error:", err);
       throw err;
     }
   },
 
-  async requestSaveInterviewResultToDjango(payload: {
-    scoreResultList: [];
-    accountId: string;
-  }): Promise<string> {
+  async requestRemoveInterviewToDjango(payload: {
+    userToken: string,
+    interviewId: number
+  }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview_result/save-interview-result",
-        payload
+        "/interview/remove",
+        {
+          payload
+        }
       );
       return res.data;
     } catch (error) {
-      console.log("requestSaveInterviewResultToDjango() 중 문제 발생:", error);
+      console.error("requestRemoveInterviewToDjango() → error:", error);
       throw error;
     }
   },
+
+  async requestCreateAnswerToDjango(payload: {
+    userToken: string;
+    interviewId: number;
+    questionId: number;
+    answerText: string;
+  }): Promise<any> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+  
+    try {
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/create-answer",
+        payload
+      );
+  
+      return res.data;
+    } catch (error) {
+      console.error("requestCreateAnswerToDjango() → error:", error);
+      throw error;
+    }
+  },
+  
 
   async requestGetScoreResultListToDjango(payload: {
     accountId: string;
@@ -60,7 +91,7 @@ export const aiInterviewActions = {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview_result/get-interview-result",
+        "/interview/get-interview-result",
         payload
       );
       return res.data.interviewResultList;
