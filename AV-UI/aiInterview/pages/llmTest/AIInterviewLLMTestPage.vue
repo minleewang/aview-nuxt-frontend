@@ -41,7 +41,11 @@
                     v-for="(keyword, index) in keywords"
                     :key="index"
                     :value="keyword"
-                    :class="selectedKeyword === keyword ? 'selected-chip' : 'unselected-chip'"
+                    :class="
+                      selectedKeyword === keyword
+                        ? 'selected-chip'
+                        : 'unselected-chip'
+                    "
                     class="keyword-chip"
                     clickable
                   >
@@ -60,7 +64,7 @@
                   v-if="!resetCareer"
                   v-model="selectedCareer"
                   class="career-select-group"
-                  column 
+                  column
                 >
                   <!--<v-btn  
                     @click="clearSelectedCareer"
@@ -82,7 +86,11 @@
                     v-for="(career, index) in careers"
                     :key="index"
                     :value="career"
-                    :class="selectedCareer === career ? 'selected-chip' : 'unselected-chip'"
+                    :class="
+                      selectedCareer === career
+                        ? 'selected-chip'
+                        : 'unselected-chip'
+                    "
                     class="career-chip"
                     clickable
                   >
@@ -115,13 +123,13 @@
       <v-card-text
         ><strong
           >시작에 앞서 체크리스트를 작성하여 주십시오.</strong
-        ></v-card-text>
+        ></v-card-text
+      >
       <!-- 제출 버튼 -->
       <v-btn @click="startQuestion" color="primary">제출하기</v-btn>
-      
     </v-container>
 
-     <!-- 면접 진행 UI (생략 없이 유지) -->
+    <!-- 면접 진행 UI (생략 없이 유지) -->
     <v-container v-if="start" align="center">
       <div v-if="visible" class="interview-container">
         <v-icon>mdi-account-tie</v-icon><br />
@@ -194,7 +202,6 @@ const googleAuthenticationStore = useGoogleAuthenticationStore();
 const accountStore = useAccountStore();
 const router = useRouter();
 
-
 // Component State
 
 const userToken = computed(() => googleAuthenticationStore.userToken); // 실제 로그인 시 토큰 바인딩
@@ -221,27 +228,34 @@ const startMessage =
 const selectedKeywords = ref([]);
 
 //기술 모음
-const keywords = ref(["Backend", "Frontend", "App·Web", "AI", "Embeddeed", "DevOps",]);
+const keywords = ref([
+  "Backend",
+  "Frontend",
+  "App·Web",
+  "AI",
+  "Embeddeed",
+  "DevOps",
+]);
 const keywordMap = {
-  "Backend": 1,
-  "Frontend": 2,  
-  "Embedded": 3,
-  "AI": 4,
-  "DevOps": 5,
-  "App·Web": 6
+  Backend: 1,
+  Frontend: 2,
+  Embedded: 3,
+  AI: 4,
+  DevOps: 5,
+  "App·Web": 6,
 };
 const selectedKeyword = ref(""); // 기술 단일 선택 (중복선택X)
 
 //경력 모음
 const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
 const careerMap = {
-  "신입": 1,
+  신입: 1,
   "3년 이하": 2,
   "5년 이하": 3,
   "10년 이하": 4,
-  "10년 이상": 5
-};  // 이건 백앤드로 보낼 데이터 목록
-const selectedCareer = ref("");  // 경력 단일 선택 (중복선택X)
+  "10년 이상": 5,
+}; // 이건 백앤드로 보낼 데이터 목록
+const selectedCareer = ref(""); // 경력 단일 선택 (중복선택X)
 
 //질문 문장단위 줄바꿈
 const formattedAIMessage = computed(() => {
@@ -323,13 +337,13 @@ function clearSelectedKeywords() {
 
 //경력 초기화 클릭시 초기화
 function clearSelectedCareer() {
-  if (selectedCareers.value.length == 0);
+  if (selectedCareer.value.length == 0);
 
-  selectedCareers.value.splice(0, selectedCareers.value.length);
+  selectedCareer.value.splice(0, selectedCareer.value.length);
   resetCareer.value = true;
-  selectedCareers.value = [];
+  selectedCareer.value = [];
   nextTick(() => {
-    selectedCareers.value.splice(0, selectedCareers.value.length);
+    selectedCareer.value.splice(0, selectedCareer.value.length);
     resetCareer.value = false;
   });
 }
@@ -426,7 +440,7 @@ const startQuestion = async () => {
 
   try {
     // ✅ 인터뷰 생성 요청
-    const res = await aiInterviewStore.requestCreateInterviewToDjango(payload); 
+    const res = await aiInterviewStore.requestCreateInterviewToDjango(payload);
     console.log("✅ 인터뷰 응답:", res);
 
     // ✅ 인터뷰 ID 및 첫 질문 저장
@@ -440,8 +454,8 @@ const startQuestion = async () => {
 };
 
 const onAnswerComplete = async () => {
-  clearInterval(timer.value);     // 1. 타이머 멈추기
-  await sendMessage();            // 2. STT 처리 (필요한 경우)
+  clearInterval(timer.value); // 1. 타이머 멈추기
+  await sendMessage(); // 2. STT 처리 (필요한 경우)
 
   const payload = {
     userToken: googleAuthenticationStore.userToken,
@@ -465,7 +479,7 @@ const getAIQuestions = async () => {
   }
 
   currentAIMessage.value =
-    aiResponseList.value.firstQuestion ||
+    currentQuestion.value ||
     "질문을 불러오는 데 실패하였습니다. 다시 시도해주세요.";
 
   chatHistory.value.push({ type: "ai", content: currentAIMessage.value });
@@ -482,7 +496,6 @@ const renderMessageContent = (message) => {
     return `<h2>${markdownIt().render(message.content)}</h2>`;
   }
 };
-
 
 //TTS
 const speak = (text) => {
@@ -520,7 +533,6 @@ const updateAIMessage = () => {
     chatHistory.value.push({ type: "ai", content: currentAIMessage.value });
   }
 };
-
 
 const adjustTextareaHeight = () => {
   const textarea = document.getElementById("messageInput");
