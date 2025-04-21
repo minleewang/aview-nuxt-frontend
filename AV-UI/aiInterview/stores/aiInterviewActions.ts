@@ -71,18 +71,37 @@ export const aiInterviewActions = {
   
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/create-answer",
+        "/interview/user-answer",  // ✅ 이걸로 고쳐야 정상 작동
         payload
       );
   
       return res.data;
-    } catch (error) {
-      console.error("requestCreateAnswerToDjango() → error:", error);
-      throw error;
+    } catch (err) {
+      console.error("답변 저장 중 오류:", err);
+      throw err;
     }
   },
-  
 
+  async requestFollowUpQuestionToDjango(payload: {
+    userToken: string;
+    interviewId: number;
+    questionId: number;
+    answerText: string;
+  }): Promise<any> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+  
+    try {
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/user-answer", // 백엔드 Django가 저장하고 FastAPI 호출
+        payload
+      );
+      return res.data;
+    } catch (error) {
+      console.error("requestFollowUpQuestionToDjango() → error:", error);
+      throw error;
+    }
+  },  
+  
   async requestGetScoreResultListToDjango(payload: {
     accountId: string;
   }): Promise<string> {

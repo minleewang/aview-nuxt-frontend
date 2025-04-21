@@ -192,21 +192,34 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
 import { useAccountStore } from "../../../account/stores/accountStore";
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
+import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
+import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import markdownIt from "markdown-it";
 import { useRouter } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
+const resetChips = ref(false);
+const resetCareer = ref(false);
+
 // Pinia Stores
 const aiInterviewStore = useAiInterviewStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
+const kakaoAuthenticationStore = useKakaoAuthenticationStore();
+const naverAuthenticationStore = useNaverAuthenticationStore();
 const accountStore = useAccountStore();
 const router = useRouter();
 
 // Component State
-
-const userToken = computed(() => googleAuthenticationStore.userToken); // 실제 로그인 시 토큰 바인딩
+const loginPlatform = localStorage.getItem("loginPlatform");
+const userToken = computed(() => {
+  if (loginPlatform === "google") return googleAuthenticationStore.userToken;
+  if (loginPlatform === "kakao") return kakaoAuthenticationStore.userToken;
+  if (loginPlatform === "naver") return naverAuthenticationStore.userToken;
+  return "";
+}); // 실제 로그인 시 토큰 바인딩
 //const userToken = ref("");
 const currentInterviewId = ref(""); // 인터뷰 id
+const currentQuestionId = ref(1);
 const currentQuestion = ref("");
 const accountId = ref(""); //로그인 확인
 const start = ref(false); //면접 시작
@@ -310,6 +323,8 @@ onMounted(async () => {
   const userToken = localStorage.getItem("userToken");
   if (userToken) {
     googleAuthenticationStore.userToken = userToken;
+    naverAuthenticationStore.userToken = userToken;
+    kakaoAuthenticationStore.userToken = userToken;
     accountId.value = await accountStore.requestAccountIdToDjango(userToken);
   } else {
     alert("로그인이 필요합니다.");
@@ -433,6 +448,8 @@ const startQuestion = async () => {
   // ✅ 백엔드로 보낼 데이터
   const payload = {
     userToken: googleAuthenticationStore.userToken,
+    userToken: naverAuthenticationStore.userToken,
+    userToken: kakaoAuthenticationStore.userToken,
     jobCategory: keywordMap[selectedKeyword.value],
     experienceLevel: careerMap[selectedCareer.value],
     //interviewId: currentInterviewId.value,
@@ -453,18 +470,49 @@ const startQuestion = async () => {
   }
 };
 
+// 답변완료 버튼을 누르면 작용하는 함수
 const onAnswerComplete = async () => {
   clearInterval(timer.value); // 1. 타이머 멈추기
   await sendMessage(); // 2. STT 처리 (필요한 경우)
 
-  const payload = {
+  if (!sttLog.value.trim()) { //답변이 비어있으면 저장을 x
+    console.warn("STT 결과가 비어있습니다.");
+    return;
+  }
+
+  // 1. 인터뷰 ID가 없으면 생성 요청
+  if (!currentInterviewId.value) {
+    const interviewPayload = {
+      userToken: googleAuthenticationStore.userToken,
+      userToken: naverAuthenticationStore.userToken,
+      userToken: kakaoAuthenticationStore.userToken,
+      jobCategory: keywordMap[selectedKeyword.value],
+      experienceLevel: careerMap[selectedCareer.value],
+    };
+
+    const interviewRes = await aiInterviewStore.requestCreateInterviewToDjango(interviewPayload);
+    currentInterviewId.value = interviewRes.interviewId; // 인터뷰 ID 저장
+    console.log("🎯 인터뷰 생성 완료:", currentInterviewId.value);
+  }
+
+  // 2. 답변 저장 요청
+  const answerPayload = {
     userToken: googleAuthenticationStore.userToken,
-    jobCategory: keywordMap[selectedKeyword.value],
-    experienceLevel: careerMap[selectedCareer.value],
-    //interviewId: currentInterviewId.value,
+    userToken: naverAuthenticationStore.userToken,
+    userToken: kakaoAuthenticationStore.userToken,
+    interviewId: currentInterviewId.value,
+    questionId: currentQuestionId.value,
+    answerText: sttLog.value,
   };
-  console.log("✅ 답변 제출 payload:", payload);
-  await aiInterviewStore.requestCreateInterviewToDjango(payload);
+
+  console.log("📝 답변 저장 payload:", answerPayload);
+  const result = await aiInterviewStore.requestCreateAnswerToDjango(answerPayload);
+
+  if (result.success) {
+    console.log("✅ 답변 저장 완료");
+  } else {
+    console.warn("❌ 답변 저장 실패:", result.error);
+  }
 };
 
 //질문
