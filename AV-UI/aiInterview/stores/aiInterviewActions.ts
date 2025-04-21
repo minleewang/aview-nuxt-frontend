@@ -5,8 +5,8 @@ import { useAiInterviewStore } from "./aiInterviewStore";
 export const aiInterviewActions = {
   async requestCreateInterviewToDjango(payload: {
     userToken: string;
-    jobCategory: string;
-    experienceLevel: string;
+    jobCategory: number;
+    experienceLevel: number;
     //interviewId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
