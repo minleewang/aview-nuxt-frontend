@@ -4,18 +4,16 @@ import { useAiInterviewStore } from "./aiInterviewStore";
 
 export const aiInterviewActions = {
   async requestCreateInterviewToDjango(payload: {
-    userToken: number,
-    jobCategory: string,
-    experienceLevel: string
+    userToken: string;
+    jobCategory: string;
+    experienceLevel: string;
+    //interviewId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/create",
-        {
-          payload
-        }
+        "/interview/create", payload
       );
       return res.data;
     } catch (err) {

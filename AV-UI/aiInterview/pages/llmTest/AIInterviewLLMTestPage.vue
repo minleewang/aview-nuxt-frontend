@@ -118,6 +118,7 @@
         ></v-card-text>
       <!-- 제출 버튼 -->
       <v-btn @click="startQuestion" color="primary">제출하기</v-btn>
+      
     </v-container>
 
      <!-- 면접 진행 UI (생략 없이 유지) -->
@@ -182,16 +183,24 @@
 import { ref, watch, computed, onMounted } from "vue";
 import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
 import { useAccountStore } from "../../../account/stores/accountStore";
+import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import markdownIt from "markdown-it";
 import { useRouter } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
 // Pinia Stores
 const aiInterviewStore = useAiInterviewStore();
+const googleAuthenticationStore = useGoogleAuthenticationStore();
 const accountStore = useAccountStore();
 const router = useRouter();
 
+
 // Component State
+
+const userToken = computed(() => googleAuthenticationStore.userToken); // 실제 로그인 시 토큰 바인딩
+//const userToken = ref("");
+const currentInterviewId = ref(""); // 인터뷰 id
+const currentQuestion = ref("");
 const accountId = ref(""); //로그인 확인
 const start = ref(false); //면접 시작
 const finished = ref(false); //면접 끝
@@ -223,7 +232,14 @@ const keywords = ref([
 const selectedKeyword = ref(""); // 기술 단일 선택 (중복선택X)
 
 //경력 모음
-const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]);
+const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
+const careerMap = {
+  "신입": 1,
+  "3년 이하": 2,
+  "5년 이하": 3,
+  "10년 이하": 4,
+  "10년 이상": 5
+};  // 이건 백앤드로 보낼 데이터 목록
 const selectedCareer = ref("");  // 경력 단일 선택 (중복선택X)
 
 //질문 문장단위 줄바꿈
@@ -278,6 +294,7 @@ watch(visible, (newVal) => {
 onMounted(async () => {
   const userToken = localStorage.getItem("userToken");
   if (userToken) {
+    googleAuthenticationStore.userToken = userToken;
     accountId.value = await accountStore.requestAccountIdToDjango(userToken);
   } else {
     alert("로그인이 필요합니다.");
@@ -389,27 +406,50 @@ onBeforeUnmount(() => {
 });
 
 // AiInterviewQuestionPage.vue로 이동
-const startQuestion = () => {
-  if (!selectedKeyword.value ||
-      !selectedCareer.value
-   ) {
+const startQuestion = async () => {
+  if (!selectedKeyword.value || !selectedCareer.value) {
     alert("기술과 경력을 모두 선택해 주세요.");
     return;
   }
-  //const KeywordText = selectedKeywords.value.join(",");
-  //const careerText = selectedCareers.value.join(",");
 
   const message = `선택한 기술: ${selectedKeyword.value}\n선택된 경력: ${selectedCareer.value}`;
+  if (!confirm(message)) return;
 
-  if (confirm(message)) {
+  // ✅ 백엔드로 보낼 데이터
+  const payload = {
+    userToken: googleAuthenticationStore.userToken,
+    jobCategory: selectedKeyword.value,
+    experienceLevel: careerMap[selectedCareer.value],
+    //interviewId: currentInterviewId.value,
+  };
+
+  try {
+    // ✅ 인터뷰 생성 요청
+    const res = await aiInterviewStore.requestCreateInterviewToDjango(payload); 
+    console.log("✅ 인터뷰 응답:", res);
+
+    // ✅ 인터뷰 ID 및 첫 질문 저장
+    currentInterviewId.value = res.interviewId;
+    currentQuestion.value = res.question;
     start.value = true;
+  } catch (err) {
+    console.error("❌ 면접 시작 실패:", err);
+    alert("면접 시작에 실패했습니다.");
   }
 };
 
-//버튼에 연결하여 다음으로 넘김
 const onAnswerComplete = async () => {
-  clearInterval(timer.value);
-  await sendMessage();
+  clearInterval(timer.value);     // 1. 타이머 멈추기
+  await sendMessage();            // 2. STT 처리 (필요한 경우)
+
+  const payload = {
+    userToken: googleAuthenticationStore.userToken,
+    jobCategory: selectedKeyword.value,
+    experienceLevel: careerMap[selectedCareer.value],
+    //interviewId: currentInterviewId.value,
+  };
+  console.log("✅ 답변 제출 payload:", payload);
+  await aiInterviewStore.requestCreateInterviewToDjango(payload);
 };
 
 //질문
@@ -417,10 +457,10 @@ const getAIQuestions = async () => {
   if (aiResponseList.value.length === 0) {
     const questionId = Math.floor(Math.random() * 200) + 1;
 
-    // ✅ 숫자만 넘기기
-    aiResponseList.value = await aiInterviewStore.requestFirstQuestionToDjango(
+    /*// ✅ 숫자만 넘기기
+    aiResponseList.value = await aiInterviewStore.requestCreateInterviewToDjango(
       questionId
-    );
+    ); */
   }
 
   currentAIMessage.value =
@@ -441,6 +481,7 @@ const renderMessageContent = (message) => {
     return `<h2>${markdownIt().render(message.content)}</h2>`;
   }
 };
+
 
 //TTS
 const speak = (text) => {
@@ -478,6 +519,7 @@ const updateAIMessage = () => {
     chatHistory.value.push({ type: "ai", content: currentAIMessage.value });
   }
 };
+
 
 const adjustTextareaHeight = () => {
   const textarea = document.getElementById("messageInput");

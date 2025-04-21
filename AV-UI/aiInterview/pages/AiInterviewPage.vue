@@ -85,6 +85,24 @@ const currentAIMessage = ref(""); // 현재 AI 메시지를 저장하는 변수
 
 const aiInterviewStore = useAiInterviewStore(); // Pinia store 인스턴스 가져오기
 
+/*const submitInterviewData = async () => {
+  // '제출하기' 버튼을 누르면 백앤드로 아래 playload 정보를 전달 -> AIInterviewLLMTestPage으로 옮김
+  const payload = {
+    userToken: userToken.value,
+    jobCategory: selectedKeyword.value,
+    yearsOfExperience: selectedCareer.value,
+    interviewId: currentInterviewId.value,
+  };
+    console.log("✅ payload:", payload);
+
+  try {
+    await store.requestCreateInterviewToDjango(payload);  // ✅ action 호출
+    console.log("면접 정보 저장 완료");
+  } catch (err) {
+    console.error("면접 정보 저장 실패:", err);
+  }
+}; */
+
 function renderMessageContent(message) {
   if (message.type !== "user") {
     // markdown-it로 렌더링된 내용에 .markdown-content 클래스를 추가
