@@ -221,14 +221,15 @@ const startMessage =
 const selectedKeywords = ref([]);
 
 //기술 모음
-const keywords = ref([
-  "Backend",
-  "Frontend",
-  "App·Web",
-  "AI",
-  "Embeddeed",
-  "DevOps",
-]);
+const keywords = ref(["Backend", "Frontend", "App·Web", "AI", "Embeddeed", "DevOps",]);
+const keywordMap = {
+  "Backend": 1,
+  "Frontend": 2,  
+  "Embedded": 3,
+  "AI": 4,
+  "DevOps": 5,
+  "App·Web": 6
+};
 const selectedKeyword = ref(""); // 기술 단일 선택 (중복선택X)
 
 //경력 모음
@@ -418,7 +419,7 @@ const startQuestion = async () => {
   // ✅ 백엔드로 보낼 데이터
   const payload = {
     userToken: googleAuthenticationStore.userToken,
-    jobCategory: selectedKeyword.value,
+    jobCategory: keywordMap[selectedKeyword.value],
     experienceLevel: careerMap[selectedCareer.value],
     //interviewId: currentInterviewId.value,
   };
@@ -444,7 +445,7 @@ const onAnswerComplete = async () => {
 
   const payload = {
     userToken: googleAuthenticationStore.userToken,
-    jobCategory: selectedKeyword.value,
+    jobCategory: keywordMap[selectedKeyword.value],
     experienceLevel: careerMap[selectedCareer.value],
     //interviewId: currentInterviewId.value,
   };
