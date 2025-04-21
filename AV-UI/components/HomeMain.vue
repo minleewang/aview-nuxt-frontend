@@ -105,8 +105,8 @@ export default defineComponent({
   height: 100vh; /*높이*/
   display: flex; /*flexbox레이아웃 모델 사용*/
   justify-content: center; /*수평 중앙*/
-  align-items: center; /*수직 중앙앙*/
-  text-align: center; /*텍스트 수평 중앙앙*/
+  align-items: center; /*수직 중앙*/
+  text-align: center; /*텍스트 수평 중앙*/
   overflow: hidden; /*콘텐츠가 영역을 벗어나면 안보이도록 설정*/
   position: relative;
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
