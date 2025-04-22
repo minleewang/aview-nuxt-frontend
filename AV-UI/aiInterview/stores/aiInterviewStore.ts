@@ -5,4 +5,5 @@ import { aiInterviewState } from './aiInterviewState';
 export const useAiInterviewStore = defineStore('aiInterviewStore', {
     state: aiInterviewState,
     actions: aiInterviewActions
+    
 });

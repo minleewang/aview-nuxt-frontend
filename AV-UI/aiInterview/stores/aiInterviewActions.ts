@@ -92,7 +92,7 @@ export const aiInterviewActions = {
   
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/user-answer", // 백엔드 Django가 저장하고 FastAPI 호출
+        "/interview/followup", // 백엔드 Django가 저장하고 FastAPI 호출
         payload
       );
       return res.data;
