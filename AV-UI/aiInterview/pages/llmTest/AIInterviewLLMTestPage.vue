@@ -230,7 +230,7 @@ const currentAIMessage = ref(""); //ai응답
 const chatHistory = ref([{ type: "ai", content: "" }]); //대화 흐름저장
 const isLoading = ref(false); //로딩확인
 const sendCount = ref(0); //질문갯수 확인
-const maxMessages = 5; //최대질문 갯수 5개
+const maxMessages = 2; //최대질문 갯수 5개
 const aiResponseList = ref([]); //ai질문 데이터 저장
 const questionIndex = ref(0); //몇번쨰 질문인지 저장
 const intentList = ["대처 능력", "소통 능력", "프로젝트 경험", "자기 개발"]; //질문주제
@@ -619,13 +619,24 @@ const sendMessage = async () => {
   sendCount.value++;
 
   setTimeout(async () => {
-    if (aiResponseList.value.length === 0) {
-      const questionId = Math.floor(Math.random() * 200) + 1;
-      aiResponseList.value =
-        await aiInterviewStore.requestFirstQuestionToDjango({
-          questionId: questionId,
-        });
-    }
+  if (aiResponseList.value.length === 1) {
+    const payload = {
+      userToken,
+      interviewId: currentInterviewId.value,
+      questionId: currentQuestionId.value,
+      answerText: lastAnswerText.value, // 사용자가 이전에 작성한 답변
+    };
+
+    const response = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
+
+    aiResponseList.value.push({
+      type: "ai",
+      content: response.questions, // FastAPI 응답의 질문 내용
+    });
+
+    // 다음 질문 ID 저장 (추후 답변 저장용)
+    currentQuestionId.value = response.questionId;
+  }
 
     if (intentIndex.value === 4) {
       currentAIMessage.value =
