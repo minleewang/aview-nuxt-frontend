@@ -51,9 +51,9 @@
             <p><strong>부칙</strong></p>
             <p>본 약관은 2025년 3월 1일부터 시행됩니다.</p>
 
-            <v-btn v-if="loginType === 'KAKAO'" @click="agreeAndLogin('KAKAO')" color="primary">동의 후 카카오 로그인</v-btn>
-            <v-btn v-if="loginType === 'GOOGLE'" @click="agreeAndLogin('GOOGLE')" color="primary">동의 후 구글 로그인</v-btn>
-            <v-btn v-if="loginType === 'NAVER'" @click="agreeAndLogin('NAVER')" color="primary">동의 후 네이버 로그인</v-btn>
+            <v-btn v-if="loginType === 'KAKAO'" @click="agreeAndLogin" color="primary">동의 후 카카오 로그인</v-btn>
+            <v-btn v-if="loginType === 'GOOGLE'" @click="agreeAndLogin" color="primary">동의 후 구글 로그인</v-btn>
+            <v-btn v-if="loginType === 'NAVER'" @click="agreeAndLogin" color="primary">동의 후 네이버 로그인</v-btn>
 
             <v-alert v-if="!loginType" type="error" class="mt-5">
               로그인 방식이 확인되지 않았습니다. 로그인 페이지에서 다시 시도해주세요.
@@ -66,41 +66,43 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
-
-const route = useRoute();
 
 const kakaoAuthentication = useKakaoAuthenticationStore();
 const googleAuthentication = useGoogleAuthenticationStore();
 const naverAuthentication = useNaverAuthenticationStore();
 
-// 쿼리에서 loginType 읽기
-const loginType = computed(() => route.query.loginType);
+const loginType = ref(null);
+
+// 페이지가 열릴 때 localStorage에서 loginType 읽어오기
+onMounted(() => {
+  loginType.value = localStorage.getItem("loginType");
+});
 
 // 동의 후 로그인 버튼 클릭 시 실행
-const agreeAndLogin = async (type) => {
-  if (!type) {
+const agreeAndLogin = async () => {
+  if (!loginType.value) {
     alert("로그인 방식이 확인되지 않았습니다.");
     return;
   }
 
-  // ✅ 동의 후에만 저장!
-  localStorage.setItem("loginType", type);
+  // ✅ 동의 여부 저장 (선택 사항)
+  localStorage.setItem("agreedToPrivacy", "true");
 
-  if (type === "KAKAO") {
+  if (loginType.value === "KAKAO") {
     await kakaoAuthentication.requestKakaoLoginToDjango();
-  } else if (type === "GOOGLE") {
+  } else if (loginType.value === "GOOGLE") {
     await googleAuthentication.requestGoogleLoginToDjango();
-  } else if (type === "NAVER") {
+  } else if (loginType.value === "NAVER") {
     await naverAuthentication.requestNaverLoginToDjango();
   } else {
     alert("알 수 없는 로그인 방식입니다.");
   }
 };
+
 </script>
 
 <style scoped>
