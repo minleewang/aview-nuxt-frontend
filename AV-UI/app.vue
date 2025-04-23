@@ -7,8 +7,15 @@
         <NuxtPage />
       </v-main>
       <div :class="['footer-container', { 'home-footer': route.path === '/' }]">
+        <!-- 🖼️ 위치 아이콘 이미지 (3배 크기) -->
+        <img src="@/assets/images/fixed/eddi.jpg" alt="위치 아이콘" class="footer-image" />
+
+        <!-- 주소 및 카피라이트 텍스트 (왼쪽 정렬됨) -->
         <p class="reserved-info">
-          2025-2026 JOBSTICK Korea LLC. All Rights Reserved.
+          서울특별시 송파구 새말로8길 26, 3층(문정동)
+        </p>
+        <p class="reserved-info">
+          Copyright © 2025 에디(EDDI). All rights reserved.
         </p>
       </div>
     </div>
@@ -41,18 +48,30 @@ const route = useRoute();
   background-color: rgba(255, 255, 255, 0.132);
   color: #111;
   font-size: 12px;
-  text-align: center;
-  padding: 1px;
+  text-align: left; /* 왼쪽 정렬 */
+  padding: 1px 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   transition: background-color 0.3s ease;
 }
 
+/* 홈 전용 푸터 배경 */
 .footer-container.home-footer {
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  /*배경이미지가 반복 되지 않도록 설정, 즉 남는 공간 발생 시 이미지가 다시 생성되는 것을 막음*/
   background-size: cover;
   background-attachment: fixed;
+}
+
+/* 푸터 이미지 스타일 (3배 크기 = 144px) */
+.footer-image {
+  width: 144px;
+  height: 144px;
+  margin-bottom: 8px;
+}
+
+/* 텍스트 스타일 */
+.reserved-info {
+  margin: 2px 0;
 }
 </style>
