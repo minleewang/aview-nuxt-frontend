@@ -86,6 +86,7 @@ export default defineNuxtConfig({
     "./management/nuxt.config.ts",
     "./githubAuthentication/nuxt.config.ts",
     "./authentication/nuxt.config.ts",
+    "./interviewReady/nuxt.config.ts",
   ],
   css: [
     "vuetify/styles",
@@ -119,6 +120,7 @@ export default defineNuxtConfig({
     "~/management/index.ts",
     "~/githubAuthentication/index.ts",
     "~/authentication/index.ts",
+    "~/interviewReady/index.ts",
   ],
   components: {
     dirs: [
