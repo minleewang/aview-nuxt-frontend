@@ -102,6 +102,7 @@ const agreeAndLogin = async () => {
     alert("알 수 없는 로그인 방식입니다.");
   }
 };
+
 </script>
 
 <style scoped>
