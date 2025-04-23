@@ -1,12 +1,11 @@
+// AccountLoginPage.vue
 <template>
   <v-container class="container">
     <div class="login-wrapper">
       <div>
         <div class="login_logo"></div>
         <div class="introduction" style="color: black">
-          <p>
-            기업 분석과 AI 모의면접 | 취업 준비는 <b>JOBSTICK</b>에서
-          </p>
+          <p>기업 분석과 AI 모의면접 | 취업 준비는 <b>JOBSTICK</b>에서</p>
         </div>
         <v-divider class="mt-5 mb-7" :thickness="3"></v-divider>
 
@@ -23,21 +22,23 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
-const router = useRouter();
+// ✅ 진입 시 loginType 초기화
+onMounted(() => {
+  localStorage.removeItem("loginType")
+})
 
 const goToPrivacyAgreementPage = (loginType) => {
-  // ✅ 로그인 방식 localStorage에 저장 (쿼리 안 씀)
-  localStorage.setItem("loginType", loginType);
-
-  // 개인정보 동의 페이지로 이동
-  router.push("/account/privacy");
-};
+  sessionStorage.setItem('tempLoginType', loginType)
+  router.push('/account/privacy')
+}
 
 const goToAdminLogin = () => {
-  router.push("/account/admin-code");
-};
+  router.push('/account/admin-code')
+}
 </script>
 
 <style scoped>
@@ -50,7 +51,6 @@ const goToAdminLogin = () => {
   background: url("@/assets/images/fixed/login_bg61.jpg") no-repeat center center;
   background-size: 900px auto;
 }
-
 .login_logo {
   height: 20vh;
   margin-bottom: -2vh;
@@ -59,7 +59,6 @@ const goToAdminLogin = () => {
   background-repeat: no-repeat;
   background-position: center;
 }
-
 .login-wrapper {
   position: relative;
   z-index: 1;
@@ -74,13 +73,11 @@ const goToAdminLogin = () => {
   align-items: center;
   text-align: center;
 }
-
 .v-btn {
   width: 100%;
   height: 50px;
   margin: 1.3vh auto;
 }
-
 .kakao-login-btn {
   background-image: url("@/assets/images/fixed/btn_login_kakao.png");
   background-size: contain;
@@ -90,7 +87,6 @@ const goToAdminLogin = () => {
   margin-bottom: 1vh;
   border-radius: 1.4vh;
 }
-
 .google-login-btn {
   background-image: url("@/assets/images/fixed/btn_login_google.png");
   background-size: contain;
@@ -100,7 +96,6 @@ const goToAdminLogin = () => {
   margin-bottom: 1vh;
   border-radius: 1.4vh;
 }
-
 .naver-login-btn {
   background-image: url("@/assets/images/fixed/btn_login_naver.png");
   background-size: contain;
@@ -109,7 +104,6 @@ const goToAdminLogin = () => {
   background-color: #03c75a;
   border-radius: 1.4vh;
 }
-
 .admin-login-btn {
   width: 100%;
   max-width: 300px;
