@@ -28,8 +28,11 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 const goToPrivacyAgreementPage = (loginType) => {
-  // 로그인 타입을 쿼리로 넘김
-  router.push({ path: "/account/privacy", query: { loginType } });
+  // ✅ 로그인 방식 localStorage에 저장 (쿼리 안 씀)
+  localStorage.setItem("loginType", loginType);
+
+  // 개인정보 동의 페이지로 이동
+  router.push("/account/privacy");
 };
 
 const goToAdminLogin = () => {
