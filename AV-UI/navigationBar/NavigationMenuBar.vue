@@ -130,6 +130,16 @@
         <v-list-item @click="goToReviewListPage" v-if="isLoggedIn">
           <v-list-item-title>REVIEW</v-list-item-title>
         </v-list-item>
+        <template v-if="isLoggedIn">
+          <v-list-item
+            v-for="(item, index) in myPageItems"
+            :key="'mobile-mypage-' + index"
+            @click="item.action"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </template>
+
         <v-list-item v-if="!isLoggedIn" @click="signIn">
           <v-list-item-title>LOGIN</v-list-item-title>
         </v-list-item>
