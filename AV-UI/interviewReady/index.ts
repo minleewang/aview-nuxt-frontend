@@ -14,7 +14,7 @@ export default defineNuxtModule({
             pages.push(
                 {
                     name: "InterviewReadyCategoryPage.vue",
-                    path: "/interview-ready",
+                    path: "/interviewReady/category",
                     file: resolve(themeDir, "interviewReady/pages/InterviewReadyCategoryPage.vue"),
                 },
                 {
