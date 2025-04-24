@@ -42,15 +42,16 @@
               <v-col cols="11">
                 <v-chip-group
                   v-model="selectedTechSkills"
+                  multiple
                   class="skills-select-group"
-                  column
+                  column 
                 >
                   <v-chip
                     v-for="(skill, index) in skills"
                     :key="index"
                     :value="skill"
                     :class="
-                      selectedTechSkills === skill
+                      selectedTechSkills.includes(skill)
                         ? 'selected-chip'
                         : 'unselected-chip'
                     "
@@ -76,16 +77,16 @@
                   <v-chip
                     v-for="(major, index) in academicBackgrounds"
                     :key="index"
-                    :value="academicBackground"
+                    :value="major"
                     :class="
-                      selectedAcademicBackground === academicBackground
+                      selectedAcademicBackground === major
                         ? 'selected-chip'
                         : 'unselected-chip'
                     "
                     class="academicBackground-chip"
                     clickable
                   >
-                    {{ academicBackground }}
+                    {{ major }}
                 </v-chip>
               </v-chip-group>
               </v-col>
@@ -209,11 +210,13 @@ const keywordMap = {
 const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택X)
 
 // 기술 다중 선택 
+
 const skills = ref([
   "풀스택", "백엔드/서버개발", "프론트엔드", "웹개발", "Flutter", "Java", "JavaScript",
   "Python", "Vue.js", "API", "MYSQL", "AWS", "ReactJS", "ASP", "Angular", "Bootstrap",
   "Node.js", "jQuery", "PHP", "JSP", "GraphQL", "HTML5"
 ])
+
 const skillsMap = {
   풀스택: 1,
   "백엔드/서버개발": 2,
@@ -238,7 +241,7 @@ const skillsMap = {
   GraphQL: 21,
   HTML5: 22
 }
-const selectedSills = ref("");  // 기술 다중 선택 
+const selectedTechSkills  = ref([]);  // ✅ 배열로 바꿔서 여러 개 선택 가능하게!
 
 // 전공 단일 선택
 const academicBackgrounds = ref(['전공자', '비전공자']);
@@ -249,10 +252,13 @@ const academicBackgroundMap = {
 const selectedAcademicBackground = ref(""); // 전공 단일 선택 
 
 //경력 모음
-const careers = ref(["신입", "경력"]); // 이건 사용자한테 보여질 목록
+const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
 const careerMap = {
   신입: 1,
-  "경력": 2
+  "3년 이하": 2,
+  "5년 이하": 3,
+  "10년 이하": 4,
+  "10년 이상": 5,
 }; // 이건 백앤드로 보낼 데이터 목록
 const selectedCareer = ref(""); // 경력 단일 선택 (중복선택X)
 
@@ -260,7 +266,7 @@ const selectedCareer = ref(""); // 경력 단일 선택 (중복선택X)
 const projectExperience = ref(["있음", "없음"]);
 const projectExperienceMap = {
   있음: 1,
-  없음: 2
+  없음: 2,
 }
 const selectedProjectExperience = ref("");  // 프로젝트 경험 여부 단일 선택 
 
@@ -274,17 +280,30 @@ onMounted(() => {
 
 // AiInterviewQuestionPage.vue로 이동
 const startQuestion = async () => {
-  if (!selectedKeyword.value || !selectedCareer.value) {
-    alert("기술과 경력을 모두 선택해 주세요.");
+  if (
+    !selectedKeyword.value || 
+    !selectedCareer.value || 
+    !selectedAcademicBackground.value ||
+    !selectedProjectExperience.value ||
+    selectedTechSkills.value.length === 0
+  ) {
+    alert("모든 항목(직무, 경력, 전공, 프로젝트 경험, 기술스택)을 선택해 주세요.");
     return;
   }
 
-  const message = `선택한 기술: ${selectedKeyword.value}\n선택된 경력: ${selectedCareer.value}`;
+  const message = `선택한 직무: ${selectedKeyword.value}
+  선택학 경력: ${selectedCareer.value}
+  전공 여부: ${selectedAcademicBackground.value}
+  프로젝트 경험: ${selectedProjectExperience.value}
+  기술 스택: ${selectedTechSkills.value}`;
   if (!confirm(message)) return;
 
   const jobstorage = {
     tech: keywordMap[selectedKeyword.value],
     exp: careerMap[selectedCareer.value],
+    academic: academicBackgroundMap[selectedAcademicBackground.value],
+    project: projectExperienceMap[selectedProjectExperience.value],
+    skills: selectedTechSkills.value.map(skill => skillsMap[skill])
   };
   localStorage.setItem("interviewInfo", JSON.stringify(jobstorage));
   router.push("/ai-test");
