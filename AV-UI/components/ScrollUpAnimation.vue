@@ -20,7 +20,7 @@
   font-size: 1.5vh;
   color: rgba(255, 255, 255, 1);
   text-decoration: none;
-  padding: 8vh 1vh 6vh 5vh; /* 기존 코드와 동일한 간격 */
+  padding: 5.5vh 1vh 6vh 4vh; /* 기존 코드와 동일한 간격 */
   display: flex;
   flex-direction: column; /* 세로 정렬 유지 */
   align-items: center;
@@ -57,6 +57,7 @@
     width: 10h;
     height: 15vh;
     font-size: 1.5vh;
+    padding: 8vh 1vh 6vh 5vh;
   }
 
   .scroll::before {
@@ -71,6 +72,7 @@
     width: 15vh;
     height: 20vh;
     font-size: 2vh;
+    padding: 8vh 1vh 6vh 5vh;
   }
 
   .scroll::before {
