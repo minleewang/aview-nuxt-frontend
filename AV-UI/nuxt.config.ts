@@ -87,6 +87,7 @@ export default defineNuxtConfig({
     "./githubAuthentication/nuxt.config.ts",
     "./authentication/nuxt.config.ts",
     "./interviewReady/nuxt.config.ts",
+    "./interviewReadyBackendSkills/nuxt.config.ts",
   ],
   css: [
     "vuetify/styles",

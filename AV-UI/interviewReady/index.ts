@@ -17,6 +17,12 @@ export default defineNuxtModule({
                     path: "/interview-ready",
                     file: resolve(themeDir, "interviewReady/pages/InterviewReadyCategoryPage.vue"),
                 },
+                {
+                    name: "InterviewReadyBackendSkillsPage",
+                    path: "/interviewReady/skills",   // 경로를 수정할 필요가 있습니다.
+                    file: resolve(themeDir, "interviewReady/pages/skills/InterviewReadyBackendSkillsPage.vue")
+                },
+
             )
         });
     },
