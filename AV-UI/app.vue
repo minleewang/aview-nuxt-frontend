@@ -9,9 +9,17 @@
       <!-- 홈이면 배경 이미지 적용, 내부 텍스트 영역만 따로 배경색 처리 -->
       <div :class="['footer-container', { 'home-footer': route.path === '/' }]">
         <div class="footer-inner">
-          <img src="@/assets/images/fixed/eddi1.png" alt="위치 아이콘" class="footer-image" />
-          <p class="reserved-info">서울특별시 송파구 새말로8길 26, 3층(문정동)</p>
-          <p class="reserved-info">Copyright © 2025 에디(EDDI). All rights reserved.</p>
+          <img
+            src="@/assets/images/fixed/eddi1.png"
+            alt="위치 아이콘"
+            class="footer-image"
+          />
+          <p class="reserved-info">
+            서울특별시 송파구 새말로8길 26, 3층(문정동)
+          </p>
+          <p class="reserved-info">
+            Copyright © 2025 에디(EDDI). All rights reserved.
+          </p>
         </div>
       </div>
     </div>
@@ -44,13 +52,6 @@ const route = useRoute();
   text-align: center;
   border-top: 1px solid #e0ccff;
   padding: 0;
-}
-
-/* 홈화면 전용 배경 이미지 */
-.footer-container.home-footer {
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  background-size: cover;
-  background-attachment: fixed;
 }
 
 /* ✅ 실제 회색 배경이 들어갈 텍스트 영역 */
