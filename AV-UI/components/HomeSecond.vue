@@ -85,7 +85,7 @@
                       <p>이름: <span style="color: red">[팀장]</span>양의정</p>
                       <p>
                         GitHub:<a
-                          href="https://github.com/UiJungYang6"
+                          href="https://github.com/UiJungYang"
                           class="link"
                           >@UiJungYang</a
                         >
@@ -300,13 +300,22 @@ export default defineComponent({
 
 .text-card {
   position: relative;
-  top: 5%;
-  left: 5%;
+  padding: 10px 15px;   /* 내부 여백으로 정리 */
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;     /* 넘침 방지 */
+  justify-content: center;
+}
+
+.text-card a {
+  white-space: nowrap;        /* 줄바꿈 방지 */
+  overflow: hidden;           /* 넘치면 숨김 */
+  text-overflow: ellipsis;    /* 넘치면 말줄임표 (...) */
+  display: inline-block;
+  max-width: 100%;            /* 카드 너비 기준 */
+  font-size: 0.9rem;          /* 글자 크기 살짝 축소 */
 }
 
 .text-card-container {
