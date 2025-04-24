@@ -265,8 +265,8 @@ export default defineComponent({
 
 /*이미지가 들어가는 카드 창 관리*/
 .v-card {
-  width: 200px;
-  height: 260px; /* 명확한 높이 지정 */
+  width: 160px;
+  height: 210px; /* 명확한 높이 지정 */
   background-color: transparent;
   box-shadow: none;
   overflow: visible;
@@ -290,6 +290,7 @@ export default defineComponent({
   height: 100%;
   transition: transform 0.3s ease;
   border-radius: 25px;
+  object-fit: cover;
 }
 
 .text-container {
@@ -374,40 +375,42 @@ export default defineComponent({
 /*모바일 전용*/
 @media screen and (max-width: 1280px) {
   .v-card {
-    width: 30% !important;
+    width: 25% !important;
+    height: 180px;
   }
 }
 
 @media screen and (max-width: 900px) {
   .v-card {
-    width: 45% !important;
+    width: 40% !important;
+    height: 180px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .v-card {
-    width: 90% !important;
+    width: 80% !important;
     height: auto;
-    min-height: 220px; /* ✅ 최소 높이 지정 */
+    min-height: 180px; /* ✅ 최소 높이 지정 */
   }
 
   .v-img {
     height: 100%;
-    min-height: 220px; /* ✅ 이미지가 사라지지 않도록 */
+    min-height: 180px; /* ✅ 이미지가 사라지지 않도록 */
     object-fit: cover;
   }
 
   .flip-card-container {
-    min-height: 220px; /* ✅ 카드 전체도 최소 높이 확보 */
+    min-height: 180px; /* ✅ 카드 전체도 최소 높이 확보 */
   }
 
   .card-inner {
-    min-height: 220px;
+    min-height: 180px;
   }
 
   .card-front,
   .card-back {
-    min-height: 220px;
+    min-height: 180px;
   }
 }
 </style>
