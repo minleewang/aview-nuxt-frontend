@@ -53,7 +53,7 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore"; // Pinia store import
-import { useRouter } from "vue-router";
+import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
 const router = useRouter();
@@ -84,10 +84,19 @@ const formattedAIMessage = computed(() => {
 const replayQuestion = () => {
   if (synth.speaking) synth.cancel();
   const utterance = new SpeechSynthesisUtterance(currentAIMessage.value);
-  utterance.lang = "KO-KR";
+  utterance.lang = "ko-KR";
   utterance.rate = 1;
   utterance.pitch = 5;
   setTimeout(() => synth.speak(utterance), 100);
+};
+
+// 면접 도중 나가려는 경우
+const handleBeforeUnload = (event) => {
+  if (start.value) {
+    event.preventDefault();
+    event.returnValue = "면접이 진행 중입니다. 페이지를 나가시겠습니까?";
+    return "면접이 진행 중입니다. 페이지를 나가시겠습니까?";
+  }
 };
 
 const speakCurrentMessage = () => {
@@ -95,8 +104,8 @@ const speakCurrentMessage = () => {
   remainingTime.value = 90; //타이머 초기화
   currentUtteance = new SpeechSynthesisUtterance(currentAIMessage.value);
   currentUtteance.lang = "ko-KR";
-  currentUtteance.rate = 1;
-  currentUtteance.pitch = 5;
+  currentUtteance.rate = 0.9;
+  currentUtteance.pitch = 1.2;
   currentUtteance.onend = () => {
     startTimer();
   };
@@ -104,12 +113,14 @@ const speakCurrentMessage = () => {
 };
 
 const showStartMessage = () => {
-  currentUtteance = new SpeechSynthesisUtterance(
-    startMessage.replace(/<[^>]+>/g, "")
-  );
+  const plainMessage = startMessage
+    .replace(/<br\s*\/?>/gi, "\n") // <br> → 줄바꿈
+    .replace(/<\/p>/gi, "\n") // </p> → 줄바꿈
+    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거거
+  currentUtteance = new SpeechSynthesisUtterance(plainMessage);
   currentUtteance.lang = "ko-KR";
-  currentUtteance.rate = 1;
-  currentUtteance.pitch = 5;
+  currentUtteance.rate = 0.9;
+  currentUtteance.pitch = 1.2;
   currentUtteance.onend = () => {
     visible.value = false; // ✅ 여기서 전환됨
     speakCurrentMessage();
@@ -185,6 +196,8 @@ onMounted(() => {
     const transcript = event.results[0][0].transcript;
     sttLog.value = transcript;
   };
+
+  window.addEventListener("beforeunload", handleBeforeUnload);
 });
 
 // 페이지 나가면 TTS 캔슬
@@ -192,8 +205,28 @@ onBeforeUnmount(() => {
   if (synth && synth.speaking) {
     synth.cancel();
   }
+  clearInterval(timer.value);
+  window.removeEventListener("beforeunload", handleBeforeUnload);
 });
 
+//면접 도중 페이지 이동
+onBeforeRouteLeave((to, from, next) => {
+  if (start.value) {
+    const answer = window.confirm(
+      "면접이 진행 중입니다. 페이지를 나가시겠습니까?"
+    );
+    if (answer) {
+      clearInterval(timer.value);
+      next(); //이동 허용
+    } else {
+      next(false); //이동 취소
+    }
+  } else {
+    next();
+  }
+});
+
+// 답변
 const onAnswerComplete = async () => {
   if (!sttLog.value.trim()) {
     alert("음성 인식 결과가 없습니다.");
@@ -266,26 +299,6 @@ useHead({
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
-}
-
-/* 아바타 이미지 스타일 */
-.avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  margin: 0 10px;
-  border: 2px solid transparent; /* 기본적으로 투명한 테두리 설정 */
-}
-
-.ai .avatar {
-  font-size: 40px; /* 아이콘 크기 조정 */
-  color: black; /* 아이콘 색상 조정 */
-}
-
-.user .avatar {
-  font-size: 40px; /* 아이콘 크기 조정 */
-  color: black; /* 아이콘 색상 조정 */
-  margin: 20px 50px;
 }
 
 @keyframes loading-animation {
