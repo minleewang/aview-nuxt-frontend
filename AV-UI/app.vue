@@ -6,17 +6,13 @@
       <v-main class="main-wrapper">
         <NuxtPage />
       </v-main>
+      <!-- 홈이면 배경 이미지 적용, 내부 텍스트 영역만 따로 배경색 처리 -->
       <div :class="['footer-container', { 'home-footer': route.path === '/' }]">
-        <!-- 🖼️ 위치 아이콘 이미지 (3배 크기) -->
-        <img src="@/assets/images/fixed/eddi.jpg" alt="위치 아이콘" class="footer-image" />
-
-        <!-- 주소 및 카피라이트 텍스트 (왼쪽 정렬됨) -->
-        <p class="reserved-info">
-          서울특별시 송파구 새말로8길 26, 3층(문정동)
-        </p>
-        <p class="reserved-info">
-          Copyright © 2025 에디(EDDI). All rights reserved.
-        </p>
+        <div class="footer-inner">
+          <img src="@/assets/images/fixed/eddi1.png" alt="위치 아이콘" class="footer-image" />
+          <p class="reserved-info">서울특별시 송파구 새말로8길 26, 3층(문정동)</p>
+          <p class="reserved-info">Copyright © 2025 에디(EDDI). All rights reserved.</p>
+        </div>
       </div>
     </div>
   </v-app>
@@ -43,35 +39,38 @@ const route = useRoute();
   flex: 1;
 }
 
-/* 푸터 스타일 */
+/* 푸터 최상위 컨테이너 - 홈이면 배경 이미지 적용 */
 .footer-container {
-  background-color: rgba(255, 255, 255, 0.132);
-  color: #111;
-  font-size: 12px;
-  text-align: left; /* 왼쪽 정렬 */
-  padding: 1px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  transition: background-color 0.3s ease;
+  text-align: center;
+  border-top: 1px solid #e0ccff;
+  padding: 0;
 }
 
-/* 홈 전용 푸터 배경 */
+/* 홈화면 전용 배경 이미지 */
 .footer-container.home-footer {
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
   background-size: cover;
   background-attachment: fixed;
 }
 
-/* 푸터 이미지 스타일 (3배 크기 = 144px) */
+/* ✅ 실제 회색 배경이 들어갈 텍스트 영역 */
+.footer-inner {
+  background-color: #f5f5f5; /* ✅ 연한 회색으로 변경 */
+  padding: 8px 12px 4px;
+}
+
+/* 푸터 이미지 스타일 */
 .footer-image {
-  width: 144px;
-  height: 144px;
-  margin-bottom: 8px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 2px auto;
+  display: block;
 }
 
 /* 텍스트 스타일 */
 .reserved-info {
-  margin: 2px 0;
+  margin: 0 0 2px;
+  font-size: 12px;
+  color: #111;
 }
 </style>

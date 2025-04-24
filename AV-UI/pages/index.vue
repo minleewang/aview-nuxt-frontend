@@ -16,8 +16,12 @@
       <HomeFive />
     </section>
     <section id="HomeSix">
+      <!-- 🟡 GO TOP 화살표 버튼도 포함된 섹션 -->
       <HomeSix @scroll-to-home="goToUp" />
     </section>
+
+    <!-- ✅ 푸터 위로 고정된 GO TOP 화살표 버튼 -->
+    <button class="go-top-btn" @click="goToUp">▲</button>
   </div>
 </template>
 
@@ -50,7 +54,6 @@ export default defineComponent({
           element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - offset;
 
-        // requestAnimationFrame을 사용해 부드러운 스크롤 유도
         requestAnimationFrame(() => {
           window.scrollTo({
             top: offsetPosition,
@@ -70,7 +73,6 @@ export default defineComponent({
           element.getBoundingClientRect().top + window.scrollY;
         const offsetPosition = elementPosition - offset;
 
-        // requestAnimationFrame을 사용해 부드러운 스크롤 유도
         requestAnimationFrame(() => {
           window.scrollTo({
             top: offsetPosition,
@@ -94,5 +96,26 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* ✅ 푸터 위에 고정되는 GO TOP 화살표 버튼 */
+.go-top-btn {
+  position: fixed;
+  bottom: 100px; /* ✅ 푸터와 겹치지 않게 여유를 둠 */
+  right: 20px;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  color: #444;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.go-top-btn:hover {
+  transform: scale(1.2);
+  color: #000;
+  opacity: 1;
 }
 </style>
