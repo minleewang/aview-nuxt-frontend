@@ -7,20 +7,40 @@
           <v-card-text>
             <!-- 약관 내용 -->
             <p><strong>제 1 조 (목적)</strong></p>
-            <p>본 약관은 본 서비스가 제공하는 면접 연습 및 모의 면접 서비스(이하 "서비스")의 이용 조건 및 절차, 이용자와 서비스 제공자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
-            
-             <p><strong>제 2 조 (약관의 효력과 변경)</strong></p>
-            <p>① 본 서비스는 이용자가 본 약관 내용에 동의하는 것을 조건으로 서비스를 제공하며, 본 서비스의 이용 행위에는 본 약관을 우선적으로 적용합니다.</p>
-            <p>② 본 서비스는 사전 고지 없이 본 약관을 변경할 수 있으며, 변경된 약관은 서비스 내 공지를 통해 이용자가 직접 확인할 수 있도록 합니다.</p>
+            <p>
+              본 약관은 본 서비스가 제공하는 면접 연습 및 모의 면접 서비스(이하
+              "서비스")의 이용 조건 및 절차, 이용자와 서비스 제공자의 권리, 의무
+              및 책임사항을 규정함을 목적으로 합니다.
+            </p>
+
+            <p><strong>제 2 조 (약관의 효력과 변경)</strong></p>
+            <p>
+              ① 본 서비스는 이용자가 본 약관 내용에 동의하는 것을 조건으로
+              서비스를 제공하며, 본 서비스의 이용 행위에는 본 약관을 우선적으로
+              적용합니다.
+            </p>
+            <p>
+              ② 본 서비스는 사전 고지 없이 본 약관을 변경할 수 있으며, 변경된
+              약관은 서비스 내 공지를 통해 이용자가 직접 확인할 수 있도록
+              합니다.
+            </p>
 
             <p><strong>제 3 조 (개인정보의 수집 및 이용)</strong></p>
             <ul>
-              <li><strong>필수 정보:</strong> 이메일, 닉네임, 성별, 생년월일, 소셜 로그인 타입</li>
-              <li><strong>자동 수집 정보:</strong> 이용 기록, 방문 기록, IP 주소</li>
+              <li>
+                <strong>필수 정보:</strong> 이메일, 닉네임, 성별, 생년월일, 소셜
+                로그인 타입, 연령대
+              </li>
+              <li>
+                <strong>자동 수집 정보:</strong> 이용 기록, 방문 기록, IP 주소
+              </li>
             </ul>
 
             <p><strong>제 4 조 (보관 및 파기)</strong></p>
-            <p>① 회원 탈퇴 시 즉시 삭제, 단 법령에 따라 보관할 필요가 있는 경우 예외</p>
+            <p>
+              ① 회원 탈퇴 시 즉시 삭제, 단 법령에 따라 보관할 필요가 있는 경우
+              예외
+            </p>
             <p>② 복구 불가능한 방식으로 파기</p>
 
             <p><strong>제 5 조 (제공 및 공유)</strong></p>
@@ -51,14 +71,29 @@
 
             <p><strong>부칙</strong></p>
             <p>본 약관은 2025년 3월 1일부터 시행됩니다.</p>
-          
 
-            <v-btn v-if="loginType === 'KAKAO'" @click="agreeAndLogin" color="primary">동의 후 카카오 로그인</v-btn>
-            <v-btn v-if="loginType === 'GOOGLE'" @click="agreeAndLogin" color="primary">동의 후 구글 로그인</v-btn>
-            <v-btn v-if="loginType === 'NAVER'" @click="agreeAndLogin" color="primary">동의 후 네이버 로그인</v-btn>
+            <v-btn
+              v-if="loginType === 'KAKAO'"
+              @click="agreeAndLogin"
+              color="primary"
+              >동의 후 카카오 로그인</v-btn
+            >
+            <v-btn
+              v-if="loginType === 'GOOGLE'"
+              @click="agreeAndLogin"
+              color="primary"
+              >동의 후 구글 로그인</v-btn
+            >
+            <v-btn
+              v-if="loginType === 'NAVER'"
+              @click="agreeAndLogin"
+              color="primary"
+              >동의 후 네이버 로그인</v-btn
+            >
 
             <v-alert v-if="!loginType" type="error" class="mt-5">
-              로그인 방식이 확인되지 않았습니다. 로그인 페이지에서 다시 시도해주세요.
+              로그인 방식이 확인되지 않았습니다. 로그인 페이지에서 다시
+              시도해주세요.
             </v-alert>
           </v-card-text>
         </v-card>
