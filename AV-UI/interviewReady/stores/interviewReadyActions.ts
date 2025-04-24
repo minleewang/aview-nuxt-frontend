@@ -1,6 +1,6 @@
 import * as axiosUtility from "../../utility/axiosInstance";
 import { AxiosResponse } from "axios";
-import { useInterviewReadyStore, useInterviewReadyStore } from "./interviewReadyStore";
+import { useInterviewReadyStore } from "./interviewReadyStore";
 
 
 export const interviewReadyAction = {
@@ -8,7 +8,7 @@ export const interviewReadyAction = {
         const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
         try {
             const res: AxiosResponse = await djangoAxiosInstance.post(
-                "/", // backend에서 interviewReady에 대한 모델 호출
+                "/interview/", // backend에서 interviewReady에 대한 모델 호출
                 { userToken }
             );
             return res.data.interviewReadyId;
