@@ -1,12 +1,15 @@
 import * as axiosUtility from "../../utility/axiosInstance";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 export const aiInterviewActions = {
   async requestCreateInterviewToDjango(payload: {
     userToken: string;
-    jobCategory: number;
-    experienceLevel: number;
+    jobCategory: number;        // 직무
+    skills: number;             // 기술
+    academicBackground: number; // 전공 여부
+    experienceLevel: number;    // 경력
+    projectExperience: number;  // 프로젝트 경험 여부 
     //interviewId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();

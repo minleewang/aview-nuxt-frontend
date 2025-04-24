@@ -10,10 +10,10 @@
       <v-slide-y-transition>
         <v-row class="filter-tags-container">
           <v-col cols="12">
-            <!-- 기술 -->
+            <!-- 직무 -->
             <v-row class="align-center mb-4">
               <v-col cols="1" class="filter-group-title">
-                <strong>기술</strong>
+                <strong>직무</strong>
               </v-col>
               <v-col cols="11">
                 <v-chip-group v-model="selectedKeyword" column>
@@ -32,6 +32,62 @@
                     {{ keyword }}
                   </v-chip>
                 </v-chip-group>
+              </v-col>
+            </v-row>
+            <!--Tech Skills 리스트-->
+            <v-row class="align-center-mb-4">
+              <v-col cols="1" class="filter-group-title">
+                <strong>Tech Skills</strong>
+              </v-col>
+              <v-col cols="11">
+                <v-chip-group
+                  v-model="selectedTechSkills"
+                  class="skills-select-group"
+                  column
+                >
+                  <v-chip
+                    v-for="(skill, index) in skills"
+                    :key="index"
+                    :value="skill"
+                    :class="
+                      selectedTechSkills === skill
+                        ? 'selected-chip'
+                        : 'unselected-chip'
+                    "
+                    class="skill-chip"
+                    clickable
+                  >
+                    {{ skill }}
+                </v-chip>
+              </v-chip-group>
+              </v-col>
+            </v-row>
+            <!--전공 여부 선택-->
+            <v-row class="align-center mb-4">
+              <v-col cols="1" class="filter-group-title">
+                <strong>전공 여부</strong>
+              </v-col>
+              <v-col cols="11">
+                <v-chip-group
+                  v-model="selectedAcademicBackground"
+                  class="academic-background-select-group"
+                  column
+                >
+                  <v-chip
+                    v-for="(major, index) in academicBackgrounds"
+                    :key="index"
+                    :value="academicBackground"
+                    :class="
+                      selectedAcademicBackground === academicBackground
+                        ? 'selected-chip'
+                        : 'unselected-chip'
+                    "
+                    class="academicBackground-chip"
+                    clickable
+                  >
+                    {{ academicBackground }}
+                </v-chip>
+              </v-chip-group>
               </v-col>
             </v-row>
             <!-- 경력 선택 부분: 기술과 같은 열에 배치 -->
@@ -60,6 +116,33 @@
                     {{ career }}
                   </v-chip>
                 </v-chip-group>
+              </v-col>
+            </v-row>
+            <!--프로젝트 경험 유무 선택 부분-->
+            <v-row class="align-center mb-4">
+              <v-col cols="1" class="filter-group-title">
+                <strong>프로젝트 경험</strong>
+              </v-col>
+              <v-col cols="11">
+                <v-chip-group
+                  v-model="selectedProjectExperience"
+                  class="projectExperience-select-group"
+                >
+                  <v-chip
+                    v-for="(project, index) in projectExperience"
+                    :key="index"
+                    :value="project"
+                    :class="
+                      selectedProjectExperience === project
+                        ? 'selected-chip'
+                        : 'unselected-chip'
+                    "
+                    class="projectExperience-chip"
+                    clickable
+                  >
+                    {{ project }}
+                </v-chip>
+              </v-chip-group>
               </v-col>
             </v-row>
           </v-col>
@@ -106,7 +189,7 @@ const router = useRouter();
 
 const start = ref(false);
 
-//기술 모음
+//직무 모음
 const keywords = ref([
   "Backend",
   "Frontend",
@@ -123,18 +206,63 @@ const keywordMap = {
   DevOps: 5,
   "App·Web": 6,
 };
-const selectedKeyword = ref(""); // 기술 단일 선택 (중복선택X)
+const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택X)
+
+// 기술 다중 선택 
+const skills = ref([
+  "풀스택", "백엔드/서버개발", "프론트엔드", "웹개발", "Flutter", "Java", "JavaScript",
+  "Python", "Vue.js", "API", "MYSQL", "AWS", "ReactJS", "ASP", "Angular", "Bootstrap",
+  "Node.js", "jQuery", "PHP", "JSP", "GraphQL", "HTML5"
+])
+const skillsMap = {
+  풀스택: 1,
+  "백엔드/서버개발": 2,
+  프론트엔드: 3,
+  웹개발: 4,
+  Flutter: 5,
+  Java: 6,
+  JavaScript: 7,
+  Python: 8,
+  "Vue.js": 9,
+  API: 10,
+  MYSQL: 11,
+  AWS: 12,
+  ReactJS: 13,
+  ASP: 14,
+  Angular: 15,
+  Bootstrap: 16,
+  "Node.js": 17,
+  jQuery: 18,
+  PHP: 19,
+  JSP: 20,
+  GraphQL: 21,
+  HTML5: 22
+}
+const selectedSills = ref("");  // 기술 다중 선택 
+
+// 전공 단일 선택
+const academicBackgrounds = ref(['전공자', '비전공자']);
+const academicBackgroundMap = {
+  전공자: 1,
+  비전공자: 2
+}
+const selectedAcademicBackground = ref(""); // 전공 단일 선택 
 
 //경력 모음
-const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
+const careers = ref(["신입", "경력"]); // 이건 사용자한테 보여질 목록
 const careerMap = {
   신입: 1,
-  "3년 이하": 2,
-  "5년 이하": 3,
-  "10년 이하": 4,
-  "10년 이상": 5,
+  "경력": 2
 }; // 이건 백앤드로 보낼 데이터 목록
 const selectedCareer = ref(""); // 경력 단일 선택 (중복선택X)
+
+// 프로젝트 경험
+const projectExperience = ref(["있음", "없음"]);
+const projectExperienceMap = {
+  있음: 1,
+  없음: 2
+}
+const selectedProjectExperience = ref("");  // 프로젝트 경험 여부 단일 선택 
 
 onMounted(() => {
   const userToken = localStorage.getItem("userToken");
