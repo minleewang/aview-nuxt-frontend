@@ -213,12 +213,12 @@ export default defineComponent({
   }
 
   .text-container {
-    width: 90vw;
-    padding: 10px;
+    width: 100vw;
+    padding: 30px;
   }
 
   .typing-animation p {
-    font-size: 32px !important;
+    font-size: 26px !important;
   }
 
   .subtitle {
@@ -226,7 +226,7 @@ export default defineComponent({
   }
 
   .description {
-    font-size: 16px;
+    font-size: 15px;
     margin-top: 5vh;
   }
 

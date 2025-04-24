@@ -19,9 +19,6 @@
       <!-- 🟡 GO TOP 화살표 버튼도 포함된 섹션 -->
       <HomeSix @scroll-to-home="goToUp" />
     </section>
-
-    <!-- ✅ 푸터 위로 고정된 GO TOP 화살표 버튼 -->
-    <button class="go-top-btn" @click="goToUp">▲</button>
   </div>
 </template>
 
