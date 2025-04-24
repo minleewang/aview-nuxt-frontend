@@ -44,7 +44,7 @@
                   v-model="selectedTechSkills"
                   multiple
                   class="skills-select-group"
-                  column 
+                  column
                 >
                   <v-chip
                     v-for="(skill, index) in skills"
@@ -59,8 +59,8 @@
                     clickable
                   >
                     {{ skill }}
-                </v-chip>
-              </v-chip-group>
+                  </v-chip>
+                </v-chip-group>
               </v-col>
             </v-row>
             <!--전공 여부 선택-->
@@ -87,8 +87,8 @@
                     clickable
                   >
                     {{ major }}
-                </v-chip>
-              </v-chip-group>
+                  </v-chip>
+                </v-chip-group>
               </v-col>
             </v-row>
             <!-- 경력 선택 부분: 기술과 같은 열에 배치 -->
@@ -142,8 +142,8 @@
                     clickable
                   >
                     {{ project }}
-                </v-chip>
-              </v-chip-group>
+                  </v-chip>
+                </v-chip-group>
               </v-col>
             </v-row>
           </v-col>
@@ -209,13 +209,32 @@ const keywordMap = {
 };
 const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택X)
 
-// 기술 다중 선택 
+// 기술 다중 선택
 
 const skills = ref([
-  "풀스택", "백엔드/서버개발", "프론트엔드", "웹개발", "Flutter", "Java", "JavaScript",
-  "Python", "Vue.js", "API", "MYSQL", "AWS", "ReactJS", "ASP", "Angular", "Bootstrap",
-  "Node.js", "jQuery", "PHP", "JSP", "GraphQL", "HTML5"
-])
+  "풀스택",
+  "백엔드/서버개발",
+  "프론트엔드",
+  "웹개발",
+  "Flutter",
+  "Java",
+  "JavaScript",
+  "Python",
+  "Vue.js",
+  "API",
+  "MYSQL",
+  "AWS",
+  "ReactJS",
+  "ASP",
+  "Angular",
+  "Bootstrap",
+  "Node.js",
+  "jQuery",
+  "PHP",
+  "JSP",
+  "GraphQL",
+  "HTML5",
+]);
 
 const skillsMap = {
   풀스택: 1,
@@ -239,17 +258,17 @@ const skillsMap = {
   PHP: 19,
   JSP: 20,
   GraphQL: 21,
-  HTML5: 22
-}
-const selectedTechSkills  = ref([]);  // ✅ 배열로 바꿔서 여러 개 선택 가능하게!
+  HTML5: 22,
+};
+const selectedTechSkills = ref([]); // ✅ 배열로 바꿔서 여러 개 선택 가능하게!
 
 // 전공 단일 선택
-const academicBackgrounds = ref(['전공자', '비전공자']);
+const academicBackgrounds = ref(["전공자", "비전공자"]);
 const academicBackgroundMap = {
   전공자: 1,
-  비전공자: 2
-}
-const selectedAcademicBackground = ref(""); // 전공 단일 선택 
+  비전공자: 2,
+};
+const selectedAcademicBackground = ref(""); // 전공 단일 선택
 
 //경력 모음
 const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
@@ -267,27 +286,31 @@ const projectExperience = ref(["있음", "없음"]);
 const projectExperienceMap = {
   있음: 1,
   없음: 2,
-}
-const selectedProjectExperience = ref("");  // 프로젝트 경험 여부 단일 선택 
+};
+const selectedProjectExperience = ref(""); // 프로젝트 경험 여부 단일 선택
 
 onMounted(() => {
-  const userToken = localStorage.getItem("userToken");
-  if (!userToken) {
-    alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-    router.push("/account/login");
+  if (process.client) {
+    const userToken = localStorage.getItem("userToken");
+    if (!userToken) {
+      alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+      router.push("/account/login");
+    }
   }
 });
 
 // AiInterviewQuestionPage.vue로 이동
 const startQuestion = async () => {
   if (
-    !selectedKeyword.value || 
-    !selectedCareer.value || 
+    !selectedKeyword.value ||
+    !selectedCareer.value ||
     !selectedAcademicBackground.value ||
     !selectedProjectExperience.value ||
     selectedTechSkills.value.length === 0
   ) {
-    alert("모든 항목(직무, 경력, 전공, 프로젝트 경험, 기술스택)을 선택해 주세요.");
+    alert(
+      "모든 항목(직무, 경력, 전공, 프로젝트 경험, 기술스택)을 선택해 주세요."
+    );
     return;
   }
 
@@ -303,7 +326,7 @@ const startQuestion = async () => {
     exp: careerMap[selectedCareer.value],
     academic: academicBackgroundMap[selectedAcademicBackground.value],
     project: projectExperienceMap[selectedProjectExperience.value],
-    skills: selectedTechSkills.value.map(skill => skillsMap[skill])
+    skills: selectedTechSkills.value.map((skill) => skillsMap[skill]),
   };
   localStorage.setItem("interviewInfo", JSON.stringify(jobstorage));
   router.push("/ai-test");
