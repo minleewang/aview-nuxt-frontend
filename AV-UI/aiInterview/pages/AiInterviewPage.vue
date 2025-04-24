@@ -1,4 +1,12 @@
 <template>
+  <v-container v-if="!start" align="center">
+    <div class="interview-container">
+      <v-icon>mdi-account-tie</v-icon><br />
+      <div v-html="startMessage"></div>
+      <v-btn color="primary" @click="handleStartInterview">면접 시작</v-btn>
+    </div>
+  </v-container>
+
   <v-container v-if="start" align="center">
     <div v-if="visible" class="interview-container">
       <v-icon>mdi-account-tie</v-icon><br />
@@ -6,7 +14,7 @@
     </div>
 
     <div v-if="!visible" class="interview-container">
-      <v-icon>mdi-account-tie</v-icon>
+      <v-icon>mdi-account-tie</v-icon><br />
       <h2 v-html="formattedAIMessage"></h2>
       <br />
       <div :class="{ timer: true, 'red-text': remainingTime <= 10 }">
@@ -43,10 +51,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore"; // Pinia store import
-import "@mdi/font/css/materialdesignicons.css";
 import { useRouter } from "vue-router";
+import "@mdi/font/css/materialdesignicons.css";
 
 const router = useRouter();
 const aiInterviewStore = useAiInterviewStore();
@@ -72,13 +80,6 @@ const formattedAIMessage = computed(() => {
   return currentAIMessage.value.replace(/([.?])/g, "$1<br>");
 });
 
-//start.value가 truerk 되면showStartMessage가 진행
-watch(start, (newVal) => {
-  if (newVal === true) {
-    showStartMessage(); // 안내 멘트 읽고
-  }
-});
-
 //다시듣기
 const replayQuestion = () => {
   if (synth.speaking) synth.cancel();
@@ -86,15 +87,14 @@ const replayQuestion = () => {
   utterance.lang = "KO-KR";
   utterance.rate = 1;
   utterance.pitch = 5;
-
-  synth.speak(utterance);
+  setTimeout(() => synth.speak(utterance), 100);
 };
 
 const speakCurrentMessage = () => {
   clearInterval(timer.value); //기존 타이머 정지
   remainingTime.value = 90; //타이머 초기화
   currentUtteance = new SpeechSynthesisUtterance(currentAIMessage.value);
-  currentUtteance.lang = "KO-KR";
+  currentUtteance.lang = "ko-KR";
   currentUtteance.rate = 1;
   currentUtteance.pitch = 5;
   currentUtteance.onend = () => {
@@ -108,12 +108,21 @@ const showStartMessage = () => {
     startMessage.replace(/<[^>]+>/g, "")
   );
   currentUtteance.lang = "ko-KR";
-  currentUtteance.rate = 1.1;
+  currentUtteance.rate = 1;
+  currentUtteance.pitch = 5;
   currentUtteance.onend = () => {
     visible.value = false; // ✅ 여기서 전환됨
     speakCurrentMessage();
   };
   synth.speak(currentUtteance);
+
+  //IOS
+  setTimeout(() => {
+    if (visible.value) {
+      visible.value = false;
+      speakCurrentMessage();
+    }
+  }, 5000);
 };
 
 // 타이머
@@ -132,6 +141,28 @@ const startTimer = () => {
 //STT시작
 const startSTT = () => {
   if (recognition && !recognizing.value) recognition.start();
+};
+
+const handleStartInterview = async () => {
+  const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
+  if (!info.tech || !info.exp) {
+    alert("면접 정보를 찾을 수 없습니다. 처음으로 돌아갑니다.");
+    router.push("/ai-interview");
+    return;
+  }
+
+  start.value = true;
+
+  const res = aiInterviewStore.requestCreateInterviewToDjango({
+    userToken: localStorage.getItem("userToken"),
+    jobCategory: info.tech,
+    experienceLevel: info.exp,
+  });
+
+  currentInterviewId.value = Number(res.interviewId);
+  currentAIMessage.value = res.question;
+
+  showStartMessage();
 };
 
 onMounted(() => {
@@ -154,26 +185,6 @@ onMounted(() => {
     const transcript = event.results[0][0].transcript;
     sttLog.value = transcript;
   };
-
-  const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
-  if (!info.tech || !info.exp) {
-    alert("면접 정보를 찾을 수 없습니다. 처음으로 돌아갑니다.");
-    router.push("/ai-interview");
-    return;
-  }
-
-  start.value = true;
-
-  aiInterviewStore
-    .requestCreateInterviewToDjango({
-      userToken: localStorage.getItem("userToken"),
-      jobCategory: info.tech,
-      experienceLevel: info.exp,
-    })
-    .then((res) => {
-      currentInterviewId.value = Number(res.interviewId);
-      currentAIMessage.value = res.question;
-    });
 });
 
 // 페이지 나가면 TTS 캔슬
