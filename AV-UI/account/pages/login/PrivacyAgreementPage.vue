@@ -127,14 +127,14 @@ const router = useRouter();
 
 onMounted(() => {
   // 세션이 sessionStorage에만 있고 localStorage로 넘어가지 않아서
-  // 인증에 실패할 수도 있을 것 같습니다. 
+  // 인증에 실패할 수도 있을 것 같습니다.
   const tempType = sessionStorage.getItem("tempLoginType");
 
-  // localStorage 보조 저장 
+  // localStorage 보조 저장
   if (!tempType) {
     tempType = localStorage.getItem("loginTypeFallback");
   }
-  
+
   // agreeAndLogin 전에 localStorage에 백업 저장
   localStorage.setItem("loginTypeFallback", loginType.value);
 
@@ -161,6 +161,7 @@ const agreeAndLogin = async () => {
       await naverAuthentication.requestNaverLoginToDjango();
     } else if (loginType.value === "GUEST") {
       await guestAuthentication.requestGuestLoginToDjango();
+      router.push("/");
     }
 
     // ✅ 로그인 완료 후에만 영구 저장

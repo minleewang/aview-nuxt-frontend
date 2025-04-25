@@ -1,7 +1,7 @@
 import * as axiosUtility from "../../utility/axiosInstance";
 
 export const guestAuthenticationAction = {
-  async requestGuestLoginToDjango(): Promise<void> {
+  async requestGuestLoginToDjango(): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res = await djangoAxiosInstance.post(
@@ -17,8 +17,10 @@ export const guestAuthenticationAction = {
 
       localStorage.setItem("userToken", userToken);
       localStorage.setItem("loginType", "GUEST");
+
+      return userToken;
     } catch (error) {
-      console.log("requestGuestLoginToDjango() 중 에러:", error);
+      throw error;
     }
   },
 
