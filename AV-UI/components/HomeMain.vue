@@ -28,7 +28,7 @@
         </p>
       </transition>
 
-      <!-- ✅ 설문조사 하러가기 버튼 추가 -->
+      <!-- ✅ 설문조사 하러가기 버튼 -->
       <transition name="fade-down">
         <div v-if="showElements" style="margin-top: 30px">
           <v-btn color="primary" @click="goToSurvey">설문조사 하러가기</v-btn>
@@ -54,7 +54,6 @@ import {
   nextTick,
   ref,
 } from "vue";
-import { useRouter } from "vue-router";
 import ScrollAnimation from "./ScrollAnimation.vue";
 
 export default defineComponent({
@@ -69,7 +68,6 @@ export default defineComponent({
     const typeIndex = ref(0);
     const showElements = ref(false);
     const { emit } = getCurrentInstance();
-    const router = useRouter(); // ✅ 라우터 사용
 
     function typeText() {
       if (typeIndex.value < fullText.value.length) {
@@ -88,9 +86,9 @@ export default defineComponent({
       emit("scroll-to-home-second");
     }
 
-    // ✅ 설문조사 페이지로 이동하는 함수
+    // ✅ 구글폼 새 탭으로 이동
     function goToSurvey() {
-      router.push("/survey");
+      window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform");
     }
 
     onMounted(() => {
