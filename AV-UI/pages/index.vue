@@ -32,7 +32,7 @@ import HomeThird from "@/components/HomeThird.vue";
 import HomeFour from "@/components/HomeFour.vue";
 import HomeFive from "@/components/HomeFive.vue";
 import HomeSix from "@/components/HomeSix.vue";
-//import SurveyPopup from "@/components/SurveyPopup.vue"; // ✅ 팝업 추가
+import SurveyPopup from "@/components/SurveyPopup.vue"; // ✅ 팝업 추가
 
 export default defineComponent({
   components: {
@@ -42,7 +42,7 @@ export default defineComponent({
     HomeFour,
     HomeFive,
     HomeSix,
-    //SurveyPopup, // ✅ 팝업 등록
+    SurveyPopup, // ✅ 팝업 등록
   },
   setup() {
     function goToHomeSecond() {
