@@ -14,13 +14,18 @@
         md="4"
       >
         <v-card>
+          <!-- 이미지가 있을 경우만 출력 -->
           <v-img
             v-if="review.imageUrl"
             :src="review.imageUrl"
             height="200px"
             cover
           />
-          <v-card-text>{{ review.text }}</v-card-text>
+          <v-card-title class="text-h6">{{ review.title }}</v-card-title>
+          <v-card-subtitle class="grey--text text--darken-1">
+            작성자: {{ review.nickname }} / {{ review.createDate }}
+          </v-card-subtitle>
+          <v-card-text>{{ review.content }}</v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -36,10 +41,12 @@ const store = useReviewStore()
 const router = useRouter()
 
 const goToRegister = () => {
+  // 프롬트 게이지 리스트 페이지와 연결합니다.
   router.push('/review/register')
 }
 
 onMounted(() => {
+  // 시작 시 리뷰 목록 건설
   store.fetchReviews()
 })
 </script>
