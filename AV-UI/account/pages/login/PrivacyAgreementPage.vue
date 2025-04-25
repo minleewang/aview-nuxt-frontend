@@ -91,6 +91,13 @@
               >동의 후 네이버 로그인</v-btn
             >
 
+            <v-btn
+              v-if="loginType === 'GUEST'"
+              @click="agreeAndLogin"
+              color="primary"
+              >동의 후 게스트 로그인</v-btn
+            >
+
             <v-alert v-if="!loginType" type="error" class="mt-5">
               로그인 방식이 확인되지 않았습니다. 로그인 페이지에서 다시
               시도해주세요.
@@ -108,17 +115,19 @@ import { useRouter } from "vue-router";
 import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
+import { useGuestAuthenticationStore } from "../../../guestAuthentication/stores/guestAuthenticationStore";
 
 const kakaoAuthentication = useKakaoAuthenticationStore();
 const googleAuthentication = useGoogleAuthenticationStore();
 const naverAuthentication = useNaverAuthenticationStore();
+const guestAuthentication = useGuestAuthenticationStore();
 
 const loginType = ref(null);
 const router = useRouter();
 
 onMounted(() => {
   const tempType = sessionStorage.getItem("tempLoginType");
-  const validTypes = ["KAKAO", "GOOGLE", "NAVER"];
+  const validTypes = ["KAKAO", "GOOGLE", "NAVER", "GUEST"];
 
   if (!tempType || !validTypes.includes(tempType)) {
     loginType.value = null;
@@ -140,6 +149,8 @@ const agreeAndLogin = async () => {
       await googleAuthentication.requestGoogleLoginToDjango();
     } else if (loginType.value === "NAVER") {
       await naverAuthentication.requestNaverLoginToDjango();
+    } else if (loginType.value === "GUEST") {
+      await guestAuthentication.requestGuestLoginToDjango();
     }
 
     // ✅ 로그인 완료 후에만 영구 저장

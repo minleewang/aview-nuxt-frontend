@@ -87,13 +87,14 @@ export default defineNuxtConfig({
     "./githubAuthentication/nuxt.config.ts",
     "./authentication/nuxt.config.ts",
     "./interviewReady/nuxt.config.ts",
+    "./guestAuthentication/nuxt.config.ts",
   ],
   css: [
     "vuetify/styles",
     "@mdi/font/css/materialdesignicons.min.css",
     "@/assets/css/global.css", // ✅ 너가 만든 global.css 추가
   ],
-  
+
   build: {
     transpile: ["vuetify"], // Vuetify를 빌드 시 트랜스파일링
   },
@@ -121,6 +122,7 @@ export default defineNuxtConfig({
     "~/githubAuthentication/index.ts",
     "~/authentication/index.ts",
     "~/interviewReady/index.ts",
+    "~/guestAuthentication/index.ts",
   ],
   components: {
     dirs: [
