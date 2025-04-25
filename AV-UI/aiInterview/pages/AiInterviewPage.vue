@@ -205,6 +205,7 @@ onBeforeUnmount(() => {
   if (synth && synth.speaking) {
     synth.cancel();
   }
+  localStorage.removeItem("interviewInfo");
   clearInterval(timer.value);
   window.removeEventListener("beforeunload", handleBeforeUnload);
 });
