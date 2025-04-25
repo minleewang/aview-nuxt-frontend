@@ -22,6 +22,7 @@
         v-if="
           kakaoAuthenticationStore.isAuthenticated ||
           googleAuthenticationStore.isAuthenticated ||
+          guestAuthenticationStore.isAuthenticated ||
           naverAuthenticationStore.isAuthenticated
         "
         text
@@ -45,6 +46,7 @@
         v-if="
           kakaoAuthenticationStore.isAuthenticated ||
           googleAuthenticationStore.isAuthenticated ||
+          guestAuthenticationStore.isAuthenticated ||
           naverAuthenticationStore.isAuthenticated
         "
         close-on-content-click
@@ -93,6 +95,7 @@
           !kakaoAuthenticationStore.isAuthenticated &&
           !googleAuthenticationStore.isAuthenticated &&
           !naverAuthenticationStore.isAuthenticated &&
+          !guestAuthenticationStore.isAuthenticated &&
           !githubAuthenticationStore.isAuthenticated
         "
         text
@@ -157,6 +160,7 @@ import { useRouter } from "vue-router";
 import { useKakaoAuthenticationStore } from "~/kakaoAuthentication/stores/kakaoAuthenticationStore";
 import { useNaverAuthenticationStore } from "~/naverAuthentication/stores/naverAuthenticationStore";
 import { useGoogleAuthenticationStore } from "~/googleAuthentication/stores/googleAuthenticationStore";
+import { useGuestAuthenticationStore } from "~/guestAuthentication/stores/guestAuthenticationStore";
 import { useGithubAuthenticationStore } from "~/githubAuthentication/stores/githubAuthenticationStore";
 import { useAuthenticationStore } from "~/authentication/stores/authenticationStore";
 import { useReviewStore } from "~/review/stores/reviewStore";
@@ -165,6 +169,7 @@ import { useReviewStore } from "~/review/stores/reviewStore";
 const kakaoAuthenticationStore = useKakaoAuthenticationStore();
 const googleAuthenticationStore = useGoogleAuthenticationStore();
 const naverAuthenticationStore = useNaverAuthenticationStore();
+const guestAuthenticationStore = useGuestAuthenticationStore();
 const githubAuthenticationStore = useGithubAuthenticationStore();
 const authenticationStore = useAuthenticationStore();
 const reviewStore = useReviewStore();
@@ -176,6 +181,7 @@ const isLoggedIn = computed(
     kakaoAuthenticationStore.isAuthenticated ||
     googleAuthenticationStore.isAuthenticated ||
     naverAuthenticationStore.isAuthenticated ||
+    guestAuthenticationStore.isAuthenticated ||
     githubAuthenticationStore.isAuthenticated
 );
 
@@ -249,6 +255,7 @@ const signOut = async () => {
   naverAuthenticationStore.isAuthenticated = false;
   githubAuthenticationStore.isAuthenticated = false;
   googleAuthenticationStore.isAuthenticated = false;
+  guestAuthenticationStore.isAuthenticated = false;
   localStorage.removeItem("userToken");
   localStorage.removeItem("loginType");
   router.push("/");
