@@ -10,35 +10,49 @@
         <v-divider class="mt-5 mb-7" :thickness="3"></v-divider>
 
         <!-- 로그인 버튼들 -->
-        <v-btn class="kakao-login-btn" @click="goToPrivacyAgreementPage('KAKAO')"></v-btn>
-        <v-btn class="google-login-btn" @click="goToPrivacyAgreementPage('GOOGLE')"></v-btn>
-        <v-btn class="naver-login-btn" @click="goToPrivacyAgreementPage('NAVER')"></v-btn>
+        <v-btn
+          class="guest-login-btn"
+          @click="goToPrivacyAgreementPage('GUEST')"
+          >게스트 로그인</v-btn
+        >
+        <v-btn
+          class="kakao-login-btn"
+          @click="goToPrivacyAgreementPage('KAKAO')"
+        ></v-btn>
+        <v-btn
+          class="google-login-btn"
+          @click="goToPrivacyAgreementPage('GOOGLE')"
+        ></v-btn>
+        <v-btn
+          class="naver-login-btn"
+          @click="goToPrivacyAgreementPage('NAVER')"
+        ></v-btn>
 
         <!-- 관리자 로그인 -->
-        <v-btn class="admin-login-btn" @click="goToAdminLogin" block>관리자 로그인</v-btn>
+        <v-btn class="admin-login-btn" @click="goToAdminLogin" block></v-btn>
       </div>
     </div>
   </v-container>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 // ✅ 진입 시 loginType 초기화
 onMounted(() => {
-  localStorage.removeItem("loginType")
-})
+  localStorage.removeItem("loginType");
+});
 
 const goToPrivacyAgreementPage = (loginType) => {
-  sessionStorage.setItem('tempLoginType', loginType)
-  router.push('/account/privacy')
-}
+  sessionStorage.setItem("tempLoginType", loginType);
+  router.push("/account/privacy");
+};
 
 const goToAdminLogin = () => {
-  router.push('/account/admin-code')
-}
+  router.push("/account/admin-code");
+};
 </script>
 
 <style scoped>
@@ -48,7 +62,8 @@ const goToAdminLogin = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("@/assets/images/fixed/login_bg61.jpg") no-repeat center center;
+  background: url("@/assets/images/fixed/login_bg61.jpg") no-repeat center
+    center;
   background-size: 900px auto;
 }
 .login_logo {
@@ -78,6 +93,13 @@ const goToAdminLogin = () => {
   height: 50px;
   margin: 1.3vh auto;
 }
+.guest-login-btn {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #00d0ff;
+  border-radius: 1.4vh;
+}
 .kakao-login-btn {
   background-image: url("@/assets/images/fixed/btn_login_kakao.png");
   background-size: contain;
@@ -105,13 +127,17 @@ const goToAdminLogin = () => {
   border-radius: 1.4vh;
 }
 .admin-login-btn {
-  width: 100%;
-  max-width: 300px;
+  width: 70px; /* 버튼 크기 줄이기 */
   height: 50px;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  border-radius: 1.4vh;
-  margin-bottom: 20px;
+  background-image: url("@/assets/images/fixed/icon-github.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  margin: 10px auto; /* 가운데 정렬 */
+  display: block;
+  min-width: 0; /* Vuetify 기본값 무력화 */
 }
 </style>
