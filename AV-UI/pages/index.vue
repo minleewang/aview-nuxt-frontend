@@ -1,5 +1,8 @@
 <template>
   <div id="Home_main">
+    <!-- ✅ 설문조사 팝업 컴포넌트 -->
+    <SurveyPopup />
+
     <section id="HomeMain">
       <HomeMain @scroll-to-home-second="goToHomeSecond" />
     </section>
@@ -16,7 +19,6 @@
       <HomeFive />
     </section>
     <section id="HomeSix">
-      <!-- 🟡 GO TOP 화살표 버튼도 포함된 섹션 -->
       <HomeSix @scroll-to-home="goToUp" />
     </section>
   </div>
@@ -30,6 +32,7 @@ import HomeThird from "@/components/HomeThird.vue";
 import HomeFour from "@/components/HomeFour.vue";
 import HomeFive from "@/components/HomeFive.vue";
 import HomeSix from "@/components/HomeSix.vue";
+//import SurveyPopup from "@/components/SurveyPopup.vue"; // ✅ 팝업 추가
 
 export default defineComponent({
   components: {
@@ -39,6 +42,7 @@ export default defineComponent({
     HomeFour,
     HomeFive,
     HomeSix,
+    //SurveyPopup, // ✅ 팝업 등록
   },
   setup() {
     function goToHomeSecond() {
@@ -95,10 +99,9 @@ body {
   box-sizing: border-box;
 }
 
-/* ✅ 푸터 위에 고정되는 GO TOP 화살표 버튼 */
 .go-top-btn {
   position: fixed;
-  bottom: 100px; /* ✅ 푸터와 겹치지 않게 여유를 둠 */
+  bottom: 100px;
   right: 20px;
   font-size: 24px;
   background-color: transparent;
