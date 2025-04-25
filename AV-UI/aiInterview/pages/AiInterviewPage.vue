@@ -163,17 +163,17 @@ const handleStartInterview = async () => {
   }
 
   start.value = true;
-  let techSkillNumberList = info.skills
-  console.log(`techSkillNumberList = ${techSkillNumberList}`)
+  let techSkillNumberList = info.skills;
+  console.log(`techSkillNumberList = ${techSkillNumberList}`);
 
-  const res = aiInterviewStore.requestCreateInterviewToDjango({
+  const res = await aiInterviewStore.requestCreateInterviewToDjango({
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
-    projectExperience: info.project,          
-    academicBackground: info.academic,        
+    projectExperience: info.project,
+    academicBackground: info.academic,
     // interviewTechStack: info.skills,
-    interviewTechStack: techSkillNumberList
+    interviewTechStack: techSkillNumberList,
   });
   //console.log("보내는 techStack:", info.skills.map(skill => skillsMap[skill]))
 
