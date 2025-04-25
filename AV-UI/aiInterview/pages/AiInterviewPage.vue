@@ -116,7 +116,7 @@ const showStartMessage = () => {
   const plainMessage = startMessage
     .replace(/<br\s*\/?>/gi, "\n") // <br> → 줄바꿈
     .replace(/<\/p>/gi, "\n") // </p> → 줄바꿈
-    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거거
+    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거
   currentUtteance = new SpeechSynthesisUtterance(plainMessage);
   currentUtteance.lang = "ko-KR";
   currentUtteance.rate = 0.9;
@@ -163,12 +163,19 @@ const handleStartInterview = async () => {
   }
 
   start.value = true;
+  let techSkillNumberList = info.skills
+  console.log(`techSkillNumberList = ${techSkillNumberList}`)
 
   const res = aiInterviewStore.requestCreateInterviewToDjango({
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
+    projectExperience: info.project,          
+    academicBackground: info.academic,        
+    // interviewTechStack: info.skills,
+    interviewTechStack: techSkillNumberList
   });
+  //console.log("보내는 techStack:", info.skills.map(skill => skillsMap[skill]))
 
   currentInterviewId.value = Number(res.interviewId);
   currentAIMessage.value = res.question;
