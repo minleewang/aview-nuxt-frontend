@@ -9,9 +9,8 @@
       <h2 class="title typing-animation">
         <p style="text-transform: none; font-size: 56px">
           &nbsp;
-          <!-- &nbsp은 공백을 의미,대신 줄바꿈은 일어나지 않음-->
-          <span style="color: black; font-weight: bold"
-            >{{ typedText }}&nbsp;
+          <span style="color: black; font-weight: bold">
+            {{ typedText }}&nbsp;
           </span>
         </p>
         <div style="margin-bottom: 10px"></div>
@@ -19,7 +18,7 @@
         <div style="margin-bottom: 24px"></div>
       </h2>
 
-      <!-- 메인화면의 있는 글씨를 나타냄-->
+      <!-- 설명글 -->
       <transition name="fade-down">
         <p v-if="showElements" class="description" style="color: black">
           JOBSTICK은 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여
@@ -28,7 +27,15 @@
           최선을 다하겠습니다.
         </p>
       </transition>
+
+      <!-- ✅ 설문조사 하러가기 버튼 추가 -->
+      <transition name="fade-down">
+        <div v-if="showElements" style="margin-top: 30px">
+          <v-btn color="primary" @click="goToSurvey">설문조사 하러가기</v-btn>
+        </div>
+      </transition>
     </div>
+
     <ScrollAnimation
       class="scrollanimation"
       v-if="showElements"
@@ -47,6 +54,7 @@ import {
   nextTick,
   ref,
 } from "vue";
+import { useRouter } from "vue-router";
 import ScrollAnimation from "./ScrollAnimation.vue";
 
 export default defineComponent({
@@ -61,6 +69,7 @@ export default defineComponent({
     const typeIndex = ref(0);
     const showElements = ref(false);
     const { emit } = getCurrentInstance();
+    const router = useRouter(); // ✅ 라우터 사용
 
     function typeText() {
       if (typeIndex.value < fullText.value.length) {
@@ -79,6 +88,11 @@ export default defineComponent({
       emit("scroll-to-home-second");
     }
 
+    // ✅ 설문조사 페이지로 이동하는 함수
+    function goToSurvey() {
+      router.push("/survey");
+    }
+
     onMounted(() => {
       typeText();
     });
@@ -88,34 +102,30 @@ export default defineComponent({
       typedText,
       typeIndex,
       showElements,
-
       goToHomeSecond,
+      goToSurvey,
       typeText,
     };
   },
 });
 </script>
 
-<!--선언한 class들 모음-->
 <style scoped>
-/* 홈화면 설정*/
 .home-container {
-  width: 100%; /*너비*/
-  max-width: 100vw; /*너비*/
-  height: 100vh; /*높이*/
-  display: flex; /*flexbox레이아웃 모델 사용*/
-  justify-content: center; /*수평 중앙*/
-  align-items: center; /*수직 중앙*/
-  text-align: center; /*텍스트 수평 중앙*/
-  overflow: hidden; /*콘텐츠가 영역을 벗어나면 안보이도록 설정*/
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
   position: relative;
   background: url("@/assets/images/fixed/home_bg2.jpg") center center;
-  /*배경이미지가 반복 되지 않도록 설정, 즉 남는 공간 발생 시 이미지가 다시 생성되는 것을 막음*/
   background-size: cover;
   background-attachment: fixed;
 }
 
-/*read more나타내는 설정*/
 .scrollanimation {
   position: absolute;
   bottom: 8vh;
@@ -125,7 +135,6 @@ export default defineComponent({
   animation-delay: 5s;
 }
 
-/*홈 화면에 있는 로고 설정*/
 .home-icon {
   height: 130px;
   background-image: url("@/assets/images/fixed/logo1.png");
@@ -134,13 +143,11 @@ export default defineComponent({
   background-position: center;
 }
 
-/*문자 크기 설정*/
 .text-container {
   width: 80vw;
   padding: 20px;
 }
 
-/*메인화면 들어갈 떄 글씨가 타자치면서 나오는 연출을 의미*/
 .typing-animation {
   display: inline-block;
   overflow: hidden;
@@ -149,18 +156,16 @@ export default defineComponent({
   animation: typing 2s steps(30), blink 0.5s step-end infinite alternate;
 }
 
-/*타이핑 모션*/
 @keyframes typing {
   from {
-    width: 0; /*여기서부터*/
+    width: 0;
   }
 
   to {
-    width: 100%; /*여기까지*/
+    width: 100%;
   }
 }
 
-/*깜빡이는 모션*/
 @keyframes blink {
   from {
     border-color: transparent;
@@ -171,37 +176,31 @@ export default defineComponent({
   }
 }
 
-/*fade-down 시작상태(처음 적용)*/
 .fade-down-enter-from {
   opacity: 0;
   transform: translateY(-30px);
 }
 
-/*fade-down 애니매이션 적용중*/
 .fade-down-enter-active {
   transition: all 0.8s ease-out;
 }
 
-/*fade-down 최종상태*/
 .fade-down-enter-to {
   opacity: 1;
   transform: translateY(0);
 }
 
-/*SINCE 2025크기 설정*/
 .subtitle {
   font-size: 24px;
   font-weight: bold;
 }
 
-/*설명글 크기 설정*/
 .description {
   font-size: 18px;
   color: #ffffff;
   margin-top: 10vh;
 }
 
-/*모바일적용 */
 @media screen and (max-width: 768px) {
   .home-container {
     background-position: center;
@@ -209,7 +208,7 @@ export default defineComponent({
   }
 
   .home-icon {
-    height: 80px; /* 줄임 */
+    height: 80px;
   }
 
   .text-container {
