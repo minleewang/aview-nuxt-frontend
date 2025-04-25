@@ -25,11 +25,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
 
 const visible = ref(false);
-const router = useRouter();
-
 const popupRef = ref<HTMLElement | null>(null);
 let isDragging = false;
 let offsetX = 0;
@@ -63,9 +60,10 @@ const stopDrag = () => {
   isDragging = false;
 };
 
+// ✅ 참여 버튼 클릭 시 구글 폼 새 탭으로 열기
 const goToSurvey = () => {
   visible.value = false;
-  router.push("/survey");
+  window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform"); // 
 };
 </script>
 
@@ -76,13 +74,13 @@ const goToSurvey = () => {
   left: 20px;
   transform: translateY(-50%);
   z-index: 9999;
-  cursor: move; /* 커서 모양 바꿔서 드래그 느낌 줌 */
+  cursor: move;
 }
 
 .popup-card {
   width: 280px;
-  background-color: #e3f2fd; /* 연한 파란색 */
-  color: #0d47a1;            /* 텍스트 파랑 */
-  user-select: none;         /* 드래그 시 텍스트 선택 방지 */
+  background-color: #e3f2fd;
+  color: #0d47a1;
+  user-select: none;
 }
 </style>
