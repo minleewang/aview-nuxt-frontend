@@ -6,18 +6,27 @@
     @mousedown="startDrag"
   >
     <v-card elevation="6" class="popup-card">
-      <v-card-title class="text-subtitle-1">
+      <v-card-title class="popup-title">
         설문조사 안내
       </v-card-title>
+
       <v-card-text>
         안녕하세요! JOBSTICK 팀입니다.<br /><br />
         더 나은 서비스를 위해 여러분의 의견이 필요해요.<br /><br />
         짧은 설문이니 부담 없이 참여 부탁드립니다..! 😢<br /><br />
         (여러분의 소중한 피드백은 서비스 개선에 큰 힘이 됩니다.)
       </v-card-text>
+
       <v-card-actions class="justify-end">
-        <v-btn text size="small" @click="visible = false">닫기</v-btn>
-        <v-btn color="primary" size="small" @click="goToSurvey">참여</v-btn>
+        <v-btn color="grey" size="small" @click="dontShowToday">
+          오늘 하루 보지 않기
+        </v-btn>
+        <v-btn color="primary" size="small" @click="visible = false">
+          닫기
+        </v-btn>
+        <v-btn color="red" size="small" @click="goToSurvey">
+          참여
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -32,7 +41,23 @@ let isDragging = false;
 let offsetX = 0;
 let offsetY = 0;
 
+function getTodayKey(): string {
+  const today = new Date();
+  return today.toISOString().split("T")[0];
+}
+
+function dontShowToday() {
+  const today = getTodayKey();
+  localStorage.setItem("hideSurveyPopupUntil", today);
+  visible.value = false;
+}
+
 onMounted(() => {
+  const today = getTodayKey();
+  const stored = localStorage.getItem("hideSurveyPopupUntil");
+
+  if (stored === today) return;
+
   setTimeout(() => {
     visible.value = true;
   }, 1000);
@@ -60,10 +85,12 @@ const stopDrag = () => {
   isDragging = false;
 };
 
-// ✅ 참여 버튼 클릭 시 구글 폼 새 탭으로 열기
 const goToSurvey = () => {
   visible.value = false;
-  window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform"); // 
+  window.open(
+    "https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform",
+    "_blank"
+  );
 };
 </script>
 
@@ -82,5 +109,10 @@ const goToSurvey = () => {
   background-color: #e3f2fd;
   color: #0d47a1;
   user-select: none;
+}
+
+.popup-title {
+  color: #d32f2f; /* 빨간색 */
+  font-weight: bold;
 }
 </style>
