@@ -200,17 +200,17 @@ const keywords = ref([
   "DevOps",
 ]);
 const keywordMap = {
-  Backend: 1,
-  Frontend: 2,
-  Embedded: 3,
-  AI: 4,
-  DevOps: 5,
+  'Backend': 1,
+  'Frontend': 2,
+  'Embedded': 3,
+  'AI': 4,
+  'DevOps': 5,
   "App·Web": 6,
 };
 const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택X)
 
-// 기술 다중 선택
 
+// 기술 다중 선택
 const skills = ref([
   "풀스택",
   "백엔드/서버개발",
@@ -237,43 +237,43 @@ const skills = ref([
 ]);
 
 const skillsMap = {
-  풀스택: 1,
+  "풀스택": 1,
   "백엔드/서버개발": 2,
-  프론트엔드: 3,
-  웹개발: 4,
-  Flutter: 5,
-  Java: 6,
-  JavaScript: 7,
-  Python: 8,
+  "프론트엔드": 3,
+  "웹개발": 4,
+  "Flutter": 5,
+  'Java': 6,
+  'JavaScript': 7,
+  'Python': 8,
   "Vue.js": 9,
-  API: 10,
-  MYSQL: 11,
-  AWS: 12,
-  ReactJS: 13,
-  ASP: 14,
-  Angular: 15,
-  Bootstrap: 16,
+  'API': 10,
+  'MYSQL': 11,
+  'AWS': 12,
+  'ReactJS': 13,
+  'ASP': 14,
+  'Angular': 15,
+  'Bootstrap': 16,
   "Node.js": 17,
-  jQuery: 18,
-  PHP: 19,
-  JSP: 20,
-  GraphQL: 21,
-  HTML5: 22,
+  'jQuery': 18,
+  'PHP': 19,
+  'JSP': 20,
+  'GraphQL': 21,
+  'HTML5': 22,
 };
-const selectedTechSkills = ref([]); // ✅ 배열로 바꿔서 여러 개 선택 가능하게!
+const selectedTechSkills = ref([]);  // ✅ 배열로 바꿔서 여러 개 선택 가능하게!
 
 // 전공 단일 선택
-const academicBackgrounds = ref(["전공자", "비전공자"]);
+const academicBackgrounds = ref(["비전공자","전공자"]);
 const academicBackgroundMap = {
-  전공자: 1,
-  비전공자: 2,
+  '비전공자': 0,
+  '전공자': 1,
 };
 const selectedAcademicBackground = ref(""); // 전공 단일 선택
 
 //경력 모음
 const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]); // 이건 사용자한테 보여질 목록
 const careerMap = {
-  신입: 1,
+  "신입": 1,
   "3년 이하": 2,
   "5년 이하": 3,
   "10년 이하": 4,
@@ -282,10 +282,10 @@ const careerMap = {
 const selectedCareer = ref(""); // 경력 단일 선택 (중복선택X)
 
 // 프로젝트 경험
-const projectExperience = ref(["있음", "없음"]);
+const projectExperience = ref(["없음","있음"]);
 const projectExperienceMap = {
-  있음: 1,
-  없음: 2,
+  '없음': 0,
+  '있음': 1,
 };
 const selectedProjectExperience = ref(""); // 프로젝트 경험 여부 단일 선택
 
@@ -314,11 +314,16 @@ const startQuestion = async () => {
     return;
   }
 
+  console.log(`selectedTechSkills: ${selectedTechSkills.value}`)
+  selectedTechSkills.value.map((skill) => console.log(`skill: ${skill}`))
+  let techSkillNumberList = selectedTechSkills.value.map((skill) => skillsMap[skill])
+  console.log(`techSkillNumberList: ${techSkillNumberList}`)
+
   const message = `선택한 직무: ${selectedKeyword.value}
   선택학 경력: ${selectedCareer.value}
   전공 여부: ${selectedAcademicBackground.value}
   프로젝트 경험: ${selectedProjectExperience.value}
-  기술 스택: ${selectedTechSkills.value}`;
+  기술 스택: ${selectedTechSkills.value.join(", ")}`;
   if (!confirm(message)) return;
 
   const jobstorage = {
@@ -326,7 +331,7 @@ const startQuestion = async () => {
     exp: careerMap[selectedCareer.value],
     academic: academicBackgroundMap[selectedAcademicBackground.value],
     project: projectExperienceMap[selectedProjectExperience.value],
-    skills: selectedTechSkills.value.map((skill) => skillsMap[skill]),
+    skills: selectedTechSkills.value.map((skill) => skillsMap[skill])
   };
   localStorage.setItem("interviewInfo", JSON.stringify(jobstorage));
   router.push("/ai-test");
