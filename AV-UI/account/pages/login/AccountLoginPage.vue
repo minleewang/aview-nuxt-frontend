@@ -12,7 +12,7 @@
         <!-- 로그인 버튼들 -->
         <v-btn
           class="guest-login-btn"
-          @click="goToPrivacyAgreementPage('GUEST')"
+          @click="handleGuestLogin('GUEST')"
           >게스트 로그인</v-btn
         >
         <v-btn
@@ -38,7 +38,10 @@
 <script setup>
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useGuestAuthenticationStore } from "@/guestAuthentication/stores/guestAuthenticationStore";
+
 const router = useRouter();
+const guestAuthentication = useGuestAuthenticationStore();
 
 // ✅ 진입 시 loginType 초기화
 onMounted(() => {
@@ -48,6 +51,22 @@ onMounted(() => {
 const goToPrivacyAgreementPage = (loginType) => {
   sessionStorage.setItem("tempLoginType", loginType);
   router.push("/account/privacy");
+};
+
+
+const handleGuestLogin = async () => {
+  try {
+    localStorage.setItem("loginType", "GUEST");
+    localStorage.setItem("loginTypeFallback", "GUEST");
+
+    const { userToken } = await guestAuthentication.requestGuestLoginToDjango();
+    localStorage.setItem("userToken", userToken);
+
+    router.push("/");
+  } catch (error) {
+    console.error("게스트 로그인 실패:", error);
+    alert("게스트 로그인에 실패했습니다.");
+  }
 };
 
 const goToAdminLogin = () => {
