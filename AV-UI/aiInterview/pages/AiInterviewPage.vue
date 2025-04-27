@@ -70,8 +70,40 @@ const currentQuestionId = ref(1);
 const currentInterviewId = ref(null);
 const remainingTime = ref(90);
 const timer = ref(null);
-const startMessage =
-  "<h2>안녕하세요. AI 모의 면접 서비스입니다.</h2><br><strong><span>제한 시간 내에 답변 작성 부탁드립니다.</span><br><span>지금부터 면접을 시작하겠습니다.</span></strong>";
+
+const startMessage = ref("");
+
+onMounted(() => {
+  if (process.client) {
+    speakStartMessage(); // 페이지 진입 시 음성과 텍스트 안내
+  }
+});
+
+const speakStartMessage = () => {
+  const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 
+  질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 
+  마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`;
+
+  // 화면용 안내 문구 (HTML)
+  startMessage.value = `
+    <br>
+    <strong>
+      <span>AI 모의 면접이 곧 시작됩니다.</span><br>
+      <span>면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다.</span><br>
+      <span>질문을 다 들은 뒤, <mark>말하기 버튼</mark>을 눌러 답변을 시작해 주세요.</span><br>
+      <span>마이크와 카메라가 정상적으로 작동 중인지 확인해 주세요.</span>
+    </strong>
+  `;
+
+  // 음성 안내
+  const utterance = new SpeechSynthesisUtterance(message);
+  utterance.lang = "ko-KR";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+};
+
 let recognition;
 let synth = window.speechSynthesis;
 let currentUtteance = null;
@@ -116,7 +148,7 @@ const showStartMessage = () => {
   const plainMessage = startMessage
     .replace(/<br\s*\/?>/gi, "\n") // <br> → 줄바꿈
     .replace(/<\/p>/gi, "\n") // </p> → 줄바꿈
-    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거
+    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거거
   currentUtteance = new SpeechSynthesisUtterance(plainMessage);
   currentUtteance.lang = "ko-KR";
   currentUtteance.rate = 0.9;
@@ -163,19 +195,12 @@ const handleStartInterview = async () => {
   }
 
   start.value = true;
-  let techSkillNumberList = info.skills;
-  console.log(`techSkillNumberList = ${techSkillNumberList}`);
 
-  const res = await aiInterviewStore.requestCreateInterviewToDjango({
+  const res = aiInterviewStore.requestCreateInterviewToDjango({
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
-    projectExperience: info.project,
-    academicBackground: info.academic,
-    // interviewTechStack: info.skills,
-    interviewTechStack: techSkillNumberList,
   });
-  //console.log("보내는 techStack:", info.skills.map(skill => skillsMap[skill]))
 
   currentInterviewId.value = Number(res.interviewId);
   currentAIMessage.value = res.question;
