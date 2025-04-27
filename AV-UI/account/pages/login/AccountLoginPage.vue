@@ -10,9 +10,7 @@
         <v-divider class="mt-5 mb-7" :thickness="3"></v-divider>
 
         <!-- 로그인 버튼들 -->
-        <v-btn
-          class="guest-login-btn"
-          @click="handleGuestLogin('GUEST')"
+        <v-btn class="guest-login-btn" @click="handleGuestLogin('GUEST')"
           >게스트 로그인</v-btn
         >
         <v-btn
@@ -43,21 +41,14 @@ import { useGuestAuthenticationStore } from "@/guestAuthentication/stores/guestA
 const router = useRouter();
 const guestAuthentication = useGuestAuthenticationStore();
 
-// ✅ 진입 시 loginType 초기화
-onMounted(() => {
-  localStorage.removeItem("loginType");
-});
-
 const goToPrivacyAgreementPage = (loginType) => {
   sessionStorage.setItem("tempLoginType", loginType);
   router.push("/account/privacy");
 };
 
-
 const handleGuestLogin = async () => {
   try {
     localStorage.setItem("loginType", "GUEST");
-    localStorage.setItem("loginTypeFallback", "GUEST");
 
     const { userToken } = await guestAuthentication.requestGuestLoginToDjango();
     localStorage.setItem("userToken", userToken);
