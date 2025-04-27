@@ -6,11 +6,12 @@ export const aiInterviewActions = {
   async requestCreateInterviewToDjango(payload: {
     userToken: string;
     jobCategory: number;        // 직무
-    skills: number;             // 기술
-    academicBackground: number; // 전공 여부
     experienceLevel: number;    // 경력
-    projectExperience: number;  // 프로젝트 경험 여부 
+    projectExperience: number;  // 프로젝트 경험 여부
+    academicBackground: number; // 전공 여부
+    interviewTechStack: number[]; // 기술
     //interviewId: number;
+
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
