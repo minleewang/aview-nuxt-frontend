@@ -146,15 +146,15 @@ const speakCurrentMessage = () => {
 
 const showStartMessage = () => {
   const plainMessage = startMessage
-    .replace(/<br\s*\/?>/gi, "\n") // <br> → 줄바꿈
-    .replace(/<\/p>/gi, "\n") // </p> → 줄바꿈
-    .replace(/<[^>]+>/g, ""); //나머지 HTML 제거거
+    .replace(/<br\s*\/?>/gi, "\n") 
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<[^>]+>/g, "");
   currentUtteance = new SpeechSynthesisUtterance(plainMessage);
   currentUtteance.lang = "ko-KR";
   currentUtteance.rate = 0.9;
   currentUtteance.pitch = 1.2;
   currentUtteance.onend = () => {
-    visible.value = false; // ✅ 여기서 전환됨
+    visible.value = false; // 여기서 전환됨
     speakCurrentMessage();
   };
   synth.speak(currentUtteance);
@@ -195,11 +195,17 @@ const handleStartInterview = async () => {
   }
 
   start.value = true;
+  let techSkillNumberList = info.skills;
+  console.log(`techSkillNumberList = ${techSkillNumberList}`);
 
-  const res = aiInterviewStore.requestCreateInterviewToDjango({
+  const res = await aiInterviewStore.requestCreateInterviewToDjango({
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
+    projectExperience: info.project,          
+    academicBackground: info.academic,        
+    // interviewTechStack: info.skills,
+    interviewTechStack: techSkillNumberList
   });
 
   currentInterviewId.value = Number(res.interviewId);
