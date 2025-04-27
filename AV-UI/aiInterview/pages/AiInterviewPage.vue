@@ -80,10 +80,6 @@ onMounted(() => {
 });
 
 const speakStartMessage = () => {
-  const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 
-  질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 
-  마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`;
-
   // 화면용 안내 문구 (HTML)
   startMessage.value = `
     <br>
@@ -94,18 +90,10 @@ const speakStartMessage = () => {
       <span>마이크와 카메라가 정상적으로 작동 중인지 확인해 주세요.</span>
     </strong>
   `;
-
-  // 음성 안내
-  const utterance = new SpeechSynthesisUtterance(message);
-  utterance.lang = "ko-KR";
-  utterance.rate = 1;
-  utterance.pitch = 1;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(utterance);
 };
 
 let recognition;
-let synth = window.speechSynthesis;
+const synth = process.client ? window.speechSynthesis : null;
 let currentUtteance = null;
 
 const formattedAIMessage = computed(() => {
@@ -117,8 +105,8 @@ const replayQuestion = () => {
   if (synth.speaking) synth.cancel();
   const utterance = new SpeechSynthesisUtterance(currentAIMessage.value);
   utterance.lang = "ko-KR";
-  utterance.rate = 1;
-  utterance.pitch = 5;
+  utterance.rate = 0.85;
+  utterance.pitch = 1.0;
   setTimeout(() => synth.speak(utterance), 100);
 };
 
@@ -136,36 +124,18 @@ const speakCurrentMessage = () => {
   remainingTime.value = 90; //타이머 초기화
   currentUtteance = new SpeechSynthesisUtterance(currentAIMessage.value);
   currentUtteance.lang = "ko-KR";
-  currentUtteance.rate = 0.9;
-  currentUtteance.pitch = 1.2;
+  currentUtteance.rate = 0.85;
+  currentUtteance.pitch = 1.0;
   currentUtteance.onend = () => {
     startTimer();
   };
   synth.speak(currentUtteance);
 };
 
+// startMessage는 ref객체이기 떄문에 value안에 텍스트가 들어있음
 const showStartMessage = () => {
-  const plainMessage = startMessage
-    .replace(/<br\s*\/?>/gi, "\n") 
-    .replace(/<\/p>/gi, "\n")
-    .replace(/<[^>]+>/g, "");
-  currentUtteance = new SpeechSynthesisUtterance(plainMessage);
-  currentUtteance.lang = "ko-KR";
-  currentUtteance.rate = 0.9;
-  currentUtteance.pitch = 1.2;
-  currentUtteance.onend = () => {
-    visible.value = false; // 여기서 전환됨
-    speakCurrentMessage();
-  };
-  synth.speak(currentUtteance);
-
-  //IOS
-  setTimeout(() => {
-    if (visible.value) {
-      visible.value = false;
-      speakCurrentMessage();
-    }
-  }, 5000);
+  visible.value = false;
+  speakCurrentMessage();
 };
 
 // 타이머
@@ -202,16 +172,30 @@ const handleStartInterview = async () => {
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
-    projectExperience: info.project,          
-    academicBackground: info.academic,        
+    projectExperience: info.project,
+    academicBackground: info.academic,
     // interviewTechStack: info.skills,
-    interviewTechStack: techSkillNumberList
+    interviewTechStack: techSkillNumberList,
   });
 
   currentInterviewId.value = Number(res.interviewId);
   currentAIMessage.value = res.question;
 
-  showStartMessage();
+  const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 
+  질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 
+  마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`;
+  // 음성 안내
+  const utterance = new SpeechSynthesisUtterance(message);
+  utterance.lang = "ko-KR";
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  utterance.onend = () => {
+    showStartMessage();
+  };
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
 };
 
 onMounted(() => {
