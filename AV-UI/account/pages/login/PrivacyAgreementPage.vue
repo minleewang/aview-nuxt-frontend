@@ -117,21 +117,12 @@ const loginType = ref(null);
 const router = useRouter();
 
 onMounted(() => {
-  // 세션이 sessionStorage에만 있고 localStorage로 넘어가지 않아서
-  // 인증에 실패할 수도 있을 것 같습니다.
   const tempType = sessionStorage.getItem("tempLoginType");
-
-  // localStorage 보조 저장
-  if (!tempType) {
-    tempType = localStorage.getItem("loginTypeFallback");
-  }
-
-  // agreeAndLogin 전에 localStorage에 백업 저장
-  localStorage.setItem("loginTypeFallback", loginType.value);
-
   const validTypes = ["KAKAO", "GOOGLE", "NAVER"];
   if (!tempType || !validTypes.includes(tempType)) {
     loginType.value = null;
+    alert("잘못된 접근입니다. 로그인 페이지로 이동합니다.");
+    router.push("/account/login"); // ✅ 로그인 페이지로 리다이렉트
   } else {
     loginType.value = tempType;
   }
@@ -154,6 +145,7 @@ const agreeAndLogin = async () => {
 
     // ✅ 로그인 완료 후에만 영구 저장
     localStorage.setItem("loginType", loginType.value);
+    sessionStorage.removeItem("tempLoginType");
   } catch (err) {
     console.error("로그인 실패:", err);
     alert("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
