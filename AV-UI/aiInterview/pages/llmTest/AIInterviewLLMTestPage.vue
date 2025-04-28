@@ -197,7 +197,7 @@ const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택 X)
 
 // 전공 단일 선택
 const academicBackgrounds = ref(["전공자", "비전공자"]);
-const academicBackgroundMap = { '전공자': 1, '비전공자': 0 };
+const academicBackgroundMap = { '전공자': 2, '비전공자': 1 };
 const selectedAcademicBackground = ref("");
 
 // 경력 모음
