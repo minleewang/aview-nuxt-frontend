@@ -87,6 +87,9 @@ export const aiInterviewActions = {
   },
 
   async requestFollowUpQuestionToDjango(payload: {
+    jobCategory: number;
+    experienceLevel: number;
+    academicBackground: number;
     userToken: string;
     interviewId: number;
     questionId: number;
