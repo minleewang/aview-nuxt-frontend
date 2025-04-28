@@ -172,8 +172,8 @@ const handleStartInterview = async () => {
     userToken: localStorage.getItem("userToken"),
     jobCategory: info.tech,
     experienceLevel: info.exp,
-    projectExperience: info.project,
     academicBackground: info.academic,
+    projectExperience: info.project,
     // interviewTechStack: info.skills,
     interviewTechStack: techSkillNumberList,
   });
@@ -255,29 +255,35 @@ const onAnswerComplete = async () => {
     alert("음성 인식 결과가 없습니다.");
     return;
   }
+  
+  const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
+
   const payload = {
     userToken: localStorage.getItem("userToken"),
     interviewId: currentInterviewId.value,
     questionId: currentQuestionId.value,
     answerText: sttLog.value,
+    jobCategory: info.tech,
+    experienceLevel: info.exp,
+    academicBackground: info.academic,
   };
 
-  //사용자 응답 저장
+  // 사용자 응답 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
-  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
-    payload
-  );
+  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
   if (!followUp || !followUp.questions) {
     alert("다음 질문을 불러오지 못했습니다.");
     return;
   }
+  
   console.log("📩 followUp 응답:", followUp);
   currentQuestionId.value = followUp.questionId;
   currentAIMessage.value = followUp.questions;
   sttLog.value = "";
   speakCurrentMessage();
 };
+
 
 useHead({
   title: `AI 모의면접 & 인성면접 | `,
