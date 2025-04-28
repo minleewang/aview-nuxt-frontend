@@ -186,24 +186,24 @@ const keywords = ref([
 ]);
 
 const keywordMap = {
-  Backend: 1,
-  Frontend: 2,
-  Embedded: 3,
-  AI: 4,
-  DevOps: 5,
+  'Backend': 1,
+  'Frontend': 2,
+  'Embedded': 3,
+  'AI': 4,
+  'DevOps': 5,
   "App·Web": 6,
 };
 const selectedKeyword = ref(""); // 직무 단일 선택 (중복선택 X)
 
 // 전공 단일 선택
 const academicBackgrounds = ref(["전공자", "비전공자"]);
-const academicBackgroundMap = { 전공자: 1, 비전공자: 0 };
+const academicBackgroundMap = { '전공자': 1, '비전공자': 0 };
 const selectedAcademicBackground = ref("");
 
 // 경력 모음
 const careers = ref(["신입", "3년 이하", "5년 이하", "10년 이하", "10년 이상"]);
 const careerMap = {
-  신입: 1,
+  '신입': 1,
   "3년 이하": 2,
   "5년 이하": 3,
   "10년 이하": 4,
@@ -213,7 +213,7 @@ const selectedCareer = ref("");
 
 // 프로젝트 경험
 const projectExperience = ref(["있음", "없음"]);
-const projectExperienceMap = { 있음: 1, 없음: 0 };
+const projectExperienceMap = { '있음': 1, '없음': 0 };
 const selectedProjectExperience = ref("");
 
 // 기술 다중 선택
@@ -243,28 +243,28 @@ const skills = ref([
 ]);
 
 const skillsMap = {
-  풀스택: 1,
+  '풀스택': 1,
   "백엔드/서버개발": 2,
-  프론트엔드: 3,
-  웹개발: 4,
-  Flutter: 5,
-  Java: 6,
-  JavaScript: 7,
-  Python: 8,
+  '프론트엔드': 3,
+  '웹개발': 4,
+  'Flutter': 5,
+  'Java': 6,
+  'JavaScript': 7,
+  'Python': 8,
   "Vue.js": 9,
-  API: 10,
-  MYSQL: 11,
-  AWS: 12,
-  ReactJS: 13,
-  ASP: 14,
-  Angular: 15,
-  Bootstrap: 16,
+  'API': 10,
+  'MYSQL': 11,
+  'AWS': 12,
+  'ReactJS': 13,
+  'ASP': 14,
+  'Angular': 15,
+  'Bootstrap': 16,
   "Node.js": 17,
-  jQuery: 18,
-  PHP: 19,
-  JSP: 20,
-  GraphQL: 21,
-  HTML5: 22,
+  'jQuery': 18,
+  'PHP': 19,
+  'JSP': 20,
+  'GraphQL': 21,
+  'HTML5': 22,
 };
 const selectedTechSkills = ref([]); // 배열로 바꿔서 여러 개 선택 가능하게!
 //const skillsMap = Object.fromEntries(skills.value.map((s, i) => [s, i + 1]));

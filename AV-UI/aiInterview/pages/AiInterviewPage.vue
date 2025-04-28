@@ -271,7 +271,9 @@ const onAnswerComplete = async () => {
   // 사용자 응답 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
+
   const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
+
   if (!followUp || !followUp.questions) {
     alert("다음 질문을 불러오지 못했습니다.");
     return;

@@ -94,6 +94,10 @@ export const aiInterviewActions = {
     interviewId: number;
     questionId: number;
     answerText: string;
+    jobCategory: number;
+    experienceLevel: number;
+    academicBackground: number;
+
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
   
