@@ -50,7 +50,7 @@ const handleGuestLogin = async () => {
   try {
     localStorage.setItem("loginType", "GUEST");
 
-    const { userToken } = await guestAuthentication.requestGuestLoginToDjango();
+    const userToken = await guestAuthentication.requestGuestLoginToDjango();
     localStorage.setItem("userToken", userToken);
 
     router.push("/");
