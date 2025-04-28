@@ -16,6 +16,7 @@ export const guestAuthenticationAction = {
       this.isAuthenticated = true;
 
       localStorage.setItem("userToken", userToken);
+      console.log("받은 userToken:", userToken);
       localStorage.setItem("loginType", "GUEST");
 
       return userToken;
