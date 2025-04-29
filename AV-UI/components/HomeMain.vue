@@ -4,36 +4,37 @@
       <transition name="fade-down">
         <div v-if="showElements" class="home-icon"></div>
       </transition>
-      <div style="margin-bottom: 10px"></div>
 
       <h2 class="title typing-animation">
-        <p style="text-transform: none; font-size: 56px">
-          &nbsp;
+        <p style="text-transform: none; font-size: 48px; text-align: left;">
           <span style="color: black; font-weight: bold">
-            {{ typedText }}&nbsp;
+            {{ typedText }}
           </span>
         </p>
-        <div style="margin-bottom: 10px"></div>
-        <p class="subtitle" style="color: black">SINCE 2025</p>
-        <div style="margin-bottom: 24px"></div>
+        <p class="subtitle" style="color: black; text-align: left;">SINCE 2025</p>
       </h2>
+
+      <!-- 설문조사 하러가기 버튼 -->
+      <transition name="fade-down">
+        <div v-if="showElements" class="survey-button">
+          <v-btn color="primary" @click="goToSurvey">설문조사 하러가기</v-btn>
+        </div>
+      </transition>
 
       <!-- 설명글 -->
       <transition name="fade-down">
-        <p v-if="showElements" class="description" style="color: black">
+        <p v-if="showElements" class="description" style="color: black; text-align: left;">
           JOBSTICK은 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여
           <br />
           보다 많은 사람들에게 양질의 정보를 공유하고 도움을 드릴 수 있도록
           최선을 다하겠습니다.
         </p>
       </transition>
+    </div>
 
-      <!-- ✅ 설문조사 하러가기 버튼 -->
-      <transition name="fade-down">
-        <div v-if="showElements" style="margin-top: 30px">
-          <v-btn color="primary" @click="goToSurvey">설문조사 하러가기</v-btn>
-        </div>
-      </transition>
+    <!-- 아이폰 이미지 -->
+    <div class="image-container" v-if="showElements">
+      <img src="@/assets/images/fixed/ph1.png" alt="iPhone Interview" class="iphone-image" />
     </div>
 
     <ScrollAnimation
@@ -61,7 +62,6 @@ export default defineComponent({
   components: {
     ScrollAnimation,
   },
-
   setup() {
     const fullText = ref("USE YOUR JOBSTICK!");
     const typedText = ref("");
@@ -86,7 +86,6 @@ export default defineComponent({
       emit("scroll-to-home-second");
     }
 
-    // ✅ 구글폼 새 탭으로 이동
     function goToSurvey() {
       window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform");
     }
@@ -114,14 +113,45 @@ export default defineComponent({
   max-width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
+  text-align: left;
   overflow: hidden;
   position: relative;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
+  padding: 0 5%;
+  background-color: #ffffff;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.text-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.image-container {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ 수정된 iphone-image */
+.iphone-image {
+  width: 90%;
+  max-width: 400px;
+  height: auto;
+  transform: rotate(-5deg);
+  /* box-shadow 삭제 */
+  /* border-radius 삭제 */
+  /* background-color 삭제 */
+}
+
+.survey-button {
+  margin: 20px 0;
+  text-align: left;
 }
 
 .scrollanimation {
@@ -133,19 +163,6 @@ export default defineComponent({
   animation-delay: 5s;
 }
 
-.home-icon {
-  height: 130px;
-  background-image: url("@/assets/images/fixed/logo1.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.text-container {
-  width: 80vw;
-  padding: 20px;
-}
-
 .typing-animation {
   display: inline-block;
   overflow: hidden;
@@ -155,23 +172,13 @@ export default defineComponent({
 }
 
 @keyframes typing {
-  from {
-    width: 0;
-  }
-
-  to {
-    width: 100%;
-  }
+  from { width: 0; }
+  to { width: 100%; }
 }
 
 @keyframes blink {
-  from {
-    border-color: transparent;
-  }
-
-  to {
-    border-color: white;
-  }
+  from { border-color: transparent; }
+  to { border-color: white; }
 }
 
 .fade-down-enter-from {
@@ -191,44 +198,32 @@ export default defineComponent({
 .subtitle {
   font-size: 24px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 .description {
   font-size: 18px;
-  color: #ffffff;
-  margin-top: 10vh;
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 768px) {
   .home-container {
-    background-position: center;
-    background-size: cover;
+    flex-direction: column;
+    padding: 20px;
   }
 
-  .home-icon {
-    height: 80px;
+  .text-container, .image-container {
+    width: 100%;
+    text-align: center;
   }
 
-  .text-container {
-    width: 100vw;
-    padding: 30px;
+  .iphone-image {
+    margin-top: 20px;
+    transform: rotate(0deg);
   }
 
-  .typing-animation p {
-    font-size: 26px !important;
-  }
-
-  .subtitle {
-    font-size: 18px;
-  }
-
-  .description {
-    font-size: 15px;
-    margin-top: 5vh;
-  }
-
-  .scrollanimation {
-    bottom: 5vh;
+  .survey-button {
+    text-align: center;
   }
 }
 </style>
