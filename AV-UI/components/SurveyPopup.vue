@@ -1,31 +1,38 @@
 <template>
   <div
     v-if="visible"
-    class="popup-container"
+    class="popup-container animate__animated animate__shakeX"
     ref="popupRef"
     @mousedown="startDrag"
   >
-    <v-card elevation="6" class="popup-card">
+    <v-card elevation="12" class="popup-card">
+      <!-- ✅ 상단 쿠폰 이미지 -->
+      <div class="popup-coupon-image">
+        <img src="@/assets/images/fixed/coupon.png" alt="쿠폰 이미지" />
+      </div>
+
       <v-card-title class="popup-title">
-        설문조사 안내
+        🎁 설문조사 이벤트
       </v-card-title>
 
-      <v-card-text>
-        안녕하세요! JOBSTICK 팀입니다.<br /><br />
-        더 나은 서비스를 위해 여러분의 의견이 필요해요.<br /><br />
-        짧은 설문이니 부담 없이 참여 부탁드립니다..! 😢<br /><br />
-        (여러분의 소중한 피드백은 서비스 개선에 큰 힘이 됩니다.)
+      <v-card-text class="popup-text">
+        안녕하세요!<br /><br />
+        JOBSTICK 팀이 준비한 깜짝 이벤트!<br /><br />
+        간단한 설문에 참여해주시면<br />
+        <strong>추첨을 통해 총 5분께</strong><br />
+        <strong>메머드 커피 기프티콘</strong>을 드려요 ☕🎉<br /><br />
+        지금 바로 참여해보세요!
       </v-card-text>
 
-      <v-card-actions class="justify-end">
-        <v-btn color="grey" size="small" @click="dontShowToday">
+      <v-card-actions class="popup-actions">
+        <v-btn color="grey" variant="elevated" size="small" class="btn-today pulse-hover" @click="dontShowToday">
           오늘 하루 보지 않기
         </v-btn>
-        <v-btn color="primary" size="small" @click="visible = false">
+        <v-btn color="primary" variant="elevated" size="small" class="btn-close pulse-hover" @click="visible = false">
           닫기
         </v-btn>
-        <v-btn color="red" size="small" @click="goToSurvey">
-          참여
+        <v-btn color="red" variant="elevated" size="small" class="btn-submit pulse-hover" @click="goToSurvey">
+          참여하기
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -95,24 +102,94 @@ const goToSurvey = () => {
 </script>
 
 <style scoped>
+@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
+
 .popup-container {
   position: fixed;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
+  top: 70px; /* ✅ 상단에서 60px 내려오게 수정 */
+  left: 50px;
   z-index: 9999;
   cursor: move;
 }
 
 .popup-card {
-  width: 280px;
-  background-color: #e3f2fd;
+  width: 300px;
+  background: #ffffff; /* ✅ 하얀색 배경 */
   color: #0d47a1;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   user-select: none;
+  padding: 16px 0 8px 0;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+}
+
+.popup-coupon-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.popup-coupon-image img {
+  width: 120px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.popup-icon {
+  display: none;
 }
 
 .popup-title {
-  color: #d32f2f; /* 빨간색 */
+  text-align: center;
+  color: #d32f2f;
   font-weight: bold;
+  font-size: 22px;
+}
+
+.popup-text {
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+  margin: 0 12px;
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+}
+
+.btn-today {
+  border-bottom: 2px solid grey;
+}
+
+.btn-close {
+  border-bottom: 2px solid #1976d2;
+}
+
+.btn-submit {
+  border-bottom: 2px solid red;
+}
+
+/* ✅ 버튼 hover시 살짝 반짝이는 효과 */
+.pulse-hover:hover {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
