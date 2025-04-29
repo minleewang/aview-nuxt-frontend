@@ -106,15 +106,16 @@ const goToSurvey = () => {
 
 .popup-container {
   position: fixed;
-  top: 70px; /* ✅ 상단에서 60px 내려오게 수정 */
-  left: 50px;
+  top: 14%;
+  left: 45%;
+  transform: translate(-50%, -50%); /* ✅ 중앙 정렬 */
   z-index: 9999;
   cursor: move;
 }
 
 .popup-card {
   width: 300px;
-  background: #ffffff; /* ✅ 하얀색 배경 */
+  background: #ffffff;
   color: #0d47a1;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
@@ -176,7 +177,6 @@ const goToSurvey = () => {
   border-bottom: 2px solid red;
 }
 
-/* ✅ 버튼 hover시 살짝 반짝이는 효과 */
 .pulse-hover:hover {
   animation: pulse 1s infinite;
 }
