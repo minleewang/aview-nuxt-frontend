@@ -255,7 +255,7 @@ const onAnswerComplete = async () => {
     alert("음성 인식 결과가 없습니다.");
     return;
   }
-  
+
   const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
 
   const payload = {
@@ -271,21 +271,21 @@ const onAnswerComplete = async () => {
   // 사용자 응답 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
-
-  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
+  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
+    payload
+  );
 
   if (!followUp || !followUp.questions) {
     alert("다음 질문을 불러오지 못했습니다.");
     return;
   }
-  
+
   console.log("📩 followUp 응답:", followUp);
-  currentQuestionId.value = followUp.questionId;
-  currentAIMessage.value = followUp.questions;
+  currentQuestionId.value += 1;
+  currentAIMessage.value = followUp.questions[0];
   sttLog.value = "";
   speakCurrentMessage();
 };
-
 
 useHead({
   title: `AI 모의면접 & 인성면접 | `,
