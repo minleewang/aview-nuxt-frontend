@@ -5,19 +5,19 @@ import { useAiInterviewStore } from "./aiInterviewStore";
 export const aiInterviewActions = {
   async requestCreateInterviewToDjango(payload: {
     userToken: string;
-    jobCategory: number;        // 직무
-    experienceLevel: number;    // 경력
-    projectExperience: number;  // 프로젝트 경험 여부
+    jobCategory: number; // 직무
+    experienceLevel: number; // 경력
+    projectExperience: number; // 프로젝트 경험 여부
     academicBackground: number; // 전공 여부
     interviewTechStack: number[]; // 기술
     //interviewId: number;
-
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/create", payload
+        "/interview/create",
+        payload
       );
       return res.data;
     } catch (err) {
@@ -46,8 +46,8 @@ export const aiInterviewActions = {
   },
 
   async requestRemoveInterviewToDjango(payload: {
-    userToken: string,
-    interviewId: number
+    userToken: string;
+    interviewId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -55,7 +55,7 @@ export const aiInterviewActions = {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/remove",
         {
-          payload
+          payload,
         }
       );
       return res.data;
@@ -72,13 +72,13 @@ export const aiInterviewActions = {
     answerText: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
-  
+
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/user-answer",  // ✅ 이걸로 고쳐야 정상 작동
+        "/interview/user-answer", // ✅ 이걸로 고쳐야 정상 작동
         payload
       );
-  
+
       return res.data;
     } catch (err) {
       console.error("답변 저장 중 오류:", err);
@@ -96,7 +96,7 @@ export const aiInterviewActions = {
     answerText: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
-  
+
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/followup", // 백엔드 Django가 저장하고 FastAPI 호출
@@ -107,8 +107,8 @@ export const aiInterviewActions = {
       console.error("requestFollowUpQuestionToDjango() → error:", error);
       throw error;
     }
-  },  
-  
+  },
+
   async requestGetScoreResultListToDjango(payload: {
     accountId: string;
   }): Promise<string> {
