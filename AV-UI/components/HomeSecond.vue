@@ -194,7 +194,6 @@ export default defineComponent({
 /*페이지 전체 틀 및 백그라운드 사진*/
 .home-second {
   width: 100%;
-  background: url("@/assets/images/fixed/home_bg2.jpg") center center;
   background-size: cover;
   background-attachment: fixed;
   display: flex;

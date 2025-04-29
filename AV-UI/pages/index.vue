@@ -3,22 +3,27 @@
     <!-- ✅ 설문조사 팝업 컴포넌트 -->
     <SurveyPopup />
 
-    <section id="HomeMain">
+    <section id="HomeMain" class="section white-bg">
       <HomeMain @scroll-to-home-second="goToHomeSecond" />
     </section>
-    <section id="HomeSecond">
+
+    <section id="HomeSecond" class="section gray-bg">
       <HomeSecond />
     </section>
-    <section id="HomeThird">
+
+    <section id="HomeThird" class="section white-bg">
       <HomeThird />
     </section>
-    <section id="HomeFour">
+
+    <section id="HomeFour" class="section gray-bg">
       <HomeFour />
     </section>
-    <section id="HomeFive">
+
+    <section id="HomeFive" class="section white-bg">
       <HomeFive />
     </section>
-    <section id="HomeSix">
+
+    <section id="HomeSix" class="section gray-bg">
       <HomeSix @scroll-to-home="goToUp" />
     </section>
   </div>
@@ -91,7 +96,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -99,6 +104,25 @@ body {
   box-sizing: border-box;
 }
 
+/* 공통 섹션 스타일 */
+.section {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ 섹션별 배경색 구분 */
+.white-bg {
+  background-color: #ffffff; /* 하얀색 */
+}
+
+.gray-bg {
+  background-color: #f5f5f5; /* 연한 회색 */
+}
+
+/* GO TOP 버튼 */
 .go-top-btn {
   position: fixed;
   bottom: 100px;
