@@ -268,7 +268,7 @@ const onAnswerComplete = async () => {
     experienceLevel: info.exp,
     academicBackground: info.academic,
     projectExperience: info.project,
-    techSkill: info.skills,
+    interviewTechStack: info.skills,
   };
 
   // 사용자 응답 저장
