@@ -23,7 +23,7 @@ export function createAxiosInstances() {
   if (!fastapiAxiosInst) {
     fastapiAxiosInst = axios.create({
       baseURL: aiBaseUrl,
-      timeout: 10000,
+      timeout: 20000,
     });
   }
 

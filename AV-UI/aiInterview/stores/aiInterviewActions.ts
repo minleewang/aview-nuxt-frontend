@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 export const aiInterviewActions = {
+  //첫 질문
   async requestCreateInterviewToDjango(payload: {
     userToken: string;
     jobCategory: number; // 직무
@@ -10,7 +11,7 @@ export const aiInterviewActions = {
     projectExperience: number; // 프로젝트 경험 여부
     academicBackground: number; // 전공 여부
     interviewTechStack: number[]; // 기술
-    //interviewId: number;
+    interviewId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -64,7 +65,7 @@ export const aiInterviewActions = {
       throw error;
     }
   },
-
+  //응답 생성
   async requestCreateAnswerToDjango(payload: {
     userToken: string;
     interviewId: number;
@@ -85,7 +86,7 @@ export const aiInterviewActions = {
       throw err;
     }
   },
-
+  //첫 질문에 대한 심화질문
   async requestFollowUpQuestionToDjango(payload: {
     jobCategory: number;
     experienceLevel: number;
@@ -98,8 +99,58 @@ export const aiInterviewActions = {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
+      console.log(payload);
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/followup", // 백엔드 Django가 저장하고 FastAPI 호출
+        payload
+      );
+      return res.data;
+    } catch (error) {
+      console.error("requestFollowUpQuestionToDjango() → error:", error);
+      throw error;
+    }
+  },
+
+  // 두번째 질문
+  async requestProjectCreateInterviewToDjango(payload: {
+    userToken: string;
+    jobCategory: number; // 직무
+    experienceLevel: number; // 경력
+    projectExperience: number; // 프로젝트 경험 여부
+    academicBackground: number; // 전공 여부
+    interviewTechStack: number[]; // 기술
+    interviewId: number;
+  }): Promise<any> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
+    try {
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/project-create",
+        payload
+      );
+      return res.data;
+    } catch (err) {
+      console.error("requestProjectCreateInterviewToDjango() -> error:", err);
+      throw err;
+    }
+  },
+
+  // 두번째 심화질문
+  async requestProjectFollowUpQuestionToDjango(payload: {
+    jobCategory: number;
+    projectExperience: number;
+    experienceLevel: number;
+    userToken: string;
+    interviewId: number;
+    questionId: number;
+    answerText: string;
+  }): Promise<any> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
+    try {
+      console.log(payload);
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/project-followup", // 백엔드 Django가 저장하고 FastAPI 호출
         payload
       );
       return res.data;
@@ -126,25 +177,6 @@ export const aiInterviewActions = {
   },
 
   // ✅ FastAPI 관련 함수들은 그대로 유지해도 문제 없음
-  async requestInferNextQuestionToFastAPI(payload: {
-    answer: string;
-    nextIntent: string;
-  }): Promise<string> {
-    const { fastapiAxiosInst } = axiosUtility.createAxiosInstances();
-    const { answer, nextIntent } = payload;
-    try {
-      const command = 7;
-      const response = await fastapiAxiosInst.post("/request-ai-command", {
-        command,
-        data: [answer, nextIntent],
-      });
-      return response.data;
-    } catch (error) {
-      console.log("requestInferToFastAPI() 중 문제 발생:", error);
-      throw error;
-    }
-  },
-
   async requestInferScoreResultToFastAPI(payload: {
     interviewResult: any[];
   }): Promise<string> {

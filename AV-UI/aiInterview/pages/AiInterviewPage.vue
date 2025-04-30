@@ -64,13 +64,13 @@ const visible = ref(true);
 const isLoading = ref(false); // 로딩 상태 추가
 const finished = ref(false);
 const recognizing = ref(false);
-const sttLog = ref("");
+const sttLog = ref(""); //STT 결과
 const currentAIMessage = ref(""); // 현재 AI 메시지를 저장하는 변수
-const currentQuestionId = ref(1);
-const currentInterviewId = ref(null);
+const currentQuestionId = ref(1); //현재 질문번호
+const currentInterviewId = ref(null); //응답중인 질문번호
 const remainingTime = ref(90);
 const timer = ref(null);
-
+const maxQuestionId = ref(6); //최대 질문 개수
 const startMessage = ref("");
 
 onMounted(() => {
@@ -119,6 +119,7 @@ const handleBeforeUnload = (event) => {
   }
 };
 
+// 질문
 const speakCurrentMessage = () => {
   clearInterval(timer.value); //기존 타이머 정지
   remainingTime.value = 90; //타이머 초기화
@@ -174,15 +175,15 @@ const handleStartInterview = async () => {
     experienceLevel: info.exp,
     academicBackground: info.academic,
     projectExperience: info.project,
-    // interviewTechStack: info.skills,
+    interviewTechStack: info.skills,
     interviewTechStack: techSkillNumberList,
   });
 
   currentInterviewId.value = Number(res.interviewId);
   currentAIMessage.value = res.question;
 
-  const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 
-  질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 
+  const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다.
+  질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요.
   마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`;
   // 음성 안내
   const utterance = new SpeechSynthesisUtterance(message);
@@ -266,23 +267,41 @@ const onAnswerComplete = async () => {
     jobCategory: info.tech,
     experienceLevel: info.exp,
     academicBackground: info.academic,
+    projectExperience: info.project,
+    techSkill: info.skills,
   };
 
   // 사용자 응답 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
-  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
-    payload
-  );
+  let nextQuestion = null; // 다음 질문을 담을 변수
 
-  if (!followUp || !followUp.questions) {
-    alert("다음 질문을 불러오지 못했습니다.");
+  //심화질문 및 두번째 섹션 질문
+  if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
+    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
+      payload
+    );
+    nextQuestion = followUp?.questions?.[0];
+  } else if (currentQuestionId.value === 3) {
+    const projectMain =
+      await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+    nextQuestion = projectMain?.questions?.[0];
+  } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
+    const projectFollowUp =
+      await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
+    nextQuestion = projectFollowUp?.questions?.[0];
+  } else {
+    alert("모든 면접이 완료되었습니다");
+    finished.value = true;
     return;
   }
 
-  console.log("📩 followUp 응답:", followUp);
+  if (!nextQuestion) {
+    alert("다음 질문을 불러오지 못했습니다.");
+    return;
+  }
   currentQuestionId.value += 1;
-  currentAIMessage.value = followUp.questions[0];
+  currentAIMessage.value = nextQuestion;
   sttLog.value = "";
   speakCurrentMessage();
 };
