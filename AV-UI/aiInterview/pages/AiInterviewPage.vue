@@ -18,7 +18,13 @@
       </v-col>
       <v-col cols="5">
         <div class="video-box">
-          <video ref="userVideo" autoplay playsinline muted class="user-video" />
+          <video
+            ref="userVideo"
+            autoplay
+            playsinline
+            muted
+            class="user-video"
+          />
         </div>
       </v-col>
     </v-row>
@@ -96,7 +102,8 @@ onMounted(() => {
   if (process.client) {
     speakStartMessage();
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
       return;
@@ -253,14 +260,18 @@ const onAnswerComplete = async () => {
   let nextQuestion = null;
 
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
-    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
+    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
+      payload
+    );
     nextQuestion = followUp?.questions?.[0];
   } else if (currentQuestionId.value === 3) {
-    const projectMain = await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
-    nextQuestion = projectMain?.questions?.[0];
+    const projectMain =
+      await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+    nextQuestion = projectMain?.question?.[0];
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
-    const projectFollowUp = await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
-    nextQuestion = projectFollowUp?.questions?.[0];
+    const projectFollowUp =
+      await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
+    nextQuestion = projectFollowUp?.question?.[0];
   } else {
     alert("모든 면접이 완료되었습니다");
     finished.value = true;
@@ -287,7 +298,9 @@ onBeforeUnmount(() => {
 
 onBeforeRouteLeave((to, from, next) => {
   if (start.value) {
-    const answer = window.confirm("면접이 진행 중입니다. 페이지를 나가시겠습니까?");
+    const answer = window.confirm(
+      "면접이 진행 중입니다. 페이지를 나가시겠습니까?"
+    );
     if (answer) {
       clearInterval(timer.value);
       next();
@@ -309,7 +322,8 @@ useHead({
     {
       hid: "keywords",
       name: "keywords",
-      content: "모의면접, ai 모의면접, 인성면접, ai 인성면접, 인적성 검사 준비, ai 인적, ai 면접, aim 모의면접, aim ai 모의면접, AIV 모의면접, AIV, AIV, AIV, AIV Sniper",
+      content:
+        "모의면접, ai 모의면접, 인성면접, ai 인성면접, 인적성 검사 준비, ai 인적, ai 면접, aim 모의면접, aim ai 모의면접, AIV 모의면접, AIV, AIV, AIV, AIV Sniper",
     },
   ],
 });
@@ -373,7 +387,9 @@ useHead({
 }
 
 @keyframes loading-animation {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     opacity: 0;
   }
   40% {

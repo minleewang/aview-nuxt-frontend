@@ -128,6 +128,7 @@ export const aiInterviewActions = {
         "/interview/project-create",
         payload
       );
+      console.log(res.data.question);
       return res.data;
     } catch (err) {
       console.error("requestProjectCreateInterviewToDjango() -> error:", err);
