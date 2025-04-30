@@ -8,6 +8,20 @@
   </v-container>
 
   <v-container v-if="start" align="center">
+    <!-- ✅ 면접관 이미지 + 사용자 웹캠 상단에 추가 -->
+    <v-row justify="center" class="video-row">
+      <v-col cols="5">
+        <div class="video-box">
+          <!-- ⛳️ 정적 경로 대신 바인딩 방식 (:src) 사용 -->
+          <img :src="hhImage" alt="면접관" class="interviewer-image" />
+        </div>
+      </v-col>
+      <v-col cols="5">
+        <div class="video-box">
+          <video ref="userVideo" autoplay playsinline muted class="user-video" />
+        </div>
+      </v-col>
+    </v-row>
     <div v-if="visible" class="interview-container">
       <v-icon>mdi-account-tie</v-icon><br />
       <div v-html="startMessage"></div>
@@ -52,8 +66,8 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore"; // Pinia store import
-import { useRouter, useRoute, onBeforeRouteLeave } from "vue-router";
+import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
 const router = useRouter();
@@ -61,26 +75,55 @@ const aiInterviewStore = useAiInterviewStore();
 
 const start = ref(false);
 const visible = ref(true);
-const isLoading = ref(false); // 로딩 상태 추가
+const isLoading = ref(false);
 const finished = ref(false);
 const recognizing = ref(false);
-const sttLog = ref(""); //STT 결과
-const currentAIMessage = ref(""); // 현재 AI 메시지를 저장하는 변수
-const currentQuestionId = ref(1); //현재 질문번호
-const currentInterviewId = ref(null); //응답중인 질문번호
+const sttLog = ref("");
+const currentAIMessage = ref("");
+const currentQuestionId = ref(1);
+const currentInterviewId = ref(null);
 const remainingTime = ref(90);
 const timer = ref(null);
-const maxQuestionId = ref(6); //최대 질문 개수
+const maxQuestionId = ref(6);
 const startMessage = ref("");
+const userVideo = ref(null);
+
+let recognition;
+const synth = process.client ? window.speechSynthesis : null;
+let currentUtteance = null;
 
 onMounted(() => {
   if (process.client) {
-    speakStartMessage(); // 페이지 진입 시 음성과 텍스트 안내
+    speakStartMessage();
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
+      return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "ko-KR";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => (recognizing.value = true);
+    recognition.onend = () => (recognizing.value = false);
+    recognition.onerror = () => (recognizing.value = false);
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      sttLog.value = transcript;
+    };
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      if (userVideo.value) userVideo.value.srcObject = stream;
+    });
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
   }
 });
 
 const speakStartMessage = () => {
-  // 화면용 안내 문구 (HTML)
   startMessage.value = `
     <br>
     <strong>
@@ -92,15 +135,10 @@ const speakStartMessage = () => {
   `;
 };
 
-let recognition;
-const synth = process.client ? window.speechSynthesis : null;
-let currentUtteance = null;
-
 const formattedAIMessage = computed(() => {
   return currentAIMessage.value.replace(/([.?])/g, "$1<br>");
 });
 
-//다시듣기
 const replayQuestion = () => {
   if (synth.speaking) synth.cancel();
   const utterance = new SpeechSynthesisUtterance(currentAIMessage.value);
@@ -110,19 +148,16 @@ const replayQuestion = () => {
   setTimeout(() => synth.speak(utterance), 100);
 };
 
-// 면접 도중 나가려는 경우
 const handleBeforeUnload = (event) => {
   if (start.value) {
     event.preventDefault();
     event.returnValue = "면접이 진행 중입니다. 페이지를 나가시겠습니까?";
-    return "면접이 진행 중입니다. 페이지를 나가시겠습니까?";
   }
 };
 
-// 질문
 const speakCurrentMessage = () => {
-  clearInterval(timer.value); //기존 타이머 정지
-  remainingTime.value = 90; //타이머 초기화
+  clearInterval(timer.value);
+  remainingTime.value = 90;
   currentUtteance = new SpeechSynthesisUtterance(currentAIMessage.value);
   currentUtteance.lang = "ko-KR";
   currentUtteance.rate = 0.85;
@@ -133,13 +168,11 @@ const speakCurrentMessage = () => {
   synth.speak(currentUtteance);
 };
 
-// startMessage는 ref객체이기 떄문에 value안에 텍스트가 들어있음
 const showStartMessage = () => {
   visible.value = false;
   speakCurrentMessage();
 };
 
-// 타이머
 const startTimer = () => {
   clearInterval(timer.value);
   timer.value = setInterval(() => {
@@ -147,12 +180,11 @@ const startTimer = () => {
       remainingTime.value--;
     } else {
       clearInterval(timer.value);
-      onAnswerComplete(); // 시간이 다 되면 자동 제출
+      onAnswerComplete();
     }
   }, 1000);
 };
 
-//STT시작
 const startSTT = () => {
   if (recognition && !recognizing.value) recognition.start();
 };
@@ -166,8 +198,7 @@ const handleStartInterview = async () => {
   }
 
   start.value = true;
-  let techSkillNumberList = info.skills;
-  console.log(`techSkillNumberList = ${techSkillNumberList}`);
+  const techSkillNumberList = info.skills;
 
   const res = await aiInterviewStore.requestCreateInterviewToDjango({
     userToken: localStorage.getItem("userToken"),
@@ -175,7 +206,6 @@ const handleStartInterview = async () => {
     experienceLevel: info.exp,
     academicBackground: info.academic,
     projectExperience: info.project,
-    interviewTechStack: info.skills,
     interviewTechStack: techSkillNumberList,
   });
 
@@ -185,12 +215,11 @@ const handleStartInterview = async () => {
   const message = `AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다.
   질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요.
   마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`;
-  // 음성 안내
+
   const utterance = new SpeechSynthesisUtterance(message);
   utterance.lang = "ko-KR";
   utterance.rate = 1;
   utterance.pitch = 1;
-
   utterance.onend = () => {
     showStartMessage();
   };
@@ -199,58 +228,6 @@ const handleStartInterview = async () => {
   window.speechSynthesis.speak(utterance);
 };
 
-onMounted(() => {
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) {
-    alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
-    return;
-  }
-
-  recognition = new SpeechRecognition();
-  recognition.lang = "ko-KR";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.onstart = () => (recognizing.value = true);
-  recognition.onend = () => (recognizing.value = false);
-  recognition.onerror = () => (recognizing.value = false);
-  recognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript;
-    sttLog.value = transcript;
-  };
-
-  window.addEventListener("beforeunload", handleBeforeUnload);
-});
-
-// 페이지 나가면 TTS 캔슬
-onBeforeUnmount(() => {
-  if (synth && synth.speaking) {
-    synth.cancel();
-  }
-  localStorage.removeItem("interviewInfo");
-  clearInterval(timer.value);
-  window.removeEventListener("beforeunload", handleBeforeUnload);
-});
-
-//면접 도중 페이지 이동
-onBeforeRouteLeave((to, from, next) => {
-  if (start.value) {
-    const answer = window.confirm(
-      "면접이 진행 중입니다. 페이지를 나가시겠습니까?"
-    );
-    if (answer) {
-      clearInterval(timer.value);
-      next(); //이동 허용
-    } else {
-      next(false); //이동 취소
-    }
-  } else {
-    next();
-  }
-});
-
-// 답변
 const onAnswerComplete = async () => {
   if (!sttLog.value.trim()) {
     alert("음성 인식 결과가 없습니다.");
@@ -271,24 +248,18 @@ const onAnswerComplete = async () => {
     interviewTechStack: info.skills,
   };
 
-  // 사용자 응답 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
-  let nextQuestion = null; // 다음 질문을 담을 변수
+  let nextQuestion = null;
 
-  //심화질문 및 두번째 섹션 질문
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
-    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
-      payload
-    );
+    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
     nextQuestion = followUp?.questions?.[0];
   } else if (currentQuestionId.value === 3) {
-    const projectMain =
-      await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+    const projectMain = await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
     nextQuestion = projectMain?.questions?.[0];
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
-    const projectFollowUp =
-      await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
+    const projectFollowUp = await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
     nextQuestion = projectFollowUp?.questions?.[0];
   } else {
     alert("모든 면접이 완료되었습니다");
@@ -300,11 +271,33 @@ const onAnswerComplete = async () => {
     alert("다음 질문을 불러오지 못했습니다.");
     return;
   }
+
   currentQuestionId.value += 1;
   currentAIMessage.value = nextQuestion;
   sttLog.value = "";
   speakCurrentMessage();
 };
+
+onBeforeUnmount(() => {
+  if (synth && synth.speaking) synth.cancel();
+  localStorage.removeItem("interviewInfo");
+  clearInterval(timer.value);
+  window.removeEventListener("beforeunload", handleBeforeUnload);
+});
+
+onBeforeRouteLeave((to, from, next) => {
+  if (start.value) {
+    const answer = window.confirm("면접이 진행 중입니다. 페이지를 나가시겠습니까?");
+    if (answer) {
+      clearInterval(timer.value);
+      next();
+    } else {
+      next(false);
+    }
+  } else {
+    next();
+  }
+});
 
 useHead({
   title: `AI 모의면접 & 인성면접 | `,
@@ -316,8 +309,7 @@ useHead({
     {
       hid: "keywords",
       name: "keywords",
-      content:
-        "모의면접, ai 모의면접, 인성면접, ai 인성면접, 인적성 검사 준비, ai 인적, ai 면접, aim 모의면접, aim ai 모의면접, AIV 모의면접, AIV, AIV, AIV, AIV Sniper",
+      content: "모의면접, ai 모의면접, 인성면접, ai 인성면접, 인적성 검사 준비, ai 인적, ai 면접, aim 모의면접, aim ai 모의면접, AIV 모의면접, AIV, AIV, AIV, AIV Sniper",
     },
   ],
 });
@@ -351,10 +343,37 @@ useHead({
   font-size: 16px;
 }
 
+.video-row {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.video-box {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+
+.interviewer-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @keyframes loading-animation {
-  0%,
-  80%,
-  100% {
+  0%, 80%, 100% {
     opacity: 0;
   }
   40% {
