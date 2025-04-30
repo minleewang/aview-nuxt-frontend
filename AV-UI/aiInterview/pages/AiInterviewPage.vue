@@ -90,7 +90,7 @@ const currentQuestionId = ref(1);
 const currentInterviewId = ref(null);
 const remainingTime = ref(90);
 const timer = ref(null);
-const maxQuestionId = ref(6);
+const maxQuestionId = ref(4);
 const startMessage = ref("");
 const userVideo = ref(null);
 
@@ -238,6 +238,12 @@ const handleStartInterview = async () => {
 const onAnswerComplete = async () => {
   if (!sttLog.value.trim()) {
     alert("음성 인식 결과가 없습니다.");
+    return;
+  }
+  // 🔁 최대질문 갯수 조정 
+  if (currentQuestionId.value >= maxQuestionId.value) {
+    alert("모든 면접이 완료되었습니다");
+    finished.value = true;
     return;
   }
 
