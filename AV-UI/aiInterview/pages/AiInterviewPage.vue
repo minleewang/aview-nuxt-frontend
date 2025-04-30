@@ -76,6 +76,8 @@ import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
+const questionQueue = ref([]); // 여러 질문 담기
+const currentQuestionIndex = ref(0);       // 현재 질문 인덱스
 const router = useRouter();
 const aiInterviewStore = useAiInterviewStore();
 
@@ -90,7 +92,7 @@ const currentQuestionId = ref(1);
 const currentInterviewId = ref(null);
 const remainingTime = ref(90);
 const timer = ref(null);
-const maxQuestionId = ref(4);
+const maxQuestionId = ref(10); // 야야야야 너는 숫자 뭐가좋니? 최대숫자를 설정해보자
 const startMessage = ref("");
 const userVideo = ref(null);
 
@@ -260,8 +262,18 @@ const onAnswerComplete = async () => {
     projectExperience: info.project,
     interviewTechStack: info.skills,
   };
-
+  
+  // 🔄 답변 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
+
+  // 🔁 follow-up 질문 큐에 여러 개가 있을 경우 하나씩 소진
+  if (questionQueue.value.length > 0 && currentQuestionIndex.value + 1 < questionQueue.value.length) {
+  currentQuestionIndex.value += 1;
+  currentAIMessage.value = questionQueue.value[currentQuestionIndex.value];
+  sttLog.value = "";
+  speakCurrentMessage();
+  return;
+  }
 
   let nextQuestion = null;
 
@@ -269,15 +281,21 @@ const onAnswerComplete = async () => {
     const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
       payload
     );
-    nextQuestion = followUp?.questions?.[0];
+    questionQueue.value = followUp?.questions || [];
+    currentQuestionIndex.value = 0;
+    nextQuestion = questionQueue.value[0];
   } else if (currentQuestionId.value === 3) {
     const projectMain =
       await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
-    nextQuestion = projectMain?.question?.[0];
+    questionQueue.value = projectMain?.question ? [projectMain.question] : [];
+    currentQuestionIndex.value = 0;
+    nextQuestion = questionQueue.value[0];
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
     const projectFollowUp =
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
-    nextQuestion = projectFollowUp?.question?.[0];
+    questionQueue.value = projectFollowUp?.question ? [projectFollowUp.question] : [];
+    currentQuestionIndex.value = 0;
+    nextQuestion = questionQueue.value[0];
   } else {
     alert("모든 면접이 완료되었습니다");
     finished.value = true;
