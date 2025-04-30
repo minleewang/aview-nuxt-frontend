@@ -104,17 +104,29 @@ const goToSurvey = () => {
 <style scoped>
 @import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css';
 
+/* 💻 웹 기본 위치 */
 .popup-container {
   position: fixed;
   top: 14%;
   left: 45%;
-  transform: translate(-50%, -50%); /* ✅ 중앙 정렬 */
+  transform: translate(-50%, -50%);
   z-index: 9999;
   cursor: move;
+  padding: 16px;
+}
+
+/* 📱 모바일 화면에서 위치 중앙으로 */
+@media (max-width: 600px) {
+  .popup-container {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .popup-card {
-  width: 300px;
+  width: 90vw;
+  max-width: 320px;
   background: #ffffff;
   color: #0d47a1;
   border-radius: 16px;
@@ -165,6 +177,7 @@ const goToSurvey = () => {
   margin-top: 8px;
 }
 
+/* 버튼 스타일 */
 .btn-today {
   border-bottom: 2px solid grey;
 }
@@ -177,6 +190,7 @@ const goToSurvey = () => {
   border-bottom: 2px solid red;
 }
 
+/* 호버 애니메이션 */
 .pulse-hover:hover {
   animation: pulse 1s infinite;
 }
@@ -190,6 +204,40 @@ const goToSurvey = () => {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+/* 📱 모바일 화면에서 위치를 더 위로 조정 */
+@media (max-width: 600px) {
+  .popup-container {
+    top: 30%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+  }
+
+  .popup-card {
+    width: 90vw;
+    max-width: 320px;
+  }
+
+  .popup-coupon-image img {
+    width: 100px;
+  }
+
+  .popup-title {
+    font-size: 18px;
+  }
+
+  .popup-text {
+    font-size: 13px;
+    margin: 0 8px;
+  }
+
+  .popup-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
   }
 }
 </style>
