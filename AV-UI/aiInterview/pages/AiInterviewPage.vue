@@ -7,47 +7,65 @@
     </div>
   </v-container>
 
-  <v-container v-if="start" align="center">
-    <!-- ✅ 면접관 이미지 + 사용자 웹캠 상단에 추가 -->
-    <v-row justify="center" class="video-row">
-      <v-col cols="5">
-        <div class="video-box">
-          <!-- ⛳️ 정적 경로 대신 바인딩 방식 (:src) 사용 -->
-          <img :src="hhImage" alt="면접관" class="interviewer-image" />
-        </div>
-      </v-col>
-      <v-col cols="5">
-        <div class="video-box">
-          <video
-            ref="userVideo"
-            autoplay
-            playsinline
-            muted
-            class="user-video"
-          />
-        </div>
-      </v-col>
-    </v-row>
-    <div v-if="visible" class="interview-container">
-      <v-icon>mdi-account-tie</v-icon><br />
-      <div v-html="startMessage"></div>
-    </div>
-
-    <div v-if="!visible" class="interview-container">
-      <v-icon>mdi-account-tie</v-icon><br />
-      <h2 v-html="formattedAIMessage"></h2>
-      <br />
-      <div :class="{ timer: true, 'red-text': remainingTime <= 10 }">
-        남은 시간: {{ Math.floor(remainingTime / 60) }}:{{
-          (remainingTime % 60).toString().padStart(2, "0")
-        }}
+  <v-container v-else fluid class="pa-0">
+    <!-- 감싸는 div에 75% 고정 -->
+<div style="width: 75%; margin: 0 auto;">
+  <v-row class="video-row" no-gutters style="margin: 0; padding: 0;">
+    <!-- 면접관 -->
+    <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-end;">
+      <div class="video-box" style="width: 100%; height: 300px;">
+        <img
+          :src="hhImage"
+          alt="면접관"
+          class="interviewer-image"
+          style="width: 100%; height: 100%; object-fit: cover;"
+        />
       </div>
-    </div>
+    </v-col>
 
+    <!-- 가운데 여백 -->
+    <v-col class="pa-0" style="max-width: 16px;"></v-col>
+
+    <!-- 면접자 -->
+    <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-start;">
+      <div class="video-box" style="width: 100%; height: 300px;">
+        <video
+          ref="userVideo"
+          autoplay
+          playsinline
+          muted
+          class="user-video"
+          style="width: 100%; height: 100%; object-fit: cover;"
+        ></video>
+      </div>
+    </v-col>
+  </v-row>
+</div>
+
+    <!-- 가운데 여백 -->
+    <v-col class="pa-0" style="max-width: 16px;"></v-col>
+      <!-- ✅ 질문 메시지/답변 영역을 영상 바로 아래로 -->
+      <v-col cols="12" class="pa-0 mt-4" style="display: flex; justify-content: center;">
+  <div v-if="visible" class="interview-container" style="margin-top: 0; width: 75%;">
+    <v-icon>mdi-account-tie</v-icon><br />
+    <div v-html="startMessage"></div>
+  </div>
+  <div v-else class="interview-container" style="margin-top: 0; width: 75%;">
+    <v-icon>mdi-account-tie</v-icon><br />
+    <h2 v-html="formattedAIMessage"></h2>
+    <br />
+    <div :class="{ timer: true, 'red-text': remainingTime <= 10 }">
+      남은 시간: {{ Math.floor(remainingTime / 60) }}:{{
+        (remainingTime % 60).toString().padStart(2, '0')
+      }}
+    </div>
+  </div>
+</v-col>
+    <!-- ✅ 로딩 메시지 -->
     <div v-if="isLoading && !finished" class="message ai">
       <br />
       <p><strong>다음 질문을 준비 중입니다.</strong></p>
-      <v-icon>mdi:account-tie</v-icon>
+      <v-icon>mdi-account-tie</v-icon>
       <div class="loading-message">
         <div class="dot"></div>
         <div class="dot"></div>
@@ -55,6 +73,7 @@
       </div>
     </div>
 
+    <!-- ✅ 답변 입력 버튼 -->
     <v-container v-if="start && !visible" class="input-area">
       <div class="button-group">
         <button class="send-button" @click="startSTT" :disabled="recognizing">
@@ -69,7 +88,6 @@
     </v-container>
   </v-container>
 </template>
-
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
