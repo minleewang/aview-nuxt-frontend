@@ -9,58 +9,74 @@
 
   <v-container v-else fluid class="pa-0">
     <!-- 감싸는 div에 75% 고정 -->
-<div style="width: 75%; margin: 0 auto;">
-  <v-row class="video-row" no-gutters style="margin: 0; padding: 0;">
-    <!-- 면접관 -->
-    <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-end;">
-      <div class="video-box" style="width: 100%; height: 300px;">
-        <img
-          :src="hhImage"
-          alt="면접관"
-          class="interviewer-image"
-          style="width: 100%; height: 100%; object-fit: cover;"
-        />
-      </div>
-    </v-col>
+    <div style="width: 75%; margin: 0 auto">
+      <v-row class="video-row" no-gutters style="margin: 0; padding: 0">
+        <!-- 면접관 -->
+        <v-col
+          cols="6"
+          class="pa-0"
+          style="display: flex; justify-content: flex-end"
+        >
+          <div class="video-box" style="width: 100%; height: 300px">
+            <img
+              :src="hhImage"
+              alt="면접관"
+              class="interviewer-image"
+              style="width: 100%; height: 100%; object-fit: cover"
+            />
+          </div>
+        </v-col>
 
-    <!-- 가운데 여백 -->
-    <v-col class="pa-0" style="max-width: 16px;"></v-col>
+        <!-- 가운데 여백 -->
+        <v-col class="pa-0" style="max-width: 16px"></v-col>
 
-    <!-- 면접자 -->
-    <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-start;">
-      <div class="video-box" style="width: 100%; height: 300px;">
-        <video
-          ref="userVideo"
-          autoplay
-          playsinline
-          muted
-          class="user-video"
-          style="width: 100%; height: 100%; object-fit: cover;"
-        ></video>
-      </div>
-    </v-col>
-  </v-row>
-</div>
-
-    <!-- 가운데 여백 -->
-    <v-col class="pa-0" style="max-width: 16px;"></v-col>
-      <!-- ✅ 질문 메시지/답변 영역을 영상 바로 아래로 -->
-      <v-col cols="12" class="pa-0 mt-4" style="display: flex; justify-content: center;">
-  <div v-if="visible" class="interview-container" style="margin-top: 0; width: 75%;">
-    <v-icon>mdi-account-tie</v-icon><br />
-    <div v-html="startMessage"></div>
-  </div>
-  <div v-else class="interview-container" style="margin-top: 0; width: 75%;">
-    <v-icon>mdi-account-tie</v-icon><br />
-    <h2 v-html="formattedAIMessage"></h2>
-    <br />
-    <div :class="{ timer: true, 'red-text': remainingTime <= 10 }">
-      남은 시간: {{ Math.floor(remainingTime / 60) }}:{{
-        (remainingTime % 60).toString().padStart(2, '0')
-      }}
+        <!-- 면접자 -->
+        <v-col
+          cols="6"
+          class="pa-0"
+          style="display: flex; justify-content: flex-start"
+        >
+          <div class="video-box" style="width: 100%; height: 300px">
+            <video
+              ref="userVideo"
+              autoplay
+              playsinline
+              muted
+              class="user-video"
+              style="width: 100%; height: 100%; object-fit: cover"
+            ></video>
+          </div>
+        </v-col>
+      </v-row>
     </div>
-  </div>
-</v-col>
+
+    <!-- 가운데 여백 -->
+    <v-col class="pa-0" style="max-width: 16px"></v-col>
+    <!-- ✅ 질문 메시지/답변 영역을 영상 바로 아래로 -->
+    <v-col
+      cols="12"
+      class="pa-0 mt-4"
+      style="display: flex; justify-content: center"
+    >
+      <div
+        v-if="visible"
+        class="interview-container"
+        style="margin-top: 0; width: 75%"
+      >
+        <v-icon>mdi-account-tie</v-icon><br />
+        <div v-html="startMessage"></div>
+      </div>
+      <div v-else class="interview-container" style="margin-top: 0; width: 75%">
+        <v-icon>mdi-account-tie</v-icon><br />
+        <h2 v-html="formattedAIMessage"></h2>
+        <br />
+        <div :class="{ timer: true, 'red-text': remainingTime <= 10 }">
+          남은 시간: {{ Math.floor(remainingTime / 60) }}:{{
+            (remainingTime % 60).toString().padStart(2, "0")
+          }}
+        </div>
+      </div>
+    </v-col>
     <!-- ✅ 로딩 메시지 -->
     <div v-if="isLoading && !finished" class="message ai">
       <br />
@@ -95,7 +111,7 @@ import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 
 const questionQueue = ref([]); // 여러 질문 담기
-const currentQuestionIndex = ref(0);       // 현재 질문 인덱스
+const currentQuestionIndex = ref(0); // 현재 질문 인덱스
 const router = useRouter();
 const aiInterviewStore = useAiInterviewStore();
 
@@ -260,7 +276,7 @@ const onAnswerComplete = async () => {
     alert("음성 인식 결과가 없습니다.");
     return;
   }
-  // 🔁 최대질문 갯수 조정 
+  // 🔁 최대질문 갯수 조정
   if (currentQuestionId.value >= maxQuestionId.value) {
     alert("모든 면접이 완료되었습니다");
     finished.value = true;
@@ -280,43 +296,30 @@ const onAnswerComplete = async () => {
     projectExperience: info.project,
     interviewTechStack: info.skills,
   };
-  
+
   // 🔄 답변 저장
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
 
-  // 🔁 follow-up 질문 큐에 여러 개가 있을 경우 하나씩 소진
-  if (questionQueue.value.length > 0 && currentQuestionIndex.value + 1 < questionQueue.value.length) {
-  currentQuestionIndex.value += 1;
-  currentAIMessage.value = questionQueue.value[currentQuestionIndex.value];
-  sttLog.value = "";
-  speakCurrentMessage();
-  return;
-  }
+  let nextQuestion = null; // ✅ 공통 변수 선언
 
-  let nextQuestion = null;
-
+  // 질문 흐름에 따른 분기
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
     const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
       payload
     );
-    questionQueue.value = followUp?.questions || [];
-    currentQuestionIndex.value = 0;
-    nextQuestion = questionQueue.value[0];
+    nextQuestion = followUp?.questions?.[0];
   } else if (currentQuestionId.value === 3) {
     const projectMain =
       await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
-    questionQueue.value = projectMain?.question ? [projectMain.question] : [];
-    currentQuestionIndex.value = 0;
-    nextQuestion = questionQueue.value[0];
+    nextQuestion = projectMain?.question?.[0];
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
     const projectFollowUp =
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
-    questionQueue.value = projectFollowUp?.question ? [projectFollowUp.question] : [];
-    currentQuestionIndex.value = 0;
-    nextQuestion = questionQueue.value[0];
+    nextQuestion = projectFollowUp?.questions?.[0];
   } else {
-    alert("모든 면접이 완료되었습니다");
+    alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
+    router.push("/ai-interview/result");
     return;
   }
 
