@@ -167,7 +167,7 @@ export const aiInterviewActions = {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview/get-interview-result",
+        "/interview_result/get-interview-result",
         payload
       );
       return res.data.interviewResultList;
