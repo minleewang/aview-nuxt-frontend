@@ -143,6 +143,7 @@ export const aiInterviewActions = {
     jobCategory: number;
     projectExperience: number;
     experienceLevel: number;
+    interviewTechStack: number[]; // 기술
     userToken: string;
     interviewId: number;
     questionId: number;
