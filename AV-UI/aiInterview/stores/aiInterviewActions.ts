@@ -1,6 +1,8 @@
 import * as axiosUtility from "../../utility/axiosInstance";
 import axios, { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
+// 모듈 범위 변수 
+let globalMediaRecorder: MediaRecorder | null = null;
 
 export const aiInterviewActions = {
   //첫 질문
@@ -217,4 +219,76 @@ export const aiInterviewActions = {
       throw error;
     }
   },
+
+  // STT 실행 후 FastAPI -> Backend로 전송
+  async sendAudioToFastAPI(recordedBlob: Blob) {
+    const formData = new FormData();
+    formData.append("audio", recordedBlob, "audio.wav");
+
+    try {
+      const response = await fetch("http://localhost:33333/stt/", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+      console.log("🎙️ STT 결과:", data.text);
+
+      // Backend로 STT 결과 전송
+      await fetch("http://localhost:3000/save_stt/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: data.text })
+      });
+
+    } catch (error) {
+      console.log("STT 처리 중 오류 발생:", error);
+    }
+  },
+
+  // 마이크 버튼 클릭 시 녹음 -> stop 후 호출
+  async startRecording() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder (stream);
+      const audioChunks: Blob[] = [];
+      globalMediaRecorder = mediaRecorder;  // 추후 stop에서 사용
+
+      mediaRecorder.ondataavailable = (event) => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+        await aiInterviewActions.sendAudioToFastAPI(audioBlob);
+
+        // 스트림 정리
+        stream.getTracks().forEach((track) => track.stop());
+        globalMediaRecorder = null;
+      };
+
+      mediaRecorder.start();
+      console.log("🎙️ 녹음 시작");
+
+      // 60초 후 자동 중지
+      setTimeout(() => {
+        if (mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+          console.log("60초 경과: 녹음 중지");
+        }
+      }, 60000);
+    } catch (err) {
+      console.error("🎙️ 마이크 접근 실패:", err);
+    }
+  },
+
+  // 녹음 수동 정지 (버튼으로도 조작 가능)
+  stopRecording() {
+    if (globalMediaRecorder && globalMediaRecorder.state !== "inactive") {
+      globalMediaRecorder.stop();
+      console.log("수동으로 녹음 중지");
+    }
+  }
 };
