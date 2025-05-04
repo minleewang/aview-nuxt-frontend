@@ -1,7 +1,3 @@
-<head>
-  <meta name="naver-site-verification" content="8119a7007491408be1083bfa16f47ef6f1bdab01" />
-</head>
-
 <template>
   <v-app>
     <!-- 전체를 감싸는 wrapper 추가 -->
