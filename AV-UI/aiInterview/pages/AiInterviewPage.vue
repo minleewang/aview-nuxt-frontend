@@ -1,12 +1,20 @@
 <template>
   <v-container v-if="!start" align="center">
-    <div class="interview-container">
-      <v-icon>mdi-account-tie</v-icon><br />
-      <div v-html="startMessage"></div>
-      <v-btn color="primary" @click="handleStartInterview">면접 시작</v-btn>
-    </div>
-  </v-container>
+  <div class="interview-container">
+    <v-icon>mdi-account-tie</v-icon><br />
+    <div v-html="startMessage"></div>
 
+    <!-- ✅ 페이지 이동용 버튼 -->
+    <v-btn color="secondary" class="mt-2" @click="goToCheckPage">
+      🎤 면접 준비 확인
+    </v-btn>
+
+    <!-- 기존 면접 시작 버튼 -->
+    <v-btn color="primary" class="mt-2" @click="handleStartInterview" :disabled="!mediaChecked">
+      면접 시작
+    </v-btn>
+  </div>
+</v-container>
   <v-container v-else fluid class="pa-0">
     <div style="width: 75%; margin: 0 auto">
       <v-row class="video-row" no-gutters style="margin: 0; padding: 0">
@@ -65,6 +73,13 @@
         <p><strong>STT 결과:</strong> {{ sttLog }}</p>
       </div>
     </v-container>
+
+    <!-- 녹화 영상 다운로드 버튼 -->
+    <div v-if="downloadUrl" style="text-align: center; margin-top: 16px">
+      <a :href="downloadUrl" download="interview-recording.webm" style="color: blue; text-decoration: underline">
+        🎥 녹화 영상 다운로드
+      </a>
+    </div>
   </v-container>
 </template>
 
@@ -93,7 +108,26 @@ const timer = ref(null);
 const maxQuestionId = ref(10);
 const startMessage = ref('');
 const userVideo = ref(null);
+const mediaChecked = ref(false);
 
+const checkMediaReady = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    stream.getTracks().forEach(track => track.stop()); // 스트림 종료
+    mediaChecked.value = true;
+    alert("마이크와 카메라가 정상적으로 작동합니다.");
+  } catch (err) {
+    alert("마이크 또는 카메라에 접근할 수 없습니다. 브라우저 권한을 확인하세요.");
+    mediaChecked.value = false;
+  }
+};
+
+const mediaRecorder = ref(null);
+const recordedBlobs = ref([]);
+const downloadUrl = ref('');
+const goToCheckPage = () => {
+  router.push('/ai-interview/check')
+}
 let recognition;
 const synth = process.client ? window.speechSynthesis : null;
 let currentUtteance = null;
@@ -101,6 +135,7 @@ let currentUtteance = null;
 onMounted(() => {
   if (process.client) {
     speakStartMessage();
+    checkMediaReady(); // ✅ 마이크/카메라 상태 확인용 함수 호출
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -119,34 +154,40 @@ onMounted(() => {
       sttLog.value = event.results[0][0].transcript;
     };
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream) => {
-        const attachVideo = () => {
-          if (userVideo.value) {
-            userVideo.value.srcObject = stream;
-          } else {
-            setTimeout(attachVideo, 100);
-          }
-        };
-        attachVideo();
-      })
-      .catch((err) => {
-        console.error('카메라 접근 오류:', err);
-        alert('카메라를 사용할 수 없습니다. 브라우저 권한을 확인해주세요.');
-      });
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      const attachVideo = () => {
+        if (userVideo.value) {
+          userVideo.value.srcObject = stream;
+        } else {
+          setTimeout(attachVideo, 100);
+        }
+      };
+      attachVideo();
+
+      mediaRecorder.value = new MediaRecorder(stream, { mimeType: 'video/webm' });
+      mediaRecorder.value.ondataavailable = (e) => recordedBlobs.value.push(e.data);
+      mediaRecorder.value.onstop = () => {
+        const blob = new Blob(recordedBlobs.value, { type: 'video/webm' });
+        downloadUrl.value = URL.createObjectURL(blob);
+      };
+      mediaRecorder.value.start();
+    }).catch((err) => {
+      console.error('카메라 접근 오류:', err);
+      alert('카메라를 사용할 수 없습니다. 브라우저 권한을 확인해주세요.');
+    });
 
     window.addEventListener('beforeunload', handleBeforeUnload);
   }
 });
-
 const speakStartMessage = () => {
   startMessage.value = `
     <strong style="display: flex; flex-direction: column; align-items: center;">
       <span style="margin-bottom: 8px;">AI 모의 면접이 곧 시작됩니다.</span>
       <span style="margin-bottom: 8px;">면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다.</span>
-      <span style="margin-bottom: 8px;">질문을 다 들은 뒤, <mark style="background: #ffecb3;">말하기 버튼</mark>을 눌러 답변을 시작해 주세요.</span>
+      <span style="margin-bottom: 8px;"><mark style="background: #ffecb3;">말하기 버튼</mark>을 눌러 답변을 시작해 주세요.</span>
       <span>마이크와 카메라가 정상적으로 작동 중인지 확인해 주세요.</span>
-    </strong>`;
+    </strong>
+  `;
 };
 
 const formattedAIMessage = computed(() => {
@@ -219,7 +260,7 @@ const handleStartInterview = async () => {
   });
   currentInterviewId.value = Number(res.interviewId);
   currentAIMessage.value = res.question;
-  const utterance = new SpeechSynthesisUtterance(`AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.`);
+  const utterance = new SpeechSynthesisUtterance("AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 마이크와 카메라가 정상적으로 작동하는지 확인해 주세요.");
   utterance.lang = 'ko-KR';
   utterance.rate = 1;
   utterance.pitch = 1;
@@ -236,6 +277,9 @@ const onAnswerComplete = async () => {
   if (currentQuestionId.value >= maxQuestionId.value) {
     alert('모든 면접이 완료되었습니다');
     finished.value = true;
+    if (mediaRecorder.value && mediaRecorder.value.state === 'recording') {
+    mediaRecorder.value.stop(); // ✅ 녹화 종료
+  }
     return;
   }
   const info = JSON.parse(localStorage.getItem('interviewInfo') || '{}');
