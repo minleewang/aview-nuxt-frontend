@@ -18,7 +18,7 @@
   position: relative;
   display: block;
   font-size: 1.5vh;
-  color: rgba(255, 255, 255, 1);
+  color: rgb(0, 0, 0);
   text-decoration: none;
   padding: 5.5vh 1vh 6vh 4vh; /* 기존 코드와 동일한 간격 */
   display: flex;
@@ -36,7 +36,7 @@
   height: 0;
   border-left: 1vh solid transparent;
   border-right: 1vh solid transparent;
-  border-bottom: 1.5vh solid white;
+  border-bottom: 1.5vh solid rgb(0, 0, 0);
   transform: translate(-50%, -50%);
   animation: bounce 1.5s infinite;
 }
@@ -63,7 +63,7 @@
   .scroll::before {
     border-left: 1.2vh solid transparent;
     border-right: 1.2vh solid transparent;
-    border-bottom: 1.8vh solid white;
+    border-bottom: 1.8vh solid rgb(0, 0, 0);
   }
 }
 
@@ -78,7 +78,7 @@
   .scroll::before {
     border-left: 1.4vh solid transparent;
     border-right: 1.4vh solid transparent;
-    border-bottom: 2vh solid white;
+    border-bottom: 2vh solid rgb(0, 0, 0);
   }
 }
 </style>

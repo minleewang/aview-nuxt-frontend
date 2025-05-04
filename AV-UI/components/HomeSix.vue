@@ -166,18 +166,18 @@ h1 {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100px;  /* 강제로 영역 확보 */
+  min-height: 100px; /* 강제로 영역 확보 */
 }
 .scrollupanimation {
   position: absolute;
   bottom: 7vh;
-  left: 50%;
+  left: 47%;
   transform: translateX(-50%);
   animation: bounce 6s ease 0s infinite;
   animation-delay: 5s;
 }
 .content-image img {
-  display: block;  /* 추가 */
+  display: block; /* 추가 */
   width: 100%;
   height: auto;
   max-height: 250px;
@@ -217,5 +217,4 @@ h1 {
     border: 1px solid red; /* 디버깅용 */
   }
 }
-
 </style>
