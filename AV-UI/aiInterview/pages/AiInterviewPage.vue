@@ -6,7 +6,7 @@
 
       <!-- ✅ 페이지 이동용 버튼 -->
       <v-btn color="secondary" class="mt-2" @click="goToCheckPage">
-        🎤 면접 준비 확인
+        면접 시작 전 기능 테스트 확인
       </v-btn>
 
       <!-- 기존 면접 시작 버튼 -->
@@ -21,7 +21,8 @@
     </div>
   </v-container>
   <v-container v-else fluid class="pa-0">
-    <div style="width: 75%; margin: 0 auto">
+    <div style="width: 75%; margin: 0 auto; padding-top: 16px">
+
       <v-row class="video-row" no-gutters style="margin: 0; padding: 0">
         <!-- 면접관 -->
         <v-col
