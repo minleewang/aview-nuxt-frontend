@@ -30,12 +30,13 @@
           style="display: flex; justify-content: flex-end"
         >
           <div class="video-box" style="width: 100%; height: 300px">
-            <img
-              :src="hhImage"
-              alt="면접관"
-              class="interviewer-image"
-              style="width: 100%; height: 100%; object-fit: cover"
-            />
+           <img
+  :src="hhImage"
+  alt="면접관"
+  class="interviewer-image"
+  style="width: 100%; height: 130%; object-fit: contain"
+/>
+ 
           </div>
         </v-col>
 
@@ -144,7 +145,7 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
-import hhImage from "@/assets/images/fixed/al.png"; //아바타로 나중에 대체할 계획
+import hhImage from "@/assets/images/fixed/al3.png"; //아바타로 나중에 대체할 계획
 
 const router = useRouter();
 const aiInterviewStore = useAiInterviewStore();
