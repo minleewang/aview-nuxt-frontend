@@ -109,7 +109,7 @@
     <v-container v-if="start && !visible" class="input-area">
       <div class="button-group">
         <button class="send-button" @click="startSTT" :disabled="recognizing">
-          말하기
+          {{ recognizing ? "녹음 중..." : "말하기" }}
         </button>
         <button @click="replayQuestion">🗣 AI 질문 듣기</button>
       </div>
@@ -208,14 +208,20 @@ onMounted(() => {
 
     recognition = new SpeechRecognition();
     recognition.lang = "ko-KR";
-    recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.continuous = true; // ✅ 지속적으로 인식
+    recognition.interimResults = true; // ✅ (선택) 중간 결과 표시
     recognition.onstart = () => (recognizing.value = true);
     recognition.onend = () => (recognizing.value = false);
     recognition.onerror = () => (recognizing.value = false);
     recognition.onresult = (event) => {
-      sttLog.value = event.results[0][0].transcript;
-    };
+      let finalTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+    }
+  }
+  sttLog.value += finalTranscript; // ✅ 누적 저장
+};
 
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -308,7 +314,10 @@ const startTimer = () => {
 };
 
 const startSTT = () => {
-  if (recognition && !recognizing.value) recognition.start();
+  if (recognition && !recognizing.value) {
+    sttLog.value = ""; // ✅ 새 답변 시 초기화
+    recognition.start();
+  }
 };
 
 const handleStartInterview = async () => {
@@ -341,6 +350,10 @@ const handleStartInterview = async () => {
 };
 
 const onAnswerComplete = async () => {
+  if (recognition && recognizing.value) {
+    recognition.stop(); // ✅ 답변 완료 시 STT 중지
+  }
+
   if (!sttLog.value.trim()) {
     alert("음성 인식 결과가 없습니다.");
     return;
