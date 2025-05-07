@@ -197,11 +197,17 @@ export const aiInterviewActions = {
 
   async requestGetScoreResultListToDjango(payload: {
     userToken: string;
+    interviewId: number;
+    jobCategory: number;
+    experienceLevel: number;
+    projectExperience: number;
+    academicBackground: number;
+    interviewTechStack: number[];
   }): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview_result/get-interview-result",
+        "/interview_result/request-interview-summary",
         payload
       );
       return res.data.interviewResultList;
@@ -211,13 +217,13 @@ export const aiInterviewActions = {
     }
   },
   //인터뷰 결과 저장
-  async requestSaveInterviewResultToDjango(payload: {
+  async requestGetInterviewResultToDjango(payload: {
     userToken: string;
   }): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
-        "/interview_result/save-interview-result",
+        "/interview_result/get-interview-result",
         payload
       );
       return res.data;
@@ -229,13 +235,6 @@ export const aiInterviewActions = {
   //면접 종료
   async requestEndInterviewToDjango(payload: {
     userToken: string;
-    questionId: number;
-    answerText: string;
-    jobCategory: number; // 직무
-    experienceLevel: number; // 경력
-    projectExperience: number; // 프로젝트 경험 여부
-    academicBackground: number; // 전공 여부
-    interviewTechStack: number[]; // 기술
     interviewId: number;
     companyName: string;
   }): Promise<string> {

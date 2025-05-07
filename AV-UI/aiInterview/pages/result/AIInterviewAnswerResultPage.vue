@@ -51,7 +51,7 @@ onMounted(async () => {
 
 // Methods
 const getScoreResultList = async (userToken) => {
-  inputList.value = await aiInterviewStore.requestGetScoreResultListToDjango({
+  inputList.value = await aiInterviewStore.requestGetInterviewResultToDjango({
     userToken: userToken,
   });
 
