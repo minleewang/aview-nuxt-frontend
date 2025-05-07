@@ -2,6 +2,17 @@ import * as axiosUtility from "../../utility/axiosInstance";
 import axios, { AxiosResponse } from "axios";
 import { useAiInterviewStore } from "./aiInterviewStore";
 
+// ✅ 회사명 매핑 유틸
+const mapCompanyName = (original: string): string => {
+  const mapping: Record<string, string> = {
+    "당근마켓": "danggeun",
+    "Toss": "toss",
+    "SK-encore": "sk_encore",
+    "KT M mobile": "kt_mobile",
+  };
+  return mapping[original] || original.toLowerCase().replace(/[\s-]+/g, "_");
+};
+
 export const aiInterviewActions = {
   //첫 질문
   async requestCreateInterviewToDjango(payload: {
@@ -16,10 +27,15 @@ export const aiInterviewActions = {
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
+    const transformedPayload = {
+      ...payload,
+      companyName: mapCompanyName(payload.companyName),
+    };
+
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/create",
-        payload
+        transformedPayload
       );
       return res.data;
     } catch (err) {
@@ -66,6 +82,7 @@ export const aiInterviewActions = {
       throw error;
     }
   },
+
   //응답 생성
   async requestCreateAnswerToDjango(payload: {
     userToken: string;
@@ -87,6 +104,7 @@ export const aiInterviewActions = {
       throw err;
     }
   },
+
   //첫 질문에 대한 심화질문
   async requestFollowUpQuestionToDjango(payload: {
     jobCategory: number;
@@ -101,11 +119,16 @@ export const aiInterviewActions = {
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
+    const transformedPayload = {
+      ...payload,
+      companyName: mapCompanyName(payload.companyName),
+    };
+
     try {
       console.log(payload);
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/followup", // 백엔드 Django가 저장하고 FastAPI 호출
-        payload
+        transformedPayload
       );
       return res.data;
     } catch (error) {
@@ -150,15 +173,20 @@ export const aiInterviewActions = {
     interviewId: number;
     questionId: number;
     answerText: string;
-    ompanyName: string;
+    companyName: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
+    const transformedPayload = {
+      ...payload,
+      companyName: mapCompanyName(payload.companyName),
+    };
 
     try {
       console.log(payload);
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview/project-followup", // 백엔드 Django가 저장하고 FastAPI 호출
-        payload
+        transformedPayload
       );
       return res.data;
     } catch (error) {
@@ -212,10 +240,16 @@ export const aiInterviewActions = {
     companyName: string;
   }): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
+    const transformedPayload = {
+      ...payload,
+      companyName: mapCompanyName(payload.companyName),
+    };
+
     try {
       const res: AxiosResponse = await djangoAxiosInstance.post(
         "/interview_result/end-interview",
-        payload
+        transformedPayload
       );
       return res.data;
     } catch (error) {
