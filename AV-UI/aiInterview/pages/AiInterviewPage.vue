@@ -333,6 +333,7 @@ const handleStartInterview = async () => {
     academicBackground: info.academic,
     projectExperience: info.project,
     interviewTechStack: info.skills,
+    companyName: info.company,
   });
   currentInterviewId.value = Number(res.interviewId);
   currentQuestionId.value = 1;
@@ -376,6 +377,7 @@ const onAnswerComplete = async () => {
     academicBackground: info.academic,
     projectExperience: info.project,
     interviewTechStack: info.skills,
+    companyName: info.company,
   };
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
   let nextQuestion = null;

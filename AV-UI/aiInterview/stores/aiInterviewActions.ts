@@ -12,6 +12,7 @@ export const aiInterviewActions = {
     academicBackground: number; // 전공 여부
     interviewTechStack: number[]; // 기술
     interviewId: number;
+    companyName: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -91,10 +92,12 @@ export const aiInterviewActions = {
     jobCategory: number;
     experienceLevel: number;
     academicBackground: number;
+    projectExperience: number;
     userToken: string;
     interviewId: number;
     questionId: number;
     answerText: string;
+    companyName: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -147,6 +150,7 @@ export const aiInterviewActions = {
     interviewId: number;
     questionId: number;
     answerText: string;
+    ompanyName: string;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -205,6 +209,7 @@ export const aiInterviewActions = {
     academicBackground: number; // 전공 여부
     interviewTechStack: number[]; // 기술
     interviewId: number;
+    companyName: string;
   }): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
