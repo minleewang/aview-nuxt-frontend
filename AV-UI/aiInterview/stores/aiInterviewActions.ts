@@ -120,6 +120,7 @@ export const aiInterviewActions = {
     academicBackground: number; // 전공 여부
     interviewTechStack: number[]; // 기술
     interviewId: number;
+    questionId: number;
   }): Promise<any> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 

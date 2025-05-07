@@ -22,7 +22,6 @@
   </v-container>
   <v-container v-else fluid class="pa-0">
     <div style="width: 75%; margin: 0 auto; padding-top: 16px">
-
       <v-row class="video-row" no-gutters style="margin: 0; padding: 0">
         <!-- 면접관 -->
         <v-col
@@ -31,13 +30,12 @@
           style="display: flex; justify-content: flex-end"
         >
           <div class="video-box" style="width: 100%; height: 300px">
-           <img
-  :src="hhImage"
-  alt="면접관"
-  class="interviewer-image"
-  style="width: 100%; height: 130%; object-fit: contain"
-/>
- 
+            <img
+              :src="hhImage"
+              alt="면접관"
+              class="interviewer-image"
+              style="width: 100%; height: 130%; object-fit: contain"
+            />
           </div>
         </v-col>
 
@@ -218,10 +216,10 @@ onMounted(() => {
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
           finalTranscript += event.results[i][0].transcript;
-    }
-  }
-  sttLog.value += finalTranscript; // ✅ 누적 저장
-};
+        }
+      }
+      sttLog.value += finalTranscript; // ✅ 누적 저장
+    };
 
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -337,6 +335,7 @@ const handleStartInterview = async () => {
     interviewTechStack: info.skills,
   });
   currentInterviewId.value = Number(res.interviewId);
+  currentQuestionId.value = 1;
   currentAIMessage.value = res.question;
   const utterance = new SpeechSynthesisUtterance(
     "AI 모의 면접이 곧 시작됩니다. 면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다. 질문을 다 들은 뒤에 말하기 버튼을 눌러 답변을 시작해 주세요. 마이크와 카메라가 정상적으로 작동하는지 확인해 주세요."
@@ -380,19 +379,25 @@ const onAnswerComplete = async () => {
   };
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
   let nextQuestion = null;
+  let nextQuestionId = null;
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
     const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
       payload
     );
     nextQuestion = followUp?.questions?.[0];
+    nextQuestionId = followUp?.questionIds?.[0];
+    console.log("✅ currentQuestionId 변경 후:", currentQuestionId.value);
   } else if (currentQuestionId.value === 3) {
     const projectMain =
       await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+    console.log("🧪 projectMain 응답 확인:", projectMain);
     nextQuestion = projectMain?.question?.[0];
+    nextQuestionId = projectMain?.questionId;
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
     const projectFollowUp =
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
     nextQuestion = projectFollowUp?.questions?.[0];
+    nextQuestionId = projectFollowUp?.questionIds?.[0];
   } else {
     alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
@@ -400,11 +405,11 @@ const onAnswerComplete = async () => {
     router.push("/ai-interview/result");
     return;
   }
-  if (!nextQuestion) {
+  if (!nextQuestion || !nextQuestionId) {
     alert("다음 질문을 불러오지 못했습니다.");
     return;
   }
-  currentQuestionId.value += 1;
+  currentQuestionId.value = nextQuestionId;
   currentAIMessage.value = nextQuestion;
   sttLog.value = "";
   speakCurrentMessage();
