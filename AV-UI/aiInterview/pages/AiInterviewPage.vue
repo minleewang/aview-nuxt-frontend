@@ -165,6 +165,16 @@ const startMessage = ref("");
 const userVideo = ref(null);
 const mediaChecked = ref(false);
 
+const mapCompanyName = (original) => {
+  const mapping = {
+    "당근마켓": "danggeun",
+    "Toss": "toss",
+    "SK-encore": "sk_encore",
+    "KT M mobile": "kt_mobile",
+  };
+  return mapping[original] || original.toLowerCase().replace(/[\s-]+/g, "_");
+};
+
 const checkMediaReady = async () => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -320,6 +330,7 @@ const startSTT = () => {
 
 const handleStartInterview = async () => {
   const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
+  const processedCompanyName = mapCompanyName(info.company);
   if (!info.tech || !info.exp) {
     alert("면접 정보를 찾을 수 없습니다. 처음으로 돌아갑니다.");
     router.push("/ai-interview");
@@ -333,7 +344,7 @@ const handleStartInterview = async () => {
     academicBackground: info.academic,
     projectExperience: info.project,
     interviewTechStack: info.skills,
-    companyName: info.company,
+    companyName: processedCompanyName,
   });
   currentInterviewId.value = Number(res.interviewId);
   currentQuestionId.value = 1;
@@ -367,6 +378,7 @@ const onAnswerComplete = async () => {
     return;
   }
   const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
+  const processedCompanyName = mapCompanyName(info.company);
   const payload = {
     userToken: localStorage.getItem("userToken"),
     interviewId: currentInterviewId.value,
@@ -377,7 +389,7 @@ const onAnswerComplete = async () => {
     academicBackground: info.academic,
     projectExperience: info.project,
     interviewTechStack: info.skills,
-    companyName: info.company,
+    companyName: processedCompanyName,
   };
   await aiInterviewStore.requestCreateAnswerToDjango(payload);
   let nextQuestion = null;
