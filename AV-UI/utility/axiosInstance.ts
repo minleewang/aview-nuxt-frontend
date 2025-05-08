@@ -13,7 +13,7 @@ export function createAxiosInstances() {
   if (!djangoAxiosInstance) {
     djangoAxiosInstance = axios.create({
       baseURL: mainApiUrl,
-      timeout: 10000,
+      timeout: 40000,
       headers: {
         "Content-Type": "application/json",
       },

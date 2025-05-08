@@ -20,9 +20,8 @@
           <div class="evaluation-section">
             <h4>AI 평가 결과</h4>
             <p><strong>의도파악:</strong>{{ item[2] }}</p>
-            <p><strong>점수:</strong>{{ item[3] }}</p>
             <p><strong>피드백:</strong></p>
-            <p class="feedback-text">{{ item[4] }}</p>
+            <p class="feedback-text">{{ item[3] }}</p>
           </div>
         </v-col>
       </v-row>
@@ -31,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
 import markdownIt from "markdown-it";
@@ -42,7 +41,6 @@ const router = useRouter();
 // Component State
 const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
-const md = ref(new markdownIt());
 
 // Lifecycle Hooks
 onMounted(async () => {
@@ -54,25 +52,6 @@ const getScoreResultList = async (userToken) => {
   inputList.value = await aiInterviewStore.requestGetInterviewResultToDjango({
     userToken: userToken,
   });
-
-  inputList.value.forEach((item) => {
-    const feedback = item[3];
-    if (feedback) {
-      const [score, feedback] = splitScoreFeedback(feedback);
-      item.pop();
-      item.push(score);
-      item.push(feedback);
-    }
-  });
-};
-
-const splitScoreFeedback = (feedback) => {
-  const parts = feedback.split("<s>");
-  if (parts.length === 2) {
-    return [parts[0].replace("score:", ""), parts[1].replace("feedBack:", "")];
-  } else {
-    return ["점수 없음", feedback.replace(/<.*?>/g, "")];
-  }
 };
 </script>
 
