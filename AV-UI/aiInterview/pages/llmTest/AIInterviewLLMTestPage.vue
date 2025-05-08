@@ -161,7 +161,7 @@ const router = useRouter();
 const start = ref(false);
 
 // 탭 순서 변경됨
-const tabs = ["회사", "전공 여부", "경력", "프로젝트 경험", "직무", "Tech Skills"];
+const tabs = ["회사", "직무", "전공 여부", "경력", "프로젝트 경험", "Tech Skills"];
 const activeTab = ref("회사");
 
 // 회사
