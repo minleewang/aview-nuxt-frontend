@@ -497,6 +497,7 @@ const onAnswerComplete = async () => {
     alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
     await aiInterviewStore.requestEndInterviewToDjango(payload);
+    await aiInterviewStore.requestGetScoreResultListToDjango(payload);
     router.push("/ai-interview/result");
     return;
   }
