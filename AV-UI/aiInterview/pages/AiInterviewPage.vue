@@ -6,12 +6,35 @@
 
       <!-- ✅ 카메라+마이크 녹화 확인 UI -->
       <div style="margin-top: 16px">
-        <video ref="previewVideo" autoplay playsinline muted style="width: 320px; height: 240px; background: #000; border-radius: 8px;" />
+        <video
+          ref="previewVideo"
+          autoplay
+          playsinline
+          muted
+          style="
+            width: 320px;
+            height: 240px;
+            background: #000;
+            border-radius: 8px;
+          "
+        />
         <div style="margin-top: 8px">
-          <v-btn color="info" @click="checkMediaReady">카메라/마이크 상태 확인</v-btn>
-          <v-btn color="success" class="ml-2" @click="startRecording">🎥 녹화 시작</v-btn>
-          <v-btn color="error" class="ml-2" @click="stopRecording">🛑 녹화 종료</v-btn>
-          <v-btn color="warning" class="ml-2" @click="playRecording" :disabled="!recordedBlob">▶ 영상 재생</v-btn>
+          <v-btn color="info" @click="checkMediaReady"
+            >카메라/마이크 상태 확인</v-btn
+          >
+          <v-btn color="success" class="ml-2" @click="startRecording"
+            >🎥 녹화 시작</v-btn
+          >
+          <v-btn color="error" class="ml-2" @click="stopRecording"
+            >🛑 녹화 종료</v-btn
+          >
+          <v-btn
+            color="warning"
+            class="ml-2"
+            @click="playRecording"
+            :disabled="!recordedBlob"
+            >▶ 영상 재생</v-btn
+          >
         </div>
       </div>
 
@@ -31,7 +54,11 @@
   <v-container v-else fluid class="pa-0">
     <div style="width: 75%; margin: 0 auto; padding-top: 16px">
       <v-row class="video-row" no-gutters style="margin: 0; padding: 0">
-        <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-end">
+        <v-col
+          cols="6"
+          class="pa-0"
+          style="display: flex; justify-content: flex-end"
+        >
           <div class="video-box" style="width: 100%; height: 300px">
             <img :src="hhImage" alt="면접관" class="interviewer-image" />
           </div>
@@ -39,9 +66,20 @@
 
         <v-col class="pa-0" style="max-width: 16px"></v-col>
 
-        <v-col cols="6" class="pa-0" style="display: flex; justify-content: flex-start">
+        <v-col
+          cols="6"
+          class="pa-0"
+          style="display: flex; justify-content: flex-start"
+        >
           <div class="video-box" style="width: 100%; height: 300px">
-            <video ref="userVideo" v-show="start" autoplay playsinline muted class="user-video"></video>
+            <video
+              ref="userVideo"
+              v-show="start"
+              autoplay
+              playsinline
+              muted
+              class="user-video"
+            ></video>
           </div>
         </v-col>
       </v-row>
@@ -49,7 +87,11 @@
 
     <v-col class="pa-0" style="max-width: 16px"></v-col>
 
-    <v-col cols="12" class="pa-0 mt-4" style="display: flex; justify-content: center">
+    <v-col
+      cols="12"
+      class="pa-0 mt-4"
+      style="display: flex; justify-content: center"
+    >
       <div
         v-if="visible"
         class="interview-container centered-text-box"
@@ -150,8 +192,8 @@ const downloadUrl = ref(null);
 
 const mapCompanyName = (original) => {
   const mapping = {
-    "당근마켓": "danggeun",
-    "Toss": "toss",
+    당근마켓: "danggeun",
+    Toss: "toss",
     "SK-encore": "sk_encore",
     "KT M mobile": "kt_mobile",
   };
@@ -169,24 +211,29 @@ const checkMediaReady = async () => {
     mediaStream.value = stream;
     if (previewVideo.value) previewVideo.value.srcObject = stream;
   } catch (err) {
-    alert("마이크 또는 카메라에 접근할 수 없습니다. 브라우저 권한을 확인하세요.");
+    alert(
+      "마이크 또는 카메라에 접근할 수 없습니다. 브라우저 권한을 확인하세요."
+    );
     mediaChecked.value = false;
   }
 };
 
 const recordedVideo = ref(null); // 상단에 선언 필요
-const recordedBlob = ref(null);  // 상단에 선언 필요
+const recordedBlob = ref(null); // 상단에 선언 필요
 let recordingStream = null;
 let recorder = null;
 let chunks = [];
 
 const startRecording = async () => {
   try {
-    recordingStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    recordingStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
     if (previewVideo.value) previewVideo.value.srcObject = recordingStream;
 
     chunks = [];
-    recorder = new MediaRecorder(recordingStream, { mimeType: 'video/webm' });
+    recorder = new MediaRecorder(recordingStream, { mimeType: "video/webm" });
 
     recorder.ondataavailable = (event) => {
       if (event.data.size > 0) {
@@ -195,18 +242,18 @@ const startRecording = async () => {
     };
 
     recorder.onstop = () => {
-  recordedBlob.value = new Blob(chunks, { type: 'video/webm' });
-  const videoURL = URL.createObjectURL(recordedBlob.value);
+      recordedBlob.value = new Blob(chunks, { type: "video/webm" });
+      const videoURL = URL.createObjectURL(recordedBlob.value);
 
-  // ✅ previewVideo에서 녹화 영상 재생
-  if (previewVideo.value) {
-    previewVideo.value.srcObject = null; // 스트림 끊기
-    previewVideo.value.src = videoURL;
-    previewVideo.value.controls = true;
-    previewVideo.value.play();
-  }
-};
-downloadUrl.value = videoURL;
+      // ✅ previewVideo에서 녹화 영상 재생
+      if (previewVideo.value) {
+        previewVideo.value.srcObject = null; // 스트림 끊기
+        previewVideo.value.src = videoURL;
+        previewVideo.value.controls = true;
+        previewVideo.value.play();
+      }
+    };
+    downloadUrl.value = videoURL;
 
     recorder.start();
     alert("녹화 시작됨 (마이크+카메라)");
@@ -220,7 +267,7 @@ const stopRecording = () => {
   if (recorder && recorder.state === "recording") {
     recorder.stop();
     if (recordingStream) {
-      recordingStream.getTracks().forEach(track => track.stop());
+      recordingStream.getTracks().forEach((track) => track.stop());
     }
     alert("녹화 종료됨");
   }
@@ -232,19 +279,22 @@ let currentUtteance = null;
 
 onMounted(async () => {
   try {
-      const videoOnlyStream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (previewVideo.value) {
-        previewVideo.value.srcObject = videoOnlyStream;
-      }
-    } catch (err) {
-      console.error("previewVideo 카메라 연결 실패:", err);
+    const videoOnlyStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+    });
+    if (previewVideo.value) {
+      previewVideo.value.srcObject = videoOnlyStream;
     }
+  } catch (err) {
+    console.error("previewVideo 카메라 연결 실패:", err);
+  }
   if (process.client) {
     speakStartMessage();
 
     await nextTick(); // ✅ DOM 준비된 다음
 
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert("이 브라우저는 음성 인식을 지원하지 않습니다.");
       return;
@@ -271,7 +321,6 @@ onMounted(async () => {
   }
 });
 
-
 const showWarning = ref(true); // 이거 먼저 선언돼 있어야 함
 
 const speakStartMessage = () => {
@@ -281,9 +330,11 @@ const speakStartMessage = () => {
       <span style="margin-bottom: 8px;">면접 질문이 화면에 표시되며, 자동으로 음성으로 읽어드립니다.</span>
       <span style="margin-bottom: 8px;"><mark style="background: #ffecb3;">말하기 버튼</mark>을 눌러 답변을 시작해 주세요.</span>
       <span style="margin-bottom: 8px;">마이크와 카메라가 정상적으로 작동 중인지 확인해 주세요.</span>
-      ${showWarning.value
-        ? '<span style="color: red; font-weight: bold;">※ 카메라/마이크 상태 확인을 체크해야 면접 시작이 가능합니다.</span>'
-        : ''}
+      ${
+        showWarning.value
+          ? '<span style="color: red; font-weight: bold;">※ 카메라/마이크 상태 확인을 체크해야 면접 시작이 가능합니다.</span>'
+          : ""
+      }
     </strong>
   `;
 };
@@ -354,17 +405,20 @@ const handleStartInterview = async () => {
   }
 
   // ✅ 카메라 다시 연결
-  navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
-    if (userVideo.value) {
-      userVideo.value.srcObject = stream;
-    }
-  }).catch((err) => {
-    console.error("면접 시작 중 카메라 접근 실패:", err);
-    alert("면접 시작 중 카메라를 사용할 수 없습니다.");
-  });
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      if (userVideo.value) {
+        userVideo.value.srcObject = stream;
+      }
+    })
+    .catch((err) => {
+      console.error("면접 시작 중 카메라 접근 실패:", err);
+      alert("면접 시작 중 카메라를 사용할 수 없습니다.");
+    });
 
   start.value = true;
-  
+
   showWarning.value = false;
   speakStartMessage();
 
@@ -423,26 +477,30 @@ const onAnswerComplete = async () => {
   let nextQuestion = null;
   let nextQuestionId = null;
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
-  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
-  nextQuestion = followUp?.questions?.[0];
-  nextQuestionId = followUp?.questionIds?.[0];
-} else if (currentQuestionId.value === 3) {
-  const projectMain = await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
-  console.log("🧪 projectMain 응답 확인:", projectMain);
-  nextQuestion = projectMain?.question?.[0];
-  nextQuestionId = projectMain?.questionId;
-} else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
-  const projectFollowUp = await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
-  nextQuestion = projectFollowUp?.questions?.[0];
-  nextQuestionId = projectFollowUp?.questionIds?.[0];
-} else {
-  alert("모든 면접 질문이 완료되었습니다.");
-  finished.value = true;
-  await aiInterviewStore.requestEndInterviewToDjango(payload);
-  router.push("/ai-interview/result");
-  return;
-}
-console.log("✅ currentQuestionId 변경 후:", currentQuestionId.value);
+    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
+      payload
+    );
+    nextQuestion = followUp?.questions?.[0];
+    nextQuestionId = followUp?.questionIds?.[0];
+  } else if (currentQuestionId.value === 3) {
+    const projectMain =
+      await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+    console.log("🧪 projectMain 응답 확인:", projectMain);
+    nextQuestion = projectMain?.question?.[0];
+    nextQuestionId = projectMain?.questionId;
+  } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
+    const projectFollowUp =
+      await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
+    nextQuestion = projectFollowUp?.questions?.[0];
+    nextQuestionId = projectFollowUp?.questionIds?.[0];
+  } else {
+    alert("모든 면접 질문이 완료되었습니다.");
+    finished.value = true;
+    await aiInterviewStore.requestEndInterviewToDjango(payload);
+    router.push("/ai-interview/result");
+    return;
+  }
+  console.log("✅ currentQuestionId 변경 후:", currentQuestionId.value);
 
   if (!nextQuestion || !nextQuestionId) {
     alert("다음 질문을 불러오지 못했습니다.");
@@ -464,7 +522,9 @@ onBeforeUnmount(() => {
 
 onBeforeRouteLeave((to, from, next) => {
   if (start.value) {
-    const answer = window.confirm("면접이 진행 중입니다. 페이지를 나가시겠습니까?");
+    const answer = window.confirm(
+      "면접이 진행 중입니다. 페이지를 나가시겠습니까?"
+    );
     answer ? next() : next(false);
   } else {
     next();
@@ -481,7 +541,6 @@ const playRecording = () => {
     }
   }
 };
-
 </script>
 
 <style scoped>
