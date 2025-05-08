@@ -146,10 +146,7 @@ const mediaChecked = ref(false);
 
 const previewVideo = ref(null);
 const mediaStream = ref(null);
-const micRecorder = ref(null);
-const micChunks = ref([]);
-const recordedMicBlob = ref(null);
-
+const downloadUrl = ref(null);
 
 const mapCompanyName = (original) => {
   const mapping = {
@@ -209,6 +206,7 @@ const startRecording = async () => {
     previewVideo.value.play();
   }
 };
+downloadUrl.value = videoURL;
 
     recorder.start();
     alert("녹화 시작됨 (마이크+카메라)");
@@ -225,13 +223,6 @@ const stopRecording = () => {
       recordingStream.getTracks().forEach(track => track.stop());
     }
     alert("녹화 종료됨");
-  }
-};
-
-const playMicRecording = () => {
-  if (recordedMicBlob.value) {
-    const audio = new Audio(URL.createObjectURL(recordedMicBlob.value));
-    audio.play();
   }
 };
 
@@ -432,16 +423,26 @@ const onAnswerComplete = async () => {
   let nextQuestion = null;
   let nextQuestionId = null;
   if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
-    const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
-    nextQuestion = followUp?.questions?.[0];
-    nextQuestionId = followUp?.questionIds?.[0];
-  } else {
-    alert("모든 면접 질문이 완료되었습니다.");
-    finished.value = true;
-    await aiInterviewStore.requestEndInterviewToDjango(payload);
-    router.push("/ai-interview/result");
-    return;
-  }
+  const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(payload);
+  nextQuestion = followUp?.questions?.[0];
+  nextQuestionId = followUp?.questionIds?.[0];
+} else if (currentQuestionId.value === 3) {
+  const projectMain = await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
+  console.log("🧪 projectMain 응답 확인:", projectMain);
+  nextQuestion = projectMain?.question?.[0];
+  nextQuestionId = projectMain?.questionId;
+} else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
+  const projectFollowUp = await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
+  nextQuestion = projectFollowUp?.questions?.[0];
+  nextQuestionId = projectFollowUp?.questionIds?.[0];
+} else {
+  alert("모든 면접 질문이 완료되었습니다.");
+  finished.value = true;
+  await aiInterviewStore.requestEndInterviewToDjango(payload);
+  router.push("/ai-interview/result");
+  return;
+}
+console.log("✅ currentQuestionId 변경 후:", currentQuestionId.value);
 
   if (!nextQuestion || !nextQuestionId) {
     alert("다음 질문을 불러오지 못했습니다.");
@@ -469,6 +470,18 @@ onBeforeRouteLeave((to, from, next) => {
     next();
   }
 });
+const playRecording = () => {
+  if (recordedBlob.value) {
+    const videoURL = URL.createObjectURL(recordedBlob.value);
+    if (previewVideo.value) {
+      previewVideo.value.srcObject = null;
+      previewVideo.value.src = videoURL;
+      previewVideo.value.controls = true;
+      previewVideo.value.play();
+    }
+  }
+};
+
 </script>
 
 <style scoped>
