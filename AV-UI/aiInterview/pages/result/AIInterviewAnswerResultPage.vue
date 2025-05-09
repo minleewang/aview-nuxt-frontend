@@ -10,18 +10,18 @@
         class="question-box my-6"
       >
         <v-col cols="12">
-          <h3 class="question-title">{{ index + 1 }}.{{ item[0] }}</h3>
+          <h3 class="question-title">{{ index + 1 }}.{{ item.question }}</h3>
 
           <div class="answer-section">
             <h4>📄 당신의 답변</h4>
-            <p class="answer-text">{{ item[1] }}</p>
+            <p class="answer-text">{{ item.answer }}</p>
           </div>
 
           <div class="evaluation-section">
             <h4>AI 평가 결과</h4>
-            <p><strong>의도파악:</strong>{{ item[2] }}</p>
+            <p><strong>의도파악:</strong>{{ item.intent }}</p>
             <p><strong>피드백:</strong></p>
-            <p class="feedback-text">{{ item[3] }}</p>
+            <p class="feedback-text">{{ item.feedback }}</p>
           </div>
         </v-col>
       </v-row>
@@ -49,9 +49,15 @@ onMounted(async () => {
 
 // Methods
 const getScoreResultList = async (userToken) => {
-  inputList.value = await aiInterviewStore.requestGetInterviewResultToDjango({
-    userToken: userToken,
-  });
+  try {
+    const res = await aiInterviewStore.requestGetInterviewResultToDjango({
+      userToken: userToken,
+    });
+    console.log("✅ 응답 확인:", res);
+    inputList.value = res.interviewResultList;
+  } catch (err) {
+    console.error("❌ 면접 결과 불러오기 실패:", err);
+  }
 };
 </script>
 
