@@ -25,12 +25,21 @@
           </div>
         </v-col>
       </v-row>
+      <div v-if="downloadUrl" style="text-align: center; margin-top: 16px">
+        <a
+          :href="downloadUrl"
+          download="interview-recording.webm"
+          style="color: blue; text-decoration: underline"
+        >
+          🎥 녹화 영상 다운로드
+        </a>
+      </div>
     </v-container>
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
 import markdownIt from "markdown-it";
@@ -41,10 +50,18 @@ const router = useRouter();
 // Component State
 const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
+const downloadUrl = ref(null);
 
 // Lifecycle Hooks
 onMounted(async () => {
   await getScoreResultList(userToken);
+});
+//영상 저장 url 불러오기
+onMounted(() => {
+  const saveUrl = localStorage.getItem("interviewRecordingUrl");
+  if (saveUrl) {
+    downloadUrl.value = saveUrl;
+  }
 });
 
 // Methods
@@ -59,6 +76,14 @@ const getScoreResultList = async (userToken) => {
     console.error("❌ 면접 결과 불러오기 실패:", err);
   }
 };
+
+//페이지 이탈 시 url정리
+onBeforeUnmount(() => {
+  if (downloadUrl.value) {
+    URL.revokeObjectURL(downloadUrl.value);
+  }
+  localStorage.removeItem("interviewRecordingUrl");
+});
 </script>
 
 <style>

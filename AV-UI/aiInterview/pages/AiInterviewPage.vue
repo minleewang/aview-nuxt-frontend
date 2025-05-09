@@ -147,16 +147,6 @@
         style="max-width: 300px"
       />
     </v-container>
-
-    <div v-if="downloadUrl" style="text-align: center; margin-top: 16px">
-      <a
-        :href="downloadUrl"
-        download="interview-recording.webm"
-        style="color: blue; text-decoration: underline"
-      >
-        🎥 녹화 영상 다운로드
-      </a>
-    </div>
   </v-container>
 </template>
 
@@ -185,10 +175,8 @@ const maxQuestionId = ref(10);
 const startMessage = ref("");
 const userVideo = ref(null);
 const mediaChecked = ref(false);
-
 const previewVideo = ref(null);
 const mediaStream = ref(null);
-const downloadUrl = ref(null);
 
 const mapCompanyName = (original) => {
   const mapping = {
@@ -223,7 +211,7 @@ const recordedBlob = ref(null); // 상단에 선언 필요
 let recordingStream = null;
 let recorder = null;
 let chunks = [];
-
+//면접 전 녹화 되는지 확인용
 const startRecording = async () => {
   try {
     recordingStream = await navigator.mediaDevices.getUserMedia({
@@ -244,7 +232,7 @@ const startRecording = async () => {
     recorder.onstop = () => {
       recordedBlob.value = new Blob(chunks, { type: "video/webm" });
       const videoURL = URL.createObjectURL(recordedBlob.value);
-
+      localStorage.setItem("interviewRecordingUrl", videoURL); //로컬에 임시저장
       // ✅ previewVideo에서 녹화 영상 재생
       if (previewVideo.value) {
         previewVideo.value.srcObject = null; // 스트림 끊기
@@ -253,16 +241,15 @@ const startRecording = async () => {
         previewVideo.value.play();
       }
     };
-    downloadUrl.value = videoURL;
-
+    //영상녹화
     recorder.start();
-    alert("녹화 시작됨 (마이크+카메라)");
+    alert("녹화를 시작합니다다");
   } catch (err) {
     console.error("🎥 녹화 시작 실패:", err);
     alert("녹화 시작 중 오류가 발생했습니다.");
   }
 };
-
+//녹화중지
 const stopRecording = () => {
   if (recorder && recorder.state === "recording") {
     recorder.stop();
@@ -353,7 +340,7 @@ const replayQuestion = () => {
 };
 
 const handleBeforeUnload = (event) => {
-  if (start.value) {
+  if (start.value && !finished.value) {
     event.preventDefault();
     event.returnValue = "면접이 진행 중입니다. 페이지를 나가시겠습니까?";
   }
@@ -393,7 +380,42 @@ const startSTT = () => {
     recognition.start();
   }
 };
-
+//자동 녹화 시작
+const startRecordingAuto = async () => {
+  try {
+    recordingStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true,
+    });
+    if (userVideo.value) {
+      userVideo.value.srcObject = recordingStream;
+    }
+    chunks = [];
+    recorder = new MediaRecorder(recordingStream, { mimeType: "video/webm" });
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) chunks.push(event.data);
+    };
+    recorder.onstop = () => {
+      recordedBlob.value = new Blob(chunks, { type: "video/webm" });
+      const videoURL = URL.createObjectURL(recordedBlob.value);
+      localStorage.setItem("interviewRecordingUrl", videoURL);
+    };
+    recorder.start();
+    console.log("녹화 시작");
+  } catch (err) {
+    console.error("녹화 실패");
+  }
+};
+// 자동 녹화 종료료
+const stopRecordingAuto = () => {
+  if (recorder && recorder.state === "recording") {
+    recorder.stop();
+    if (recordingStream) {
+      recordingStream.getTracks().forEach((track) => track.stop());
+    }
+    console.log("녹화 종료");
+  }
+};
 const handleStartInterview = async () => {
   const info = JSON.parse(localStorage.getItem("interviewInfo") || "{}");
   const processedCompanyName = mapCompanyName(info.company);
@@ -403,21 +425,8 @@ const handleStartInterview = async () => {
     router.push("/ai-interview");
     return;
   }
-
-  // ✅ 카메라 다시 연결
-  navigator.mediaDevices
-    .getUserMedia({ video: true, audio: true })
-    .then((stream) => {
-      if (userVideo.value) {
-        userVideo.value.srcObject = stream;
-      }
-    })
-    .catch((err) => {
-      console.error("면접 시작 중 카메라 접근 실패:", err);
-      alert("면접 시작 중 카메라를 사용할 수 없습니다.");
-    });
-
   start.value = true;
+  await startRecordingAuto(); //녹화 시작
 
   showWarning.value = false;
   speakStartMessage();
@@ -485,7 +494,6 @@ const onAnswerComplete = async () => {
   } else if (currentQuestionId.value === 3) {
     const projectMain =
       await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
-    console.log("🧪 projectMain 응답 확인:", projectMain);
     nextQuestion = projectMain?.question?.[0];
     nextQuestionId = projectMain?.questionId;
   } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
@@ -496,12 +504,12 @@ const onAnswerComplete = async () => {
   } else {
     alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
+    stopRecordingAuto();
     await aiInterviewStore.requestEndInterviewToDjango(payload);
     await aiInterviewStore.requestGetScoreResultListToDjango(payload);
     router.push("/ai-interview/result");
     return;
   }
-  console.log("✅ currentQuestionId 변경 후:", currentQuestionId.value);
 
   if (!nextQuestion || !nextQuestionId) {
     alert("다음 질문을 불러오지 못했습니다.");
@@ -522,7 +530,7 @@ onBeforeUnmount(() => {
 });
 
 onBeforeRouteLeave((to, from, next) => {
-  if (start.value) {
+  if (start.value && !finished.value) {
     const answer = window.confirm(
       "면접이 진행 중입니다. 페이지를 나가시겠습니까?"
     );
