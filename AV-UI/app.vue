@@ -34,6 +34,29 @@ useHead({
   ],
 });
 
+// 직접 gtag 코드 삽입
+onMounted(() => {
+  if (process.client) {
+    const script1 = document.createElement('script')
+    script1.setAttribute('async', '')
+    script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-QG43SWSZTP'
+    document.head.appendChild(script1)
+
+    const script2 = document.createElement('script')
+    script2.innterHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new date());
+      gtag('config', 'G-QG43SWSZTP', {
+        anonymize_ip: true,
+        send_page_view: true
+      });
+    `
+
+    document.head.appendChild(script2)
+  }
+})
+
 const route = useRoute();
 </script>
 
