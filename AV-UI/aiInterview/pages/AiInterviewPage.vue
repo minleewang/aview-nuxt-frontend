@@ -501,6 +501,11 @@ const onAnswerComplete = async () => {
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
     nextQuestion = projectFollowUp?.questions?.[0];
     nextQuestionId = projectFollowUp?.questionIds?.[0];
+  } else if (currentQuestionId.value === 6 || currentQuestionId.value === 7) {
+    const techFollowUp =
+      await aiInterviewStore.requestTechFollowUpQuestionToDjango(payload);
+    nextQuestion = techFollowUp?.questions?.[0];
+    nextQuestionId = techFollowUp?.questionIds?.[0];
   } else {
     alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
