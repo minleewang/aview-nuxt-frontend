@@ -157,6 +157,16 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: 'AI 모의 면접 시작 | Tech-Interview',
+  description: '당신의 이력에 맞춘 맞춤형 AI 면접을 시작하세요. 회사, 직무, 전공 여부, 경력, 프로젝트 경험, 기술 스택을 기반으로 면접을 구성합니다.',
+  keywords: ['AI 면접', '모의 면접', 'AI 인터뷰', 'Tech-Interview', 'AI 취업 준비', 'AI 질문 추천'],
+  ogTitle: 'AI 모의 면접 서비스 - Tech-Interview',
+  ogDescription: '회사와 직무를 선택하면, AI가 맞춤형 면접을 제공합니다. 지금 시작해보세요!',
+  ogImage: '' // 실제 이미지 경로
+});
+
 const router = useRouter();
 const start = ref(false);
 
