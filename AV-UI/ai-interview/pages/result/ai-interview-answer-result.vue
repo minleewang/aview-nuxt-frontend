@@ -41,7 +41,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
+import { useAiInterviewStore } from "../../stores/aiInterviewStore"; // Pinia store import
 import markdownIt from "markdown-it";
 
 // Pinia Store

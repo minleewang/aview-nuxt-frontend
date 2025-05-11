@@ -152,7 +152,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
-import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
+import { useAiInterviewStore } from "../stores/aiInterviewStore";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 import hhImage from "@/assets/images/fixed/al3.png";
