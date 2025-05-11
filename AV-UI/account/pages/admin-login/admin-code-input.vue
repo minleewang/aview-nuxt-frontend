@@ -59,6 +59,15 @@ import { useRouter } from "vue-router";
 import githubIconSrc from "@/assets/images/fixed/icon-github.svg";
 import { useGithubAuthenticationStore } from "../../../githubAuthentication/stores/githubAuthenticationStore";
 
+// ✅ SEO 메타 정보 설정
+definePageMeta({
+  title: "관리자 코드 입력 | JobStick",  
+  description: "GitHub 로그인을 진행하기 위해 관리자 코드를 입력하세요.", 
+  ogTitle: "관리자 로그인 인증 - JobStick",
+  ogDescription: "관리자 인증을 통해 GitHub 로그인을 시작하세요.",
+  ogImage: "/images/og-admin-login.png",
+})
+
 const router = useRouter();
 const githubAuthentication = useGithubAuthenticationStore();
 const adminCode = ref("");

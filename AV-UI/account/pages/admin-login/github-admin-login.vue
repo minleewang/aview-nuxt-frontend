@@ -40,6 +40,17 @@ import githubIconSrc from "@/assets/images/fixed/icon-github.svg";
 
 import { useGithubAuthenticationStore } from "../../../githubAuthentication/stores/githubAuthenticationStore";
 
+// ✅ SEO 메타 정보 설정
+definePageMeta({
+  title: '관리자 GitHub 로그인 | JobStick',
+  description: 'JobStick 관리자 전용 GitHub 계정으로 로그인하여 관리 기능을 이용하세요.',
+  keywords: ['관리자 로그인', 'GitHub 로그인', 'JobStick 관리자', 'Admin GitHub Login'],
+  ogTitle: 'JobStick 관리자 GitHub 로그인',
+  ogDescription: 'JobStick의 관리자용 페이지입니다. GitHub 계정으로 안전하게 로그인하세요.',
+  ogImage: '/assets/images/fixed/icon-github.svg',
+  robots: 'noindex, nofollow' // 관리자 페이지는 검색에 노출되지 않도록 처리
+});
+
 // Pinia store 상태
 const githubAuthentication = useGithubAuthenticationStore();
 
