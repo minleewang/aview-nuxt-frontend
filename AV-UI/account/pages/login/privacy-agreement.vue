@@ -109,6 +109,15 @@ import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '개인정보 수집 및 이용 동의 | JobStick',
+  description: 'JobStick 이용을 위한 개인정보 수집 및 이용 동의 페이지입니다. 사용자의 소중한 정보를 안전하게 처리합니다.',
+  ogTitle: 'JobStick 개인정보 동의',
+  ogDescription: '서비스 이용을 위한 개인정보 동의 내용을 확인하고 동의해주세요.',
+  ogImage: '' // 실제 이미지 경로 
+});
+
 const kakaoAuthentication = useKakaoAuthenticationStore();
 const googleAuthentication = useGoogleAuthenticationStore();
 const naverAuthentication = useNaverAuthenticationStore();

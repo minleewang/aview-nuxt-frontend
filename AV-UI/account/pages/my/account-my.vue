@@ -149,6 +149,16 @@ import { useAccountStore } from "../../stores/accountStore"; // Pinia store 사�
 import profileImg from "@/assets/images/fixed/profile_img.png";
 import { useRouter } from "vue-router";
 
+// ✅ SEO 메타 정보 
+definePageMeta({
+  title: "내 정보 | JobStick",
+  description: "내 계정 정보를 확인하고 수정할 수 있는 페이지입니다.",
+  keywords: ['내 정보', '계정', '프로필', 'JobStick'],
+  ogTitle: "내 정보 - JobStcik",
+  ogDescription: "JobStick에서 내 계정 정보를 안전하게 확인하고 관리하세요.",
+  ogImage: '' // 실제 이미지 경로
+});
+
 const imageSrc = profileImg;
 const email = ref("");
 const nickname = ref("");

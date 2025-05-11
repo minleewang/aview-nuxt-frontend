@@ -124,6 +124,16 @@ import { useKakaoAuthenticationStore } from "../../../kakaoAuthentication/stores
 import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stores/googleAuthenticationStore";
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '회원가입 | JobStick',
+  description: 'JobStick에 소셜 계정으로 간편하게 회원가입하고 모의 면접 서비스를 이용해보세요.',
+  keywords: ['회원가입', 'JobStick', '카카오 로그인', '구글 로그인', '네이버 로그인', '소셜 로그인'],
+  ogTitle: '회원가입 - JobStick',
+  ogDescription: '지금 JobStick에 가입하고 AI 모의 면접 서비스를 누려보세요.',
+  ogImage: '' // 실제 이미지 경로
+});
+
 // Pinia 스토어 사용
 const accountStore = useAccountStore();
 const kakaoAuthenticationStore = useKakaoAuthenticationStore();
