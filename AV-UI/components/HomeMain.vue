@@ -6,12 +6,14 @@
       </transition>
 
       <h2 class="title typing-animation">
-        <p style="text-transform: none; font-size: 48px; text-align: left;">
+        <p style="text-transform: none; font-size: 48px; text-align: left">
           <span style="color: black; font-weight: bold">
             {{ typedText }}
           </span>
         </p>
-        <p class="subtitle" style="color: black; text-align: left;">SINCE 2025</p>
+        <p class="subtitle" style="color: black; text-align: left">
+          SINCE 2025
+        </p>
       </h2>
 
       <!-- 설문조사 하러가기 버튼 -->
@@ -21,17 +23,13 @@
         </div>
       </transition>
 
-      <!-- ✅ Go 서버 호출 버튼 & 응답 출력 -->
-<transition name="fade-down">
-  <div v-if="showElements" class="survey-button">
-    <v-btn color="success" @click="loadFromGo">Go 서버에서 메시지 받기</v-btn>
-    <p v-if="message" style="margin-top: 12px; color: green;">응답: {{ message }}</p>
-  </div>
-</transition>
-
       <!-- 설명글 -->
       <transition name="fade-down">
-        <p v-if="showElements" class="description" style="color: black; text-align: left;">
+        <p
+          v-if="showElements"
+          class="description"
+          style="color: black; text-align: left"
+        >
           JOBSTICK은 한국 IT 기업 분석 보고서와 AI 모의면접 서비스를 제공하여
           <br />
           보다 많은 사람들에게 양질의 정보를 공유하고 도움을 드릴 수 있도록
@@ -42,7 +40,11 @@
 
     <!-- 아이폰 이미지 -->
     <div class="image-container" v-if="showElements">
-      <img src="@/assets/images/fixed/ph1.png" alt="iPhone Interview" class="iphone-image" />
+      <img
+        src="@/assets/images/fixed/ph1.png"
+        alt="iPhone Interview"
+        class="iphone-image"
+      />
     </div>
 
     <ScrollAnimation
@@ -96,19 +98,9 @@ export default defineComponent({
     }
 
     function goToSurvey() {
-      window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform");
-    }
-
-    // ✅ Go 서버 API 호출 함수
-    async function loadFromGo() {
-      try {
-        const res = await fetch("http://localhost:8000"); // Go 서버 주소
-        const data = await res.json();
-        message.value = data.message;
-      } catch (error) {
-        message.value = "Go 서버 호출 실패";
-        console.error("Go 서버 오류:", error);
-      }
+      window.open(
+        "https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform"
+      );
     }
 
     onMounted(() => {
@@ -123,8 +115,7 @@ export default defineComponent({
       goToHomeSecond,
       goToSurvey,
       typeText,
-      loadFromGo, // ✅ 등록
-      message,     // ✅ 등록
+      message, // ✅ 등록
     };
   },
 });
@@ -195,13 +186,21 @@ export default defineComponent({
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blink {
-  from { border-color: transparent; }
-  to { border-color: white; }
+  from {
+    border-color: transparent;
+  }
+  to {
+    border-color: white;
+  }
 }
 
 .fade-down-enter-from {
@@ -235,7 +234,8 @@ export default defineComponent({
     padding: 20px;
   }
 
-  .text-container, .image-container {
+  .text-container,
+  .image-container {
     width: 100%;
     text-align: center;
   }

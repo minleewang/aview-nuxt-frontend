@@ -19,12 +19,7 @@
     >
       <v-btn text @click="goToHome" class="btn-text"> HOME </v-btn>
       <v-btn
-        v-if="
-          kakaoAuthenticationStore.isAuthenticated ||
-          googleAuthenticationStore.isAuthenticated ||
-          guestAuthenticationStore.isAuthenticated ||
-          naverAuthenticationStore.isAuthenticated
-        "
+        v-if="isLoggedIn"
         text
         @click="goToReviewListPage"
         class="btn-text"
@@ -38,19 +33,12 @@
       <v-btn text @click="goToLlmTestPage" class="btn-text">
         AI INTERVIEW
       </v-btn>
+      <v-btn text @click="goToMembership" class="btn-text"> MEMBERSHIP </v-btn>
 
       <v-spacer></v-spacer>
 
       <!-- 로그인 후 화면-->
-      <v-menu
-        v-if="
-          kakaoAuthenticationStore.isAuthenticated ||
-          googleAuthenticationStore.isAuthenticated ||
-          guestAuthenticationStore.isAuthenticated ||
-          naverAuthenticationStore.isAuthenticated
-        "
-        close-on-content-click
-      >
+      <v-menu v-if="isLoggedIn" close-on-content-click>
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" class="btn-text" style="margin-right: 14px">
             <b>My Page</b>
@@ -68,10 +56,7 @@
       </v-menu>
 
       <!--추후 관리자 추가하여 교체예정-->
-      <v-menu
-        v-if="githubAuthenticationStore.isAuthenticated"
-        close-on-content-click
-      >
+      <v-menu v-if="isAdminLoggedIn" close-on-content-click>
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" class="btn-text" style="margin-right: 14px">
             <b>ADMIN</b>
@@ -91,13 +76,7 @@
 
       <!--로그인/로그아웃 버튼-->
       <v-btn
-        v-if="
-          !kakaoAuthenticationStore.isAuthenticated &&
-          !googleAuthenticationStore.isAuthenticated &&
-          !naverAuthenticationStore.isAuthenticated &&
-          !guestAuthenticationStore.isAuthenticated &&
-          !githubAuthenticationStore.isAuthenticated
-        "
+        v-if="!isLoggedIn && !isAdminLoggedIn"
         text
         @click="signIn"
         class="btn-login"
@@ -176,6 +155,7 @@ const reviewStore = useReviewStore();
 
 const router = useRouter();
 const drawer = ref(false);
+//일반 유저들 로그인 상태 확인
 const isLoggedIn = computed(
   () =>
     kakaoAuthenticationStore.isAuthenticated ||
@@ -184,8 +164,10 @@ const isLoggedIn = computed(
     guestAuthenticationStore.isAuthenticated ||
     githubAuthenticationStore.isAuthenticated
 );
-
-// 데이터 선언
+//관리자 로그인 상태 확인
+const isAdminLoggedIn = computed(
+  () => githubAuthenticationStore.isAuthenticated
+);
 
 // 관리자 페이지
 const adminPageList = ref([
@@ -196,6 +178,10 @@ const adminPageList = ref([
   {
     title: "사용자 로그 현황",
     action: () => goToManagementUserLogList(),
+  },
+  {
+    title: "go서버 호출",
+    action: () => goToGO(),
   },
 ]);
 
@@ -236,8 +222,9 @@ const goToMyPage = () => router.push("/account/mypage"); // 내페이지
 const goToReviewListPage = () => router.push("/review/list"); // 리뷰페이지
 const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
-// const goToAiInterviewPage = () => router.push('/ai-interview'); 나중에 확인
+const goToGO = () => router.push("/admin/default");
 const goToLlmTestPage = () => router.push("/ai-interview");
+const goToMembership = () => router.push("/price");
 
 // 로그아웃 처리
 const signOut = async () => {
