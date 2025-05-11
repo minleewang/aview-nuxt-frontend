@@ -1,4 +1,4 @@
-// AccountLoginPage.vue
+// account-login.vue
 <template>
   <v-container class="container">
     <div class="login-wrapper">
