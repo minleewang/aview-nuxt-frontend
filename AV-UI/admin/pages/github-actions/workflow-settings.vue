@@ -42,6 +42,16 @@
 import { ref, computed } from 'vue'
 import { useAdminStore } from '@/stores/adminStore'
 
+// ✅ SEO 메타 정보
+definePageMeta({
+    title: '워크플로우 설정 | Admin Dashboard - JobStick',
+    description: 'GitHub 워크플로우를 직접 선택하고 실행할 수 있는 관리자 설정 페이지입니다.',
+    keywords: ['GitHub', '워크플로우 실행', 'Admin Dashboard', 'CI/CD', '배포 설정'],
+    ogTitle: '워크플로우 설정 - 관리자 페이지',
+    ogDescription: 'JobStick 관리자 대시보드에서 배포 및 테스트 워크플로우를 관리하세요.',
+    ogImage: '' // 실제 이미지 경로
+});
+
 const adminStore = useAdminStore()
 
 const repositories = [

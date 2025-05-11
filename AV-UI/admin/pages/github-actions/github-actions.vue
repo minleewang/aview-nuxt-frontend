@@ -56,6 +56,16 @@
 import { ref, onMounted } from "vue";
 import { useAdminStore } from "~/admin/stores/adminStore";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: "GitHub Actions 모니터링 | Admin Dashboard - JobStick",
+  keywords: ['GitHub Actions', "CI/CD", "워크플로우", "JobStick", "관리자 대시보드"],
+  description: "관리자는 JobStick 프로젝트의 GitHub Actions 워크플로우 상태를 실시간으로 확인하고 상세 내역을 확인할 수 있습니다.",
+  ogTitle: "GitHub Actions 모니터링 - JobStick Admin",
+  ogDescription: "JobStick 프로젝트의 최신 GitHub Workflow 실행 내역을 관리자 페이지에서 확인해보세요.",
+  ogImage: ''  // 실제 이미지 경로  
+});
+
 // Pinia 스토어 가져오기
 const adminStore = useAdminStore();
 

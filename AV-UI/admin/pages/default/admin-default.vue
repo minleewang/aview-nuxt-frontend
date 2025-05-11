@@ -36,6 +36,17 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '관리자 대시보드 | JobStick',
+  keywords: ['GitHub Actions', '모니터링','사용자 관리', '로그 및 알림', '워크플로우 설정'],
+  description: 'GitHub Actions 모니터링, 사용자 관리, 로그 및 알림, 워크플로우 설정을 위한 관리자 페이지입니다.',
+  ogTitle: 'JobStick 관리자 대시보드',
+  ogDescription: 'GitHub Actions와 사용자 관리를 한눈에! JobStick 관리자 기능을 확인해보세요.',
+  ogImage: '' // 실제 이미지 경로
+});
+
 const router = useRouter();
 
 const goToMonitoring = () => router.push('/admin/monitoring');
