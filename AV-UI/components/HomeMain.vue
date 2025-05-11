@@ -21,6 +21,14 @@
         </div>
       </transition>
 
+      <!-- ✅ Go 서버 호출 버튼 & 응답 출력 -->
+<transition name="fade-down">
+  <div v-if="showElements" class="survey-button">
+    <v-btn color="success" @click="loadFromGo">Go 서버에서 메시지 받기</v-btn>
+    <p v-if="message" style="margin-top: 12px; color: green;">응답: {{ message }}</p>
+  </div>
+</transition>
+
       <!-- 설명글 -->
       <transition name="fade-down">
         <p v-if="showElements" class="description" style="color: black; text-align: left;">
@@ -67,6 +75,7 @@ export default defineComponent({
     const typedText = ref("");
     const typeIndex = ref(0);
     const showElements = ref(false);
+    const message = ref(""); // ✅ Go 응답 메시지 상태
     const { emit } = getCurrentInstance();
 
     function typeText() {
@@ -90,6 +99,18 @@ export default defineComponent({
       window.open("https://docs.google.com/forms/d/e/1FAIpQLSep5cE1W5SzDzAyZmjC30YKuRiJrIiZQCTgo5hu4HiU_NjyiA/viewform");
     }
 
+    // ✅ Go 서버 API 호출 함수
+    async function loadFromGo() {
+      try {
+        const res = await fetch("http://localhost:8000"); // Go 서버 주소
+        const data = await res.json();
+        message.value = data.message;
+      } catch (error) {
+        message.value = "Go 서버 호출 실패";
+        console.error("Go 서버 오류:", error);
+      }
+    }
+
     onMounted(() => {
       typeText();
     });
@@ -102,6 +123,8 @@ export default defineComponent({
       goToHomeSecond,
       goToSurvey,
       typeText,
+      loadFromGo, // ✅ 등록
+      message,     // ✅ 등록
     };
   },
 });
