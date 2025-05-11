@@ -11,7 +11,7 @@
         <div class="content-container">
           <div class="content-title" data-aos="fade-up" data-aos-offset="400">
             <p><span class="title-span">JOBSTICK</span></p>
-            <p>팀원을 소개합니다.</p>
+            <p style="color: black;">팀원을 소개합니다.</p>
           </div>
           <div class="image-container">
             <div class="image-card-container">
