@@ -1,4 +1,4 @@
-// AccountLoginPage.vue
+// account-login.vue
 <template>
   <v-container class="container">
     <div class="login-wrapper">
@@ -37,6 +37,17 @@
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useGuestAuthenticationStore } from "@/guestAuthentication/stores/guestAuthenticationStore";
+
+// ✅ SEO 메타 정보 설정
+definePageMeta({
+  title: '로그인 | JobStick',
+  description: 'JobStick에 로그인하고 다양한 개인 맞춤형 서비스를 이용해보세요.',
+  keywords: ['JobStick 로그인', '계정 로그인', '회원 로그인', '게스트 로그인'],
+  ogTitle: '로그인 - JobStick',
+  ogDescription: 'JobStick에 로그인하여 추천 컨텐츠 및 맞춤형 기능을 체험해보세요.',
+  ogImage: '', // 실제 존재하는 경로로 설정
+  robots: 'index, follow',
+})
 
 const router = useRouter();
 const guestAuthentication = useGuestAuthenticationStore();

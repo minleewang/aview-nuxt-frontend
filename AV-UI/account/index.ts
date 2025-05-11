@@ -15,33 +15,33 @@ export default defineNuxtModule({
         {
           name: "AccountLoginPage",
           path: "/account/login",
-          file: resolve(themeDir, "account/pages/login/AccountLoginPage.vue"),
+          file: resolve(themeDir, "account/pages/login/account-login.vue"),
         },
         {
           name: "AccountRegisterPage",
           path: "/account/register",
           file: resolve(
             themeDir,
-            "account/pages/register/AccountRegisterPage.vue"
+            "account/pages/register/account-register.vue"
           ),
         },
         {
           name: "AccountMyPage",
           path: "/account/mypage",
-          file: resolve(themeDir, "account/pages/my/AccountMyPage.vue"),
+          file: resolve(themeDir, "account/pages/my/account-my.vue"),
         },
         {
           name: "AccountWithdrawPage",
           path: "/account/withdraw",
           file: resolve(
             themeDir,
-            "account/pages/withdraw/AccountWithdrawPage.vue"
+            "account/pages/withdraw/account-withdraw.vue"
           ),
         },
         {
           name: "AccountModifyPage",
           path: "/account/modify",
-          file: resolve(themeDir, "account/pages/modify/AccountModifyPage.vue"),
+          file: resolve(themeDir, "account/pages/modify/account-modify.vue"),
         },
 
         {
@@ -49,7 +49,7 @@ export default defineNuxtModule({
           path: "/account/admin-code",
           file: resolve(
             themeDir,
-            "account/pages/adminLogin/AdminCodeInputPage.vue"
+            "account/pages/admin-login/admin-code-input.vue"
           ),
         },
 
@@ -58,7 +58,7 @@ export default defineNuxtModule({
           path: "/account/admin-login",
           file: resolve(
             themeDir,
-            "account/pages/adminLogin/GithubAdminLoginPage.vue"
+            "account/pages/admin-login/github-admin-login.vue"
           ),
         },
         {
@@ -66,7 +66,7 @@ export default defineNuxtModule({
           path: "/account/privacy",
           file: resolve(
             themeDir,
-            "account/pages/login/PrivacyAgreementPage.vue"
+            "account/pages/login/privacy-agreement.vue"
           ),
         }
       );

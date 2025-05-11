@@ -65,6 +65,16 @@ import { useAccountStore } from '../../stores/accountStore'; // accountStore로 
 import { useRouter } from 'vue-router';
 // import { useSessionStorage } from '@vueuse/core'; // VueUse 라이브러리를 사용하여 세션 스토리지 관리
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  titme: '계정 정보 수정 | JobStick',
+  description: '비밀번호나 닉네임을 안전하게 변경할 수 있는 JobStick의 계정 정보 수정 페이지입니다.',
+  keywords: ['계정 수정', '비밀번호 변경', '닉네임 변경', 'JobStick', '보안'],
+  ogTitle: '계정 정보 수정 - JobStick',
+  ogDescription: 'JobStick에서 계정 정보를 손쉽고 안전하게 수정해보세요.',
+  ogImage: '' // 실제 이미지 경로 
+});
+
 const router = useRouter();
 const accountStore = useAccountStore()
 // Data

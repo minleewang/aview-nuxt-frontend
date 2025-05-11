@@ -8,6 +8,13 @@
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
+// ✅ SEO 및 로봇 차단 메타 설정
+definePageMeta({
+  title: 'OAuth 처리 중 | JobStick',
+  description: 'OAuth 인증 코드를 처리하는 중입니다.',
+  robots: 'noindex, nofollow' // 검색엔진 인덱싱 방지
+});
+
 const router = useRouter();
 
 onMounted(() => {
