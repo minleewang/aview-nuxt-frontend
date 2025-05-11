@@ -14,19 +14,19 @@ export default defineNuxtModule({
 			pages.push({
                 name: 'AdminDefaultPage',
                 path: '/admin/default',
-                file: resolve(themeDir, 'admin/pages/default/AdminDefaultPage.vue'),
+                file: resolve(themeDir, 'admin/pages/default/admin-default.vue'),
             });
 
 			pages.push({
                 name: 'GithubActionsPage',
                 path: '/admin/monitoring',
-                file: resolve(themeDir, 'admin/pages/githubActions/GithubActionsPage.vue'),
+                file: resolve(themeDir, 'admin/pages/github-actions/github-actions.vue'),
             });
 
 			pages.push({
 				name: 'WorkflowSettingsPage',
 				path: '/admin/workflow-settings',
-				file: resolve(themeDir, 'admin/pages/githubActions/WorkflowSettingsPage.vue'),
+				file: resolve(themeDir, 'admin/pages/github-actions/workflow-settings.vue'),
 			});
 		});
 
