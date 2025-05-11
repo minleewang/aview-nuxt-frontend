@@ -38,7 +38,7 @@
       <v-spacer></v-spacer>
 
       <!-- 로그인 후 화면-->
-      <v-menu v-if="isLoggedIn" close-on-content-click>
+      <v-menu v-if="isLoggedIn && !isAdminLoggedIn" close-on-content-click>
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" class="btn-text" style="margin-right: 14px">
             <b>My Page</b>
@@ -100,25 +100,50 @@
 
       <!-- 드롭다운으로 뜨는 메뉴 항목 -->
       <v-list>
-        <v-list-item @click="goToHome">
-          <v-list-item-title>HOME</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="goToProductList">
-          <v-list-item-title>COMPANY REPORT</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="goToLlmTestPage">
-          <v-list-item-title>AI INTERVIEW</v-list-item-title>
-        </v-list-item>
-        <v-list-item @click="goToReviewListPage" v-if="isLoggedIn">
-          <v-list-item-title>REVIEW</v-list-item-title>
-        </v-list-item>
-        <template v-if="isLoggedIn">
+        <template v-if="isLoggedIn && !isAdminLoggedIn">
+          <v-list-item @click="goToHome">
+            <v-list-item-title>HOME</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToProductList">
+            <v-list-item-title>COMPANY REPORT</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToLlmTestPage">
+            <v-list-item-title>AI INTERVIEW</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToReviewListPage">
+            <v-list-item-title>REVIEW</v-list-item-title>
+          </v-list-item>
+          <v-divider></v-divider>
           <v-list-item
             v-for="(item, index) in myPageItems"
-            :key="'mobile-mypage-' + index"
+            :key="'mypage-menu-' + index"
             @click="item.action"
           >
             <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </template>
+
+        <!-- ✅ 관리자 로그인 전용 메뉴 -->
+        <template v-else-if="isAdminLoggedIn">
+          <v-list-item
+            v-for="(item, index) in adminPageList"
+            :key="'admin-menu-' + index"
+            @click="item.action"
+          >
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </template>
+
+        <!-- ✅ 비로그인 사용자 메뉴 -->
+        <template v-else>
+          <v-list-item @click="goToHome">
+            <v-list-item-title>HOME</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToProductList">
+            <v-list-item-title>COMPANY REPORT</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToLlmTestPage">
+            <v-list-item-title>AI INTERVIEW</v-list-item-title>
           </v-list-item>
         </template>
 
@@ -262,38 +287,26 @@ const goToReview = async () => {
 
 // 사용자 상태 복원
 onMounted(async () => {
-  const kakaoUserToken = localStorage.getItem("userToken");
+  const userToken = localStorage.getItem("userToken");
+  const loginType = localStorage.getItem("loginType");
 
-  if (kakaoUserToken) {
-    const isValid = await kakaoAuthenticationStore.requestValidationUserToken(
-      kakaoUserToken
-    );
-    kakaoAuthenticationStore.isAuthenticated = isValid;
+  if (!userToken || !loginType) return;
+  const isValid = await authenticationStore.requestValidationUserToken(
+    userToken
+  );
+  if (!isValid) return;
+
+  if (loginType === "KAKAO") {
+    kakaoAuthenticationStore.isAuthenticated = true;
+  } else if (loginType === "GOOGLE") {
+    googleAuthenticationStore.isAuthenticated = true;
+  } else if (loginType === "NAVER") {
+    naverAuthenticationStore.isAuthenticated = true;
+  } else if (loginType === "GUEST") {
+    guestAuthenticationStore.isAuthenticated = true;
+  } else if (loginType === "GITHUB") {
+    githubAuthenticationStore.isAuthenticated = true;
   }
-
-  //const googleUserToken = localStorage.getItem("userToken");
-  //if (googleUserToken) {
-  //  const isValid = await googleAuthenticationStore.requestValidationUserToken(
-  //    googleUserToken
-  //  );
-  //  googleAuthenticationStore.isAuthenticatedGoogle = isValid;
-  //}
-
-  //const naverUserToken = localStorage.getItem("userToken");
-  //if (naverUserToken) {
-  //  const isValid = await naverAuthenticationStore.requestValidationUserToken(
-  //    naverUserToken
-  //  );
-  //  naverAuthenticationStore.isAuthenticatedNaver = isValid;
-  //}
-
-  //const adminToken = localStorage.getItem("adminToken");
-  //if (adminToken) {
-  //  kakaoAuthenticationStore.isKakaoAdmin = true;
-  //  googleAuthenticationStore.isGoogleAdmin = true;
-  // naverAuthenticationStore.isNaverAdmin = true;
-  //  accountStore.isNormalAdmin = true;
-  // }
 });
 </script>
 

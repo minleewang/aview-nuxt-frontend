@@ -16,7 +16,9 @@
               label="모니터링할 리포지토리 선택"
               outlined
             ></v-select>
-            <v-btn color="primary" @click="fetchWorkflowRuns">데이터 새로고침</v-btn>
+            <v-btn color="primary" @click="fetchWorkflowRuns"
+              >데이터 새로고침</v-btn
+            >
           </v-card-text>
           <v-divider></v-divider>
 
@@ -32,7 +34,10 @@
                     <v-chip :color="statusColor(run.status)" label>
                       {{ statusLabel(run.status, run.conclusion) }}
                     </v-chip>
-                    <span class="run-time">실행 시간: <strong>{{ formatDate(run.created_at) }}</strong></span>
+                    <span class="run-time"
+                      >실행 시간:
+                      <strong>{{ formatDate(run.created_at) }}</strong></span
+                    >
                   </v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
@@ -59,11 +64,19 @@ import { useAdminStore } from "~/admin/stores/adminStore";
 // ✅ SEO 메타 정보
 definePageMeta({
   title: "GitHub Actions 모니터링 | Admin Dashboard - JobStick",
-  keywords: ['GitHub Actions', "CI/CD", "워크플로우", "JobStick", "관리자 대시보드"],
-  description: "관리자는 JobStick 프로젝트의 GitHub Actions 워크플로우 상태를 실시간으로 확인하고 상세 내역을 확인할 수 있습니다.",
+  keywords: [
+    "GitHub Actions",
+    "CI/CD",
+    "워크플로우",
+    "JobStick",
+    "관리자 대시보드",
+  ],
+  description:
+    "관리자는 JobStick 프로젝트의 GitHub Actions 워크플로우 상태를 실시간으로 확인하고 상세 내역을 확인할 수 있습니다.",
   ogTitle: "GitHub Actions 모니터링 - JobStick Admin",
-  ogDescription: "JobStick 프로젝트의 최신 GitHub Workflow 실행 내역을 관리자 페이지에서 확인해보세요.",
-  ogImage: ''  // 실제 이미지 경로  
+  ogDescription:
+    "JobStick 프로젝트의 최신 GitHub Workflow 실행 내역을 관리자 페이지에서 확인해보세요.",
+  ogImage: "", // 실제 이미지 경로
 });
 
 // Pinia 스토어 가져오기
@@ -74,8 +87,18 @@ const selectedRepo = ref<string | null>(null);
 
 // 두 저장소의 목록
 const repositories = [
-  { name: "Mashed-Potato-Frontend", url: "https://github.com/silenc3502/Mashed-Potato-Frontend" },
-  { name: "Mashed-Potato-Data-Server", url: "https://github.com/silenc3502/Mashed-Potato-Data-Server" }
+  {
+    name: "aview-nuxt-frontend",
+    url: "https://github.com/minleewang/aview-nuxt-frontend",
+  },
+  {
+    name: "aview-django-backend",
+    url: "https://github.com/minleewang/aview-django-backend",
+  },
+  {
+    name: "aview-fastapi-ai",
+    url: "https://github.com/minleewang/aview-fastapi-ai",
+  },
 ];
 
 // GitHub Workflow 데이터 가져오기
@@ -93,8 +116,11 @@ const fetchWorkflowRuns = async () => {
 
   try {
     console.log(`🔄 ${selectedRepo.value}의 GitHub Workflow 데이터 요청`);
-    await adminStore.requestGithubWorkflow({ userToken, repoUrl: selectedRepo.value });
-    console.log("Fetched workflows:", adminStore.workflows); 
+    await adminStore.requestGithubWorkflow({
+      userToken,
+      repoUrl: selectedRepo.value,
+    });
+    console.log("Fetched workflows:", adminStore.workflows);
   } catch (error) {
     console.error("❌ fetchWorkflowRuns() 오류:", error);
   }
