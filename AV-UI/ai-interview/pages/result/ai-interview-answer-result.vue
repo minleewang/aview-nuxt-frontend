@@ -41,8 +41,18 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
-import { useAiInterviewStore } from "../../../aiInterview/stores/aiInterviewStore"; // Pinia store import
+import { useAiInterviewStore } from "../../stores/aiInterviewStore"; // Pinia store import
 import markdownIt from "markdown-it";
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: 'AI 면접 결과 보기 | JobStick',
+  description: 'AI 기반 모의 면접 결과를 확인하고, 나의 강점과 개선점을 분석해보세요.',
+  keywords: ['AI 면접', '면접 결과', '자기 분석', '모의 면접', 'AI 분석'],
+  ogTitle: 'AI 면접 결과 - JobStick',
+  ogDescription: 'AI가 분석한 나의 면접 결과를 지금 확인해보세요.',
+  ogImage: '' // 실제 이미지 경로
+});
 
 // Pinia Store
 const aiInterviewStore = useAiInterviewStore();

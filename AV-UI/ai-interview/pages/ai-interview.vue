@@ -152,10 +152,21 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
-import { useAiInterviewStore } from "../../aiInterview/stores/aiInterviewStore";
+import { useAiInterviewStore } from "../stores/aiInterviewStore";
 import { useRouter, onBeforeRouteLeave } from "vue-router";
 import "@mdi/font/css/materialdesignicons.css";
 import hhImage from "@/assets/images/fixed/al3.png";
+import { definePageMeta } from "nuxt/dist/pages/runtime";
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: 'AI 모의 면접 시작 | JobStick',
+  description: 'AI 기반 모의 면접을 진행하고, 원하는 기업, 직무에 대한 기술 면접을 대비해보세요.',
+  keywords: ['AI 면접', '모의 면접', '기술 면접', 'AI 기반 모의 면접', '카메라 테스트', '면접 준비', '온라인 면접', '비대면 면접', '인공지능 면접'],
+  ogTItle: 'AI 모의 면접 준비 - JobStick',
+  ogDescription: 'AI 기반의 실전 면습 연습을 통해 기술 면접의 실전 감각을 길러보세요.',
+  ogImage: '' // 실제 이미지 경로
+});
 
 const router = useRouter();
 const aiInterviewStore = useAiInterviewStore();

@@ -15,7 +15,7 @@ export default defineNuxtModule({
         {
           name: "AiInterviewPage",
           path: "/ai-test",
-          file: resolve(themeDir, "aiInterview/pages/AiInterviewPage.vue"),
+          file: resolve(themeDir, "ai-interview/pages/ai-interview.vue"),
         },
 
         {
@@ -23,7 +23,7 @@ export default defineNuxtModule({
           path: "/ai-interview",
           file: resolve(
             themeDir,
-            "aiInterview/pages/llmTest/AIInterviewLLMTestPage.vue"
+            "ai-interview/pages/llm-test/ai-interview-llm-test.vue"
           ),
         },
         {
@@ -31,7 +31,7 @@ export default defineNuxtModule({
           path: "/ai-interview/result",
           file: resolve(
             themeDir,
-            "aiInterview/pages/result/AIInterviewAnswerResultPage.vue"
+            "ai-interview/pages/result/ai-interview-answer-result.vue"
           ),
         }
       );

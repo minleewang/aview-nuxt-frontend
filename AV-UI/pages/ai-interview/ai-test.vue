@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import AiInterviewPage from '@/aiInterview/pages/AiInterviewPage.vue'
+import AiInterviewPage from '~/ai-interview/pages/ai-interview.vue'
 </script>

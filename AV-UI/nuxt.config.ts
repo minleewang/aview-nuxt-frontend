@@ -73,7 +73,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   extends: [
-    "./aiInterview/nuxt.config.ts",
+    "./ai-interview/nuxt.config.ts",
     "./account/nuxt.config.ts",
     "./kakaoAuthentication/nuxt.config.ts",
     "./naverAuthentication/nuxt.config.ts",
@@ -109,7 +109,7 @@ export default defineNuxtConfig({
   modules: [
     "vuetify-nuxt-module",
     "@pinia/nuxt",
-    "~/aiInterview/index.ts",
+    "~/ai-interview/index.ts",
     "~/account/index.ts",
     "~/kakaoAuthentication/index.ts",
     "~/naverAuthentication/index.ts",
