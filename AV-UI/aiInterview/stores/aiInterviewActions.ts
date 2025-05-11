@@ -1,5 +1,6 @@
 import * as axiosUtility from "../../utility/axiosInstance";
-import axios, { AxiosResponse } from "axios";
+import axios from 'axios'
+import type { AxiosResponse } from 'axios'  // ✅ 타입만 import
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 // ✅ 회사명 매핑 유틸
@@ -195,6 +196,33 @@ export const aiInterviewActions = {
     }
   },
 
+  // 세번째 심화질문
+  async requestTechFollowUpQuestionToDjango(payload: {
+    interviewTechStack: number[]; // 기술
+    userToken: string;
+    interviewId: number;
+    questionId: number;
+    answerText: string;
+  }): Promise<any> {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
+
+    const transformedPayload = {
+      ...payload,
+    };
+
+    try {
+      console.log(payload);
+      const res: AxiosResponse = await djangoAxiosInstance.post(
+        "/interview/tech-followup", // 백엔드 Django가 저장하고 FastAPI 호출
+        transformedPayload
+      );
+      return res.data;
+    } catch (error) {
+      console.error("requestTechFollowUpQuestionToDjango() → error:", error);
+      throw error;
+    }
+  },
+
   async requestGetScoreResultListToDjango(payload: {
     userToken: string;
     interviewId: number;
@@ -216,6 +244,7 @@ export const aiInterviewActions = {
       throw error;
     }
   },
+
   //인터뷰 결과 저장
   async requestGetInterviewResultToDjango(payload: {
     userToken: string;
