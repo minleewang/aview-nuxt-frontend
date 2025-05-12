@@ -13,18 +13,18 @@ export default defineNuxtModule({
         nuxt.hook('pages:extend', (pages) => {
             pages.push({
                 name: 'CompanyReportPage',
-                path: '/companyReport/list',
-                file: resolve(themeDir, 'companyReport/pages/list/CompanyReportListPage.vue'),
+                path: '/company-report/list',
+                file: resolve(themeDir, 'company-report/pages/list/company-report-list.vue'),
             },
             {
                 name: 'CompanyReportReadPage',
-                path: '/companyReport/read/:id',
-                file: resolve(themeDir, 'companyReport/pages/read/CompanyReportReadPage.vue'),
+                path: '/company-report/read/:id',
+                file: resolve(themeDir, 'company-report/pages/read/company-report-read.vue'),
             },
             {
                 name: 'CompanyReportModifyPage',
-                path: '/companyReport/modify/:id',
-                file: resolve(themeDir, 'companyReport/pages/modify/CompanyReportModifyPage.vue'),
+                path: '/company-report/modify/:id',
+                file: resolve(themeDir, 'company-report/pages/modify/company-report-modify.vue'),
             }
             )
         })

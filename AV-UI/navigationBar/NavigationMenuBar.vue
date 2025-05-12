@@ -240,7 +240,7 @@ const aiInterviewPageList = ref([
 // 라우터 이동 함수들
 const signIn = () => router.push("/account/login"); //로그인 페이지
 const goToHome = () => router.push("/"); // 홈 메인페이지
-const goToProductList = () => router.push("/companyReport/list"); // company report 페이지
+const goToProductList = () => router.push("/company-report/list"); // company report 페이지
 const goToCart = () => router.push("/cart/list"); // 카트페이지
 const goToOrder = () => router.push("/order/list"); // 주문내역 페이지
 const goToMyPage = () => router.push("/account/mypage"); // 내페이지
