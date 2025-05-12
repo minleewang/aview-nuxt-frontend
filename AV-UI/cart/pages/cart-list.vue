@@ -108,6 +108,16 @@ import { useOrderStore } from "../../order/stores/orderStore";
 // import { useUserLogStore } from '@/stores/userLogStore';
 import { useRouter } from "vue-router";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: "장바구니 | JobStick",
+  description: "장바구니에 담긴 리포트를 확인하고 주문을 진행할 수 있습니다.",
+  keywords: ['장바구니', '기업 선택', 'JobStick 장바구니'],
+  ogTitle: "JobStick 장바구니",
+  ogDescription: "저장한 리포트를 확인하고 결제를 진행하세요.",
+  ogImage: "",  // 실제 경로 이미지
+});
+
 const cartItems = ref([]);
 const selectedItems = ref([]);
 const isCheckoutDialogVisible = ref(false);
