@@ -39,6 +39,17 @@
 import { useRouter } from "vue-router"
 import { ref } from "vue"
 
+// ✅ SEO 메타 정보
+definePageMeta({
+    title: '직무 선택 페이지 | JobStick',
+    description: 'JobStick 모의 면접을 시작하기 전에 원하는 직무를 선택해보세요.',
+    keywords: ['직무 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '직무 선택', '직무 카테고리'],
+    ogTitle: 'JobStick 직무 선택 페이지',
+    ogDescription: '모의 면접 시작하기 전에 지원하고자 하는 기업을 선택해보세요.',
+    ogImage: '',    // 실제 이미지 경로
+    robots: 'index, follow' // 검색엔진에 노출 혀용
+});
+
 const router = useRouter()
 const selectedRole = ref('')
 const roles = [
@@ -54,6 +65,14 @@ function goToNext() {
     if (selectedRole.value) {
         router.push(`/skills?role=${selectedRole.value}`)
     }
+}
+
+// 일단 mocking하여 definePageMeta is not defined 에러를 방지합니다.
+function definePageMeta(arg0: {
+    title: string; description: string; keywords: string[]; ogTitle: string; ogDescription: string; ogImage: string; // 실제 이미지 경로
+    robots: string; // 검색엔진에 노출 혀용
+}) {
+    throw new Error("Function not implemented.");
 }
 </script>
 
