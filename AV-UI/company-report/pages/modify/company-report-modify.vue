@@ -54,6 +54,17 @@ import { ref, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCompanyReportStore } from "../../stores/companyReportStore";
 
+// ✅ SEO 메타 정보 
+definePageMeta({
+  title: '회사 보고서 수정 | JobStick',
+  description: 'JobStick 관리자 페이지에서 회사 보고서를 수정할 수 있습니다.',
+  keywords: ['회사 보고서', '회사 보고서 수정', '관리자 페이지', 'JobStick 보고서'],
+  ogTitle: 'JobStick 관리자 - 회사 보고서 수정',
+  ogDescription: 'JobStick에서 보고서 내용을 수정하고 관리하세요.',
+  ogImage: '',  // 실제 이미지 경로
+  robots: 'noindex, nofollow' // 관리자용이라서 검색 노출 방지
+});
+
 const route = useRoute();
 const router = useRouter();
 const companyReportStore = useCompanyReportStore();

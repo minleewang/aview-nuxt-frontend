@@ -277,6 +277,17 @@ import { useGoogleAuthenticationStore } from "../../../googleAuthentication/stor
 import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores/naverAuthenticationStore";
 import { useUserLogStore } from "../../../userLog/store/userLogStore";
 
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '기업 보고서 목록 | JobStick',
+  description: 'AI, 빅데이터, 클라우드 등 다양한 분야의 기업 보고서를 확인하고 분석해보세요.',
+  keywords: ['회사 보고서', '기업 분석', '산업 분야', 'JobStick', 'AI 기업', '빅데이터', '빅데이터 보고서'],
+  ogTitle: 'JobStick 회사 보고서 목록',
+  ogDescription: '다양한 분야의 기업 보고서를 한눈에 확인할 수 있는 JobStick의 기업 분석 보고서 페이지입니다.',
+  ogImage: '',  // 실제 이미지 경로
+  robots: 'index, follow' // 검색 엔진에 노출될 수 있도록 설정
+});
+
 const router = useRouter();
 const companyReportStore = useCompanyReportStore();
 const userLogStore = useUserLogStore();
