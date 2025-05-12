@@ -482,7 +482,7 @@ function clearSelectedKeywords() {
 // 페이지 이동
 function goToCompanyReportReadPage(companyReportId, companyReportName) {
   router.push({
-    path: `/companyReport/read/${companyReportId}`,
+    path: `/company-report/read/${companyReportId}`,
     query: { companyReportName: companyReportName },
   });
 

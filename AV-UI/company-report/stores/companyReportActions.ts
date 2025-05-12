@@ -4,11 +4,11 @@ import { useCompanyReportStore } from "./companyReportStore";
 
 export const companyReportActions = {
 	async requestCompanyReportToDjango(companyReportId: number): Promise<void> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 		const companyReportStore = useCompanyReportStore();
 
         try {
-            const res = await djangoAxiosInst.get(`/company_report/read/${companyReportId}`);
+            const res = await djangoAxiosInstance.get(`/company_report/read/${companyReportId}`);
 			companyReportStore.companyReport = res.data;
         } catch (error) {
             console.error('requestCompanyReportToDjango() -> error:', error);
@@ -17,11 +17,11 @@ export const companyReportActions = {
     },
 
 	async requestCompanyReportListToDjango(): Promise<void> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 		const companyReportStore = useCompanyReportStore();
 
 		try {
-			const res = await djangoAxiosInst.get('/company_report/list/');
+			const res = await djangoAxiosInstance.get('/company_report/list/');
 			const data = res.data;
 			const sortedData = data.sort((a, b) => a.companyReportId - b.companyReportId)
 			companyReportStore.companyReportList = sortedData;
@@ -32,10 +32,10 @@ export const companyReportActions = {
 	},
 
 	async requestCreateCompanyReportToDjango(imageFormData: FormData): Promise<void> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 	
 		try {
-			await djangoAxiosInst.post('/company_report/register', imageFormData, {
+			await djangoAxiosInstance.post('/company_report/register', imageFormData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
@@ -48,10 +48,10 @@ export const companyReportActions = {
 	},
 
 	async requestDeleteCompanyReportToDjango(companyReportId: number): Promise<void> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 		
 		try {
-			await djangoAxiosInst.delete(`/company_report/delete/${companyReportId}`);
+			await djangoAxiosInstance.delete(`/company_report/delete/${companyReportId}`);
 		} catch (error) {
 			console.log('requestDeleteCompanyReportToDjango() -> error:', error);
 			throw error;
@@ -66,10 +66,10 @@ export const companyReportActions = {
 		keyword:string
     }): Promise<void> {
         const { companyReportName, content, companyReportId,companyReportPrice,keyword } = payload
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
         try {
-            await djangoAxiosInst.put(`/company_report/modify/${companyReportId}`, {
+            await djangoAxiosInstance.put(`/company_report/modify/${companyReportId}`, {
 				companyReportName, 
 				content, 
 				companyReportPrice,
@@ -82,10 +82,10 @@ export const companyReportActions = {
     },
 
 	async requestCompanyReportFinanceToDjango(companyReportName: string): Promise<any> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
 		try {
-			const data = await djangoAxiosInst.post('company_report/finance', { companyReportName });
+			const data = await djangoAxiosInstance.post('company_report/finance', { companyReportName });
 			return data;
 		} catch (error) {
 			console.log('requestCompanyReportFinanceToDjango() -> error:', error);
@@ -94,10 +94,10 @@ export const companyReportActions = {
 	},
 
 	async requestCompanyReportInfoToDjango(companyReportName: string): Promise<any> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 		
 		try {
-			return await djangoAxiosInst.post('company_report/info', { companyReportName });
+			return await djangoAxiosInstance.post('company_report/info', { companyReportName });
 		} catch (error) {
 			console.log('requestCompanyReportInfoToDjango() -> error:', error);
 			throw error;
@@ -105,11 +105,11 @@ export const companyReportActions = {
 	},
 	
 	async requestTopNCompanyReportListToDjango(topN: number): Promise<void> {
-		const { djangoAxiosInst } = axiosUtility.createAxiosInstances();
+		const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 		const companyReportStore = useCompanyReportStore();
 		
 		try {
-			const res = await djangoAxiosInst.post('company_report/top', { params: { topN } });
+			const res = await djangoAxiosInstance.post('company_report/top', { params: { topN } });
 			companyReportStore.topList = res.data;
 		} catch (error) {
 			console.log('requestTopNCompanyReportListToDjango() -> error:', error);
