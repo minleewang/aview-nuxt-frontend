@@ -103,7 +103,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useCartStore } from "../../cart/stores/cartStore";
+import { useCartStore } from "../stores/cartStore";
 import { useOrderStore } from "../../order/stores/orderStore";
 // import { useUserLogStore } from '@/stores/userLogStore';
 import { useRouter } from "vue-router";
