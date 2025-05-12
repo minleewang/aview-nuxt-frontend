@@ -254,7 +254,7 @@ const goToReviewListPage = () => router.push("/review/list"); // 리뷰페이지
 const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
 const goToGO = () => router.push("/admin/default");
-const goToLlmTestPage = () => router.push("/ai-interview");
+const goToLlmTestPage = () => router.push("/llm-test");
 const goToMembership = () => router.push("/price");
 
 // 로그아웃 처리

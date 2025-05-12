@@ -23,7 +23,7 @@ export default defineNuxtModule({
           path: "/ai-interview",
           file: resolve(
             themeDir,
-            "ai-interview/pages/llm-test/ai-interview-llm-test.vue"
+            "ai-interview/pages/llm-test/index.vue"
           ),
         },
         {
