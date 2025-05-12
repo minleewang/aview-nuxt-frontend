@@ -11,6 +11,18 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useRouter, useRoute } from "vue-router"
+
+// ✅ SEO 메타 정보
+definePageMeta({
+    title: '백엔드 기술 선택 페이지 | JobStick',
+    description: 'JobStick 모의 면접을 시작하기 전에 백엔드 직무의 기술을 선택해보세요.',
+    keywords: ['기술 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '백엔드', 'backend', 'tech'],
+    ogTitle: 'JobStick 백엔드 기술 선택 페이지',
+    ogDescription: '모의 면접 시작하기 전에 백엔드 기술을 선택해보세요.',
+    ogImage: '',    // 실제 이미지 경로
+    robots: 'index, follow' // 검색엔진에 노출 혀용
+});
+
 const router = useRouter()
 const route = useRoute()
 
@@ -38,6 +50,14 @@ const techMap: Record<string, string[]> = {
 
 function goToNext() {
     router.push('/experience')
+}
+
+// 일단 mocking 하여 definePageMeta is not defined 에러를 방지합니다.
+function definePageMeta(arg0: {
+    title: string; description: string; keywords: string[]; ogTitle: string; ogDescription: string; ogImage: string; // 실제 이미지 경로
+    robots: string; // 검색엔진에 노출 혀용
+}) {
+    throw new Error("Function not implemented.");
 }
 </script>
 
