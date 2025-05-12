@@ -13,14 +13,14 @@ export default defineNuxtModule({
         nuxt.hook("pages:extend", (pages) => {
             pages.push(
                 {
-                    name: "InterviewReadyCategoryPage.vue",
-                    path: "/interviewReady/category",
-                    file: resolve(themeDir, "interviewReady/pages/category/InterviewReadyCategoryPage.vue"),
+                    name: "InterviewReadyCategoryPage",
+                    path: "/interview-ready/category",
+                    file: resolve(themeDir, "interview-ready/pages/category/interview-ready-category.vue"),
                 },
                 {
                     name: "InterviewReadyBackendSkillsPage",
-                    path: "/interviewReady/skills",   // 경로를 수정할 필요가 있습니다.
-                    file: resolve(themeDir, "interviewReady/pages/skills/InterviewReadyBackendSkillsPage.vue")
+                    path: "/interview-ready/skills",   // 경로를 수정할 필요가 있습니다.
+                    file: resolve(themeDir, "interview-ready/pages/skills/interview-ready-backend-skills.vue")
                 },
 
             )
