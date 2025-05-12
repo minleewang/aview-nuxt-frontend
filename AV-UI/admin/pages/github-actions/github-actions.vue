@@ -56,7 +56,8 @@
     </v-row>
   </v-container>
 </template>
-
+///
+<reference types="nuxt" />
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useAdminStore } from "~/admin/stores/adminStore";
