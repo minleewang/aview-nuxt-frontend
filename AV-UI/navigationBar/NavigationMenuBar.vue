@@ -113,6 +113,9 @@
           <v-list-item @click="goToReviewListPage">
             <v-list-item-title>REVIEW</v-list-item-title>
           </v-list-item>
+          <v-list-item @click="goToMembership">
+         <v-list-item-title>MEMBERSHIP</v-list-item-title>
+         </v-list-item>
           <v-divider></v-divider>
           <v-list-item
             v-for="(item, index) in myPageItems"
@@ -144,6 +147,9 @@
           </v-list-item>
           <v-list-item @click="goToLlmTestPage">
             <v-list-item-title>AI INTERVIEW</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="goToMembership">
+          <v-list-item-title>MEMBERSHIP</v-list-item-title>
           </v-list-item>
         </template>
 

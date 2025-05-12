@@ -3,7 +3,7 @@
     <v-row justify="center" align="stretch" class="gap-6">
       <v-col cols="12" class="text-center">
         <h1 class="text-h4 font-weight-bold mb-4">이용 요금 안내</h1>
-        <p class="text-subtitle-1">AI 모의 면접 서비스를 요금제에 맞게 선택해보세요.</p>
+        <p class="text-subtitle-1 black-text">AI 모의 면접 서비스를 요금제에 맞게 선택해보세요.</p>
       </v-col>
 
       <v-col
@@ -15,7 +15,7 @@
       >
         <v-card
           :class="['pricing-card', getGradientClass(plan.id)]"
-          class="pa-6 rounded-xl elevation-10 text-white"
+          class="pa-6 rounded-xl elevation-10 text-white w-100"
           hover
         >
           <v-card-title class="text-h5 font-weight-bold mb-2">
@@ -85,27 +85,29 @@ const getGradientClass = (id: number) => {
 }
 
 .gradient-lightblue {
+  background: linear-gradient(135deg, #b3e5fc, #4fc3f7);
+}
+
+.gradient-midblue {
   background: linear-gradient(135deg, #81d4fa, #29b6f6);
 }
-.gradient-midblue {
-  background: linear-gradient(135deg, #4fc3f7, #0288d1);
-}
+
 .gradient-darkblue {
-  background: linear-gradient(135deg, #039be5, #01579b);
+  background: linear-gradient(135deg, #4fc3f7, #0288d1);
 }
 
 .original-price {
   text-decoration: line-through;
-  color: #eeeeee;
+  color: #000; /* 선명한 검정 */
   font-weight: 600;
   margin-right: 8px;
   font-size: 16px;
 }
 
 .discounted-price {
-  color: #ff1744;
-  font-weight: 800;
-  font-size: 22px;
+  color: red; /* 더 선명한 빨간색 */
+  font-weight: 900;
+  font-size: 24px;
 }
 
 .feature-list {
@@ -118,8 +120,8 @@ const getGradientClass = (id: number) => {
   color: #fff;
 }
 
-.text-subtitle-1 {
-  color: #ccc;
+.text-subtitle-1.black-text {
+  color: #000;
   font-size: 16px;
 }
 </style>
