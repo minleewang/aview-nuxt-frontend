@@ -63,6 +63,18 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useOrderStore } from "@/stores/orderStore"; // Pinia store import
 
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '구매한 보고서 확인 | JobStick',
+  description: 'JobStick 구매 목록 확인 페이지에서 구매한 기업 보고서를 확인하세요',
+  keywords: ['보고서', '보고서 확인', '기업 보고서', '구매 목록', 'JobStick', '잡스틱'],
+  ogTitle: 'JobStick 구매 보고서 확인',
+  ogDescription: 'JobStick 구매 목록 확인 페이지입니다. 구매한 기업 보고서를 확인해보세요.',
+  ogImage: '', // 실제 이미지 경로
+  robots: 'index, follow'
+});
+
 // Props 정의
 const props = defineProps({
   companyReportId: {
