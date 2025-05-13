@@ -18,14 +18,6 @@ export default defineNuxtModule({
           file: resolve(themeDir, "account/pages/login/account-login.vue"),
         },
         {
-          name: "AccountRegisterPage",
-          path: "/account/register",
-          file: resolve(
-            themeDir,
-            "account/pages/register/account-register.vue"
-          ),
-        },
-        {
           name: "AccountMyPage",
           path: "/account/mypage",
           file: resolve(themeDir, "account/pages/my/account-my.vue"),
@@ -38,12 +30,6 @@ export default defineNuxtModule({
             "account/pages/withdraw/account-withdraw.vue"
           ),
         },
-        {
-          name: "AccountModifyPage",
-          path: "/account/modify",
-          file: resolve(themeDir, "account/pages/modify/account-modify.vue"),
-        },
-
         {
           name: "AdminCodeInputPage",
           path: "/account/admin-code",
@@ -64,10 +50,7 @@ export default defineNuxtModule({
         {
           name: "PrivacyAgreementPage",
           path: "/account/privacy",
-          file: resolve(
-            themeDir,
-            "account/pages/login/privacy-agreement.vue"
-          ),
+          file: resolve(themeDir, "account/pages/login/privacy-agreement.vue"),
         }
       );
     });
