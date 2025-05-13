@@ -20,10 +20,10 @@ export default defineNuxtModule({
 
         {
           name: "AIInterviewLLMTestPage",
-          path: "/ai-interview",
+          path: "/ai-interview/llm-test",
           file: resolve(
             themeDir,
-            "ai-interview/pages/llm-test/index.vue"
+            "ai-interview/pages/llm-test/ai-interview-llm.vue"
           ),
         },
         {

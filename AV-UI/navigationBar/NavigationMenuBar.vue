@@ -114,8 +114,8 @@
             <v-list-item-title>REVIEW</v-list-item-title>
           </v-list-item>
           <v-list-item @click="goToMembership">
-         <v-list-item-title>MEMBERSHIP</v-list-item-title>
-         </v-list-item>
+            <v-list-item-title>MEMBERSHIP</v-list-item-title>
+          </v-list-item>
           <v-divider></v-divider>
           <v-list-item
             v-for="(item, index) in myPageItems"
@@ -149,7 +149,7 @@
             <v-list-item-title>AI INTERVIEW</v-list-item-title>
           </v-list-item>
           <v-list-item @click="goToMembership">
-          <v-list-item-title>MEMBERSHIP</v-list-item-title>
+            <v-list-item-title>MEMBERSHIP</v-list-item-title>
           </v-list-item>
         </template>
 
@@ -254,7 +254,7 @@ const goToReviewListPage = () => router.push("/review/list"); // 리뷰페이지
 const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
 const goToGO = () => router.push("/admin/default");
-const goToLlmTestPage = () => router.push("/llm-test");
+const goToLlmTestPage = () => router.push("/ai-interview/llm-test");
 const goToMembership = () => router.push("/price");
 
 // 로그아웃 처리

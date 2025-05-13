@@ -1,8 +1,8 @@
-import { defineStore } from 'pinia'
-import { reviewActions } from './reviewActions'
-import { reviewState } from './reviewState'
+import { defineStore } from "pinia";
+import { reviewState } from "./reviewState";
+import { reviewActions } from "./reviewActions";
 
-export const useReviewStore = defineStore('review', {
-  state: () => reviewState(), // ✅ () 호출 필수!
-  actions: reviewActions
-})
+export const useReviewStore = defineStore("review", {
+  state: reviewState,
+  actions: reviewActions,
+});

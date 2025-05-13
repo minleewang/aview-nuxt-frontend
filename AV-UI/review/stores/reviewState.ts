@@ -1,7 +1,5 @@
 export const reviewState = () => ({
-  reviewList: [],
-  reviewForm: {
-    text: '',
-    image: null as File | null
-  }
-})
+  reviewList: [] as any[],
+  totalItems: 0,
+  totalPages: 0,
+});
