@@ -26,7 +26,7 @@
             작성자: {{ review.nickname }} / {{ review.createDate }}
           </v-card-subtitle>
           <v-card-text>{{
-            review.content.length > 100
+            review.content && review.content.length > 100
               ? review.content.slice(0, 100) + "..."
               : review.content
           }}</v-card-text>
