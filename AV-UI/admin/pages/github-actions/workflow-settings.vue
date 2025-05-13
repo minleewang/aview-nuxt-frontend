@@ -10,22 +10,8 @@
       </v-col>
 
       <v-col cols="12">
-        <v-checkbox
-          v-for="workflow in workflowOptions"
-          :key="workflow.value"
-          v-model="selectedWorkflows"
-          :label="workflow.label"
-          :value="workflow.value"
-        />
-      </v-col>
-
-      <v-col cols="12">
-        <v-btn
-          color="primary"
-          @click="triggerWorkflows"
-          :disabled="!canTrigger"
-        >
-          선택된 워크플로우 실행
+        <v-btn color="primary" @click="triggerDeploy" :disabled="!selectedRepo">
+          배포하기
         </v-btn>
       </v-col>
 
@@ -40,7 +26,7 @@
 ///
 <reference types="nuxt" />
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useAdminStore } from "@/stores/adminStore";
 
 // ✅ SEO 메타 정보
@@ -63,23 +49,16 @@ definePageMeta({
 
 const adminStore = useAdminStore();
 
-const repositories = ["silenc3502/SK-Networks-8-Notes"];
-
-const workflowOptions = [
-  { label: "Deploy Test", value: "deploy-test.yml" },
-  { label: "Integration Test", value: "integration_test.yml" },
-  { label: "Deploy", value: "deploy.yml" },
+const repositories = [
+  "minleewang/aview-nuxt-frontend",
+  "minleewang/aview-django-backend",
+  "minleewang/aview-fastapi-ai",
 ];
-
-const selectedRepo = ref(repositories[0]);
-const selectedWorkflows = ref<string[]>([]);
-
+const selectedRepo = ref<string | null>(repositories[0]);
 const message = ref("");
 const messageType = ref<"success" | "error">("success");
 
-const canTrigger = computed(() => selectedWorkflows.value.length > 0);
-
-const triggerWorkflows = async () => {
+const triggerDeploy = async () => {
   message.value = "";
   try {
     const userToken = localStorage.getItem("userToken");
@@ -88,13 +67,11 @@ const triggerWorkflows = async () => {
       throw new Error("사용자 토큰이 존재하지 않습니다.");
     }
 
-    for (const workflow of selectedWorkflows.value) {
-      await adminStore.triggerGithubWorkflow({
-        userToken,
-        repoUrl: selectedRepo.value,
-        workflowName: workflow,
-      });
-    }
+    await adminStore.triggerGithubWorkflow({
+      userToken,
+      repoUrl: selectedRepo.value!,
+      workflowName: "main.yml",
+    });
 
     message.value = "워크플로우 실행 성공!";
     messageType.value = "success";
