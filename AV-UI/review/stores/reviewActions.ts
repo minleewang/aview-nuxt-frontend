@@ -16,6 +16,7 @@ export const reviewActions = {
       this.reviewList = res.data.dataList;
       this.totalItems = res.data.totalItems;
       this.totalPages = res.data.totalPages;
+      console.log("📦 리뷰 목록 응답 전체:", res.data);
     } catch (error: any) {
       console.error(
         "❌ 리뷰 목록 불러오기 실패:",
