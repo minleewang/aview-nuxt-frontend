@@ -17,23 +17,23 @@ export default defineNuxtModule({
 					path: "/payments/test/page",
 					file: resolve(
 						themeDir,
-						"payments/pages/payment/testPayments.vue"
+						"payments/pages/payment/test-payments.vue"
 					),
 				},
 				{
 					name: "paymentSuccessed",
-					path: "/payment/success",
+					path: "/payments/succed",
 					file: resolve(
 						themeDir,
-						"payments/pages/succed/paymentSuccessed.vue"
+						"payments/pages/succed/payment-successed.vue"
 					),
 				},
 				{
 					name: "paymentFailed",
-					path: "/payment/fail",
+					path: "/payments/failed",
 					file: resolve(
 						themeDir,
-						"payments/pages/failed/paymentFailed.vue"
+						"payments/pages/failed/payment-failed.vue"
 					),
 				}
 			);
