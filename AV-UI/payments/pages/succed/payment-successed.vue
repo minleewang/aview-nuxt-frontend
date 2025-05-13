@@ -43,10 +43,22 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useRuntimeConfig } from "nuxt/app";
+
+
+// ✅ SEO 메타 정보
+definePageMeta({
+    title: '결제 성공 | JobStick',
+    description: 'JobStick 결제하기가 성공되었습니다. 결제 정보를 확인하세요.',
+    keywords: ['결제', '결제 성공', '결제 정보', 'JobStick', '잡스틱'],
+    ogTitle: 'JobStick 결제 성공',
+    ogDescription: 'JobStick 결제하기 성공 페이지입니다. 결제 정보를 확인하세요.',
+    ogImage: '',    // 실제 이미지 경로
+    robots: 'noindex, nofollow' // 결제 성공 페이지이므로 검색 노출 방지
+});
 
 export default defineComponent({
     setup() {

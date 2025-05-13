@@ -20,9 +20,21 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
+
+
+// ✅ SEO 메타 정보
+definePageMeta({
+    title: '결제 실패 | JobStick',
+    description: 'JobStick 결제에 실패했습니다.',
+    keywords: ['결제 실패', '실패', 'JobStick', '잡스틱'],
+    ogTitle: 'JobStick 결제 실패',
+    ogDescription: 'JobStick 결제 실패 안내 페이지입니다. 결제 과정에서 문제가 발생했습니다.',
+    ogImage: '', // 실제 이미지 경로
+    robots: 'noindex, nofollow' // 결제 관련 페이지이므로 검색 노출 방지
+});
 
 export default defineComponent({
     setup(){
