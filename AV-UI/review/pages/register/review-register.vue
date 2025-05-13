@@ -20,6 +20,18 @@ import { useGoogleAuthenticationStore } from '@/googleAuthentication/stores/goog
 import { useKakaoAuthenticationStore } from '@/kakaoAuthentication/stores/kakaoAuthenticationStore'
 import { useNaverAuthenticationStore } from '@/naverAuthentication/stores/naverAuthenticationStore'
 
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '리뷰 작성 | JobStick',
+  description: 'JobStick 리뷰 작성 페이지입니다. 리뷰를 작성해보세요.',
+  keywords: ['리뷰', '리뷰 작성', '리뷰 제출', 'JobStick', '잡스틱'],
+  ogTitle: 'JobStick 리뷰 작성'
+  ogDescription: 'JobStick 리뷰 작성 페이지입니다. 서비스 이용 후 리뷰를 남겨보세요.',
+  ogImage: '', // 실제 이미지 경로
+  robots: 'index, follow' // 검색 엔진 노출 허용 
+});
+
 const googleStore = useGoogleAuthenticationStore()
 const kakaoStore = useKakaoAuthenticationStore()
 const naverStore = useNaverAuthenticationStore()

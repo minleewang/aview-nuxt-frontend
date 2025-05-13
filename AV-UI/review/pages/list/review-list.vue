@@ -37,6 +37,18 @@ import { onMounted } from 'vue'
 import { useReviewStore } from '~/review/stores/reviewStore'
 import { useRouter } from 'vue-router'
 
+
+// ✅ SEO 메타 정보
+definePageMeta({
+  title: '리뷰 리스트 | JobStick',
+  description: 'JobStick 리뷰 리스트페이지입니다.',
+  keywords: ['리뷰', '리뷰 리스트', '리뷰 목록', 'Jobstick', '잡스틱'],
+  ogTitle: 'JobStick 리뷰 리스트',
+  ogDescription: 'JobStick 리뷰 리스트 페이지입니다.',
+  ogImage: '', // 실제 이미지 경로
+  robots: 'index, follow' // 검색 엔진에서 리뷰 페이지 노출 허용
+});
+
 const store = useReviewStore()
 const router = useRouter()
 
