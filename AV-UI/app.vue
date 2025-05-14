@@ -21,10 +21,14 @@
 </template>
 
 <script setup>
-import { useHead } from '#imports'; // ✅ Nuxt 3에서 head 설정
+import { onMounted } from 'vue';
+import { useHead } from '#imports';
 import { useRoute } from 'vue-router';
 import NavigationBar from '~/navigationBar/NavigationMenuBar.vue';
 
+const route = useRoute();
+
+// ✅ SEO 및 네이버 인증 메타 태그
 useHead({
   meta: [
     {
@@ -34,30 +38,27 @@ useHead({
   ],
 });
 
-// 직접 gtag 코드 삽입
+// ✅ 구글 애널리틱스 삽입 (gtag.js)
 onMounted(() => {
   if (process.client) {
-    const script1 = document.createElement('script')
-    script1.setAttribute('async', '')
-    script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-QG43SWSZTP'
-    document.head.appendChild(script1)
+    const script1 = document.createElement('script');
+    script1.setAttribute('async', '');
+    script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-QG43SWSZTP';
+    document.head.appendChild(script1);
 
-    const script2 = document.createElement('script')
-    script2.innterHTML = `
+    const script2 = document.createElement('script');
+    script2.innerHTML = `
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new date());
+      gtag('js', new Date());
       gtag('config', 'G-QG43SWSZTP', {
         anonymize_ip: true,
         send_page_view: true
       });
-    `
-
-    document.head.appendChild(script2)
+    `;
+    document.head.appendChild(script2);
   }
-})
-
-const route = useRoute();
+});
 </script>
 
 <style>

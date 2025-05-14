@@ -101,6 +101,9 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    optimizeDeps: {
+      include: ["@tosspayments/payment-widget-sdk"],
+    },
     ssr: {
       noExternal: ["vuetify"], // SSR에서도 Vuetify를 외부 패키지로 처리하지 않도록 설정
     },
