@@ -42,7 +42,7 @@ import { useGuestAuthenticationStore } from "@/guestAuthentication/stores/guestA
 definePageMeta({
   title: '로그인 | JobStick',
   description: 'JobStick에 로그인하고 다양한 개인 맞춤형 서비스를 이용해보세요.',
-  keywords: ['JobStick 로그인', '계정 로그인', '회원 로그인', '게스트 로그인'],
+  keywords: ['JobStick 로그인', '계정 로그인', '회원 로그인', '게스트 로그인', 'JobStick', 'job-stick', '잡스틱'],
   ogTitle: '로그인 - JobStick',
   ogDescription: 'JobStick에 로그인하여 추천 컨텐츠 및 맞춤형 기능을 체험해보세요.',
   ogImage: '', // 실제 존재하는 경로로 설정

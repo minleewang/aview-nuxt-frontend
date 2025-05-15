@@ -16,7 +16,7 @@ import { useRoute, useRouter } from "vue-router";
 definePageMeta({
   title: "리뷰 확인 | JobStick",
   description: "JobStick 리뷰 리스트에서 리뷰를 확인해보세요.",
-  keywords: ["리뷰", "리뷰 보기", "리뷰 확인", "JobStick", "잡스틱"],
+  keywords: ["리뷰", "리뷰 보기", "리뷰 확인", "JobStick", "잡스틱", "job-stick"],
   ogTitle: "JobStick 리뷰 확인",
   ogDescription: "JobStick 리뷰 확인 페이지입니다. 리뷰 내용을 확인해보세요.",
   ogImage: "", // 실제 이미지 경로

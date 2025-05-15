@@ -432,7 +432,7 @@ import { useOrderStore } from "../../../order/stores/orderStore";
 definePageMeta({
   title: '기업 리포트 상세 보기 | JobStick',
   description: '선택한 기업의 재무제표와 보고서를 상세히 확인해보세요.',
-  keywords: ['기업 보고서', '재무제표', 'JobStick', '리포트 분석'],
+  keywords: ['기업 보고서', '재무제표', 'JobStick', '리포트 분석', 'job-stick', '잡스틱'],
   ogTitle: '기업 리포트 상세 페이지 - JobStick',
   ogDescription: '기업의 리포트를 한눈에 확인하고 인사이트를 얻어보세요.',
   ogImage: '',  // 실제 이미지 경로

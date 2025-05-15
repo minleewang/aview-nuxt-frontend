@@ -44,7 +44,7 @@ import { useGithubAuthenticationStore } from "../../../githubAuthentication/stor
 definePageMeta({
   title: '관리자 GitHub 로그인 | JobStick',
   description: 'JobStick 관리자 전용 GitHub 계정으로 로그인하여 관리 기능을 이용하세요.',
-  keywords: ['관리자 로그인', 'GitHub 로그인', 'JobStick 관리자', 'Admin GitHub Login'],
+  keywords: ['관리자 로그인', 'GitHub 로그인', 'JobStick 관리자', 'Admin GitHub Login', 'JobStick', 'job-stick', '잡스틱'],
   ogTitle: 'JobStick 관리자 GitHub 로그인',
   ogDescription: 'JobStick의 관리자용 페이지입니다. GitHub 계정으로 안전하게 로그인하세요.',
   ogImage: '/assets/images/fixed/icon-github.svg',

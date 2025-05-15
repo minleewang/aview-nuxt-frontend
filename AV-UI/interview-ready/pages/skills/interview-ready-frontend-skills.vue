@@ -16,7 +16,7 @@ import { useRouter, useRoute } from "vue-router"
 definePageMeta({
     title: '프론트엔드 기술 선택 페이지 | JobStick',
     description: 'JobStick 모의 면접을 시작하기 전에 프론트엔드 기술을 선택해보세요.',
-    keywords: ['기술 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '프론트엔드', 'frontend', 'tech'],
+    keywords: ['기술 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '프론트엔드', 'frontend', 'tech', 'job-stick', '잡스틱', '기술 면접'],
     ogTitle: 'JobStick 프론트엔드 기술 선택 페이지',
     ogDescription: '모의 면접 시작하기 전에 프론트엔드 기술을 선택해보세요.',
     ogImage: '',    // 실제 이미지 경로

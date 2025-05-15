@@ -24,7 +24,7 @@ import { useRouter } from "vue-router";
 definePageMeta({
   title: "리뷰 작성 | JobStick",
   description: "JobStick 리뷰 작성 페이지입니다. 리뷰를 작성해보세요.",
-  keywords: ["리뷰", "리뷰 작성", "리뷰 제출", "JobStick", "잡스틱"],
+  keywords: ["리뷰", "리뷰 작성", "리뷰 제출", "JobStick", "잡스틱", "job-stick"],
   ogTitle: "JobStick 리뷰 작성",
   ogDescription:
     "JobStick 리뷰 작성 페이지입니다. 서비스 이용 후 리뷰를 남겨보세요.",

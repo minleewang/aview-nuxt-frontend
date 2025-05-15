@@ -52,7 +52,7 @@ import { useRuntimeConfig } from 'nuxt/app'
 definePageMeta({
   title: '결제 성공 | JobStick',
   description: 'JobStick 결제하기가 성공되었습니다. 결제 정보를 확인하세요.',
-  keywords: ['결제', '결제 성공', '결제 정보', 'JobStick', '잡스틱'],
+  keywords: ['결제', '결제 성공', '결제 정보', 'JobStick', '잡스틱', 'job-stick'],
   ogTitle: 'JobStick 결제 성공',
   ogDescription: 'JobStick 결제하기 성공 페이지입니다. 결제 정보를 확인하세요.',
   ogImage: '',

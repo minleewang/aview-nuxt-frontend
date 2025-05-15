@@ -172,11 +172,15 @@ definePageMeta({
     "온라인 면접",
     "비대면 면접",
     "인공지능 면접",
+    "JobStick",
+    "job-stick",
+    "잡스틱"
   ],
   ogTItle: "AI 모의 면접 준비 - JobStick",
   ogDescription:
     "AI 기반의 실전 면습 연습을 통해 기술 면접의 실전 감각을 길러보세요.",
   ogImage: "", // 실제 이미지 경로
+  robots: 'index, follow' // 검색 노출 허용 
 });
 
 const router = useRouter();

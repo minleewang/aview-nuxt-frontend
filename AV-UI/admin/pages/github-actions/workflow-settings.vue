@@ -40,6 +40,9 @@ definePageMeta({
     "Admin Dashboard",
     "CI/CD",
     "배포 설정",
+    "JobStick",
+    "job-stick",
+    "잡스틱"
   ],
   ogTitle: "워크플로우 설정 - 관리자 페이지",
   ogDescription:
