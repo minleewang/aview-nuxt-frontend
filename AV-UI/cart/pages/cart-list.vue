@@ -112,10 +112,11 @@ import { useRouter } from "vue-router";
 definePageMeta({
   title: "장바구니 | JobStick",
   description: "장바구니에 담긴 리포트를 확인하고 주문을 진행할 수 있습니다.",
-  keywords: ['장바구니', '기업 선택', 'JobStick 장바구니'],
+  keywords: ['장바구니', '기업 선택', 'JobStick 장바구니', '잡스틱 장바구닝', 'JobStick', 'job-stick', '잡스틱'],
   ogTitle: "JobStick 장바구니",
   ogDescription: "저장한 리포트를 확인하고 결제를 진행하세요.",
   ogImage: "",  // 실제 경로 이미지
+  robots: 'index, follow' // 검색 노출 허용 
 });
 
 const cartItems = ref([]);

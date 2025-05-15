@@ -58,7 +58,7 @@ import { useCompanyReportStore } from "../../stores/companyReportStore";
 definePageMeta({
   title: '회사 보고서 수정 | JobStick',
   description: 'JobStick 관리자 페이지에서 회사 보고서를 수정할 수 있습니다.',
-  keywords: ['회사 보고서', '회사 보고서 수정', '관리자 페이지', 'JobStick 보고서'],
+  keywords: ['회사 보고서', '회사 보고서 수정', '관리자 페이지', 'JobStick 보고서', 'JobStick', '잡스틱'],
   ogTitle: 'JobStick 관리자 - 회사 보고서 수정',
   ogDescription: 'JobStick에서 보고서 내용을 수정하고 관리하세요.',
   ogImage: '',  // 실제 이미지 경로

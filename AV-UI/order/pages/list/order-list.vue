@@ -60,7 +60,7 @@ import { useOrderStore } from '@/stores/orderStore'; // Pinia store import
 definePageMeta({
   title: '구매 목록 | JobStick',
   description: '사용자의 구매 목록을 확인할 수 있는 페이지입니다.',
-  keywords: ['구매 목록', '구매', 'JobStick', '잡스틱', '구매 리스트'],
+  keywords: ['구매 목록', '구매', 'JobStick', '잡스틱', '구매 리스트', 'job-stick', '잡스틱'],
   ogTitle: 'JobStick 구매 목록',
   ogDescription: 'JobStick의 구매 목록 페이지입니다. 구매 기록을 확인하세요.',
   ogImage: '', // 실제 이미지 경로

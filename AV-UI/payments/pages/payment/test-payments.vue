@@ -45,7 +45,7 @@ import { useRoute } from "vue-router"
 definePageMeta({
   title: "결제하기 | JobStick",
   description: "JobStick 서비스를 결제하여 더 많은 서비스를 누려보세요.",
-  keywords: ["결제", "결제하기", "JobStick", "잡스틱", "서비스", "혜택"],
+  keywords: ["결제", "결제하기", "JobStick", "잡스틱", "서비스", "혜택", "job-stick"],
   ogTitle: "JobStick 결제하기",
   ogDescription: "JobStick 결제하기 페이지입니다. 더 많은 서비스와 혜택을 누려보세요.",
   ogImage: "",

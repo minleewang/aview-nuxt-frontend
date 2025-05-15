@@ -48,7 +48,7 @@ import markdownIt from "markdown-it";
 definePageMeta({
   title: 'AI 면접 결과 보기 | JobStick',
   description: 'AI 기반 모의 면접 결과를 확인하고, 나의 강점과 개선점을 분석해보세요.',
-  keywords: ['AI 면접', '면접 결과', '자기 분석', '모의 면접', 'AI 분석'],
+  keywords: ['AI 면접', '면접 결과', '자기 분석', '모의 면접', 'AI 분석', 'JotStick', 'job-stick', '잡스틱'],
   ogTitle: 'AI 면접 결과 - JobStick',
   ogDescription: 'AI가 분석한 나의 면접 결과를 지금 확인해보세요.',
   ogImage: '' // 실제 이미지 경로

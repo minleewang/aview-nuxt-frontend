@@ -71,6 +71,8 @@ definePageMeta({
     "워크플로우",
     "JobStick",
     "관리자 대시보드",
+    "job-stick",
+    "잡스틱"
   ],
   description:
     "관리자는 JobStick 프로젝트의 GitHub Actions 워크플로우 상태를 실시간으로 확인하고 상세 내역을 확인할 수 있습니다.",
