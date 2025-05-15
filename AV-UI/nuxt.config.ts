@@ -20,7 +20,7 @@ export default defineNuxtConfig({
         {
           name: "description",
           content:
-            "내가 지원할 기업의 핵심은 뭘까? 기업의 사업 내용, 공략 포인트, 재무제표, 핵심만 요약했습니다. 전자공시시스템(DART) 기반 기업 핵심 정보 분석 및 AI 모의면접 JOBSTICK에서 확인해보세요.",
+            "JOBSTICK - AI 모의 기술 면접을 통해 취업 경쟁력을 높이세요!",
         },
 
         // SEO 키워드 설정
