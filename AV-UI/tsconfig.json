@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    
+
     // ✅ 경로 설정 추가
     "baseUrl": ".",
     "paths": {
@@ -18,8 +18,8 @@
     "nuxt.config.ts",
     "pages/**/*.vue",
     "components/**/*.vue",
-    "review/pages/**/*.vue",   // ✅ review 안의 페이지 포함
-    "review/stores/**/*.ts",   // ✅ review 안의 store 포함
-    "utility/**/*.ts"          // ✅ axiosInstance 경로 포함
+    "review/pages/**/*.vue", // ✅ review 안의 페이지 포함
+    "review/stores/**/*.ts", // ✅ review 안의 store 포함
+    "utility/**/*.ts" // ✅ axiosInstance 경로 포함
   ]
 }

@@ -5,13 +5,6 @@
 
     <section id="HomeMain" class="section white-bg">
       <HomeMain @scroll-to-home-second="goToHomeSecond" />
-
-      <!-- ✅ 요금제 보기 버튼 추가 -->
-      <div style="margin-top: 24px;">
-        <button @click="goToMembership" style="padding: 10px 20px; font-size: 16px;">
-          요금제 보기
-        </button>
-      </div>
     </section>
 
     <section id="HomeSecond" class="section gray-bg">
@@ -38,7 +31,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import HomeMain from "@/components/HomeMain.vue";
 import HomeSecond from "@/components/HomeSecond.vue";
 import HomeThird from "@/components/HomeThird.vue";
@@ -99,14 +92,14 @@ export default defineComponent({
     }
 
     function goToMembership() {
-      console.log("✅ [요금제 보기] 버튼 클릭됨")
-      router.push('/membership');
+      console.log("✅ [요금제 보기] 버튼 클릭됨");
+      router.push("/membership");
     }
 
     return {
       goToHomeSecond,
       goToUp,
-      goToMembership
+      goToMembership,
     };
   },
 });
