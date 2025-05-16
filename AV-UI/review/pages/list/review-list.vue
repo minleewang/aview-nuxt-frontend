@@ -13,7 +13,7 @@
         sm="6"
         md="4"
       >
-        <v-card>
+        <v-card @click="goToRead(review.id)" class="cursor-pointer">
           <!-- 이미지가 있을 경우만 출력 -->
           <v-img
             v-if="review.imageUrl"
@@ -46,7 +46,14 @@ import { useRouter } from "vue-router";
 definePageMeta({
   title: "리뷰 리스트 | JobStick",
   description: "JobStick 리뷰 리스트페이지입니다.",
-  keywords: ["리뷰", "리뷰 리스트", "리뷰 목록", "Jobstick", "잡스틱", "job-stick"],
+  keywords: [
+    "리뷰",
+    "리뷰 리스트",
+    "리뷰 목록",
+    "Jobstick",
+    "잡스틱",
+    "job-stick",
+  ],
   ogTitle: "JobStick 리뷰 리스트",
   ogDescription: "JobStick 리뷰 리스트 페이지입니다.",
   ogImage: "", // 실제 이미지 경로
@@ -59,6 +66,10 @@ const router = useRouter();
 const goToRegister = () => {
   // 프롬트 게이지 리스트 페이지와 연결합니다.
   router.push("/review/register");
+};
+
+const goToRead = (id) => {
+  router.push(`/review/read/${id}`);
 };
 
 onMounted(() => {
