@@ -26,6 +26,19 @@
     <section id="HomeSix" class="section gray-bg">
       <HomeSix @scroll-to-home="goToUp" />
     </section>
+
+    <section id="HomeSeven" class="section white-bg">
+      <HomeSeven />
+    </section>
+
+    <section id="HomeEight" class="section gray-bg">
+      <HomeEight />
+    </section>
+
+    <section id="HomeNine" class="section white-bg">
+      <HomeNine />
+    </section>
+
   </div>
 </template>
 
@@ -38,6 +51,9 @@ import HomeThird from "@/components/HomeThird.vue";
 import HomeFour from "@/components/HomeFour.vue";
 import HomeFive from "@/components/HomeFive.vue";
 import HomeSix from "@/components/HomeSix.vue";
+import HomeSeven from "@/components/HomeSeven.vue";
+import HomeEight from "@/components/HomeEight.vue";
+import HomeNine from "@/components/HomeNine.vue";
 import SurveyPopup from "@/components/SurveyPopup.vue"; // ✅ 팝업 추가
 
 export default defineComponent({
@@ -48,6 +64,9 @@ export default defineComponent({
     HomeFour,
     HomeFive,
     HomeSix,
+    HomeSeven,
+    HomeEight,
+    HomeNine,
     SurveyPopup, // ✅ 팝업 등록
   },
   setup() {
