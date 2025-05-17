@@ -34,6 +34,18 @@
           🎥 녹화 영상 다운로드
         </a>
       </div>
+      <v-row justify="end" class="mt-10">
+        <v-col cols="auto">
+          <v-btn
+            class="next-page-btn"
+            @click="goToNext"
+            color="primary"
+            elevation="4"
+          >
+            다음장
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </main>
 </template>
@@ -46,12 +58,22 @@ import markdownIt from "markdown-it";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: 'AI 면접 결과 보기 | JobStick',
-  description: 'AI 기반 모의 면접 결과를 확인하고, 나의 강점과 개선점을 분석해보세요.',
-  keywords: ['AI 면접', '면접 결과', '자기 분석', '모의 면접', 'AI 분석', 'JotStick', 'job-stick', '잡스틱'],
-  ogTitle: 'AI 면접 결과 - JobStick',
-  ogDescription: 'AI가 분석한 나의 면접 결과를 지금 확인해보세요.',
-  ogImage: '' // 실제 이미지 경로
+  title: "AI 면접 결과 보기 | JobStick",
+  description:
+    "AI 기반 모의 면접 결과를 확인하고, 나의 강점과 개선점을 분석해보세요.",
+  keywords: [
+    "AI 면접",
+    "면접 결과",
+    "자기 분석",
+    "모의 면접",
+    "AI 분석",
+    "JotStick",
+    "job-stick",
+    "잡스틱",
+  ],
+  ogTitle: "AI 면접 결과 - JobStick",
+  ogDescription: "AI가 분석한 나의 면접 결과를 지금 확인해보세요.",
+  ogImage: "", // 실제 이미지 경로
 });
 
 // Pinia Store
@@ -61,6 +83,10 @@ const router = useRouter();
 const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
 const downloadUrl = ref(null);
+
+const goToNext = () => {
+  router.push("/ai-interview/score");
+};
 
 // Lifecycle Hooks
 onMounted(async () => {
@@ -150,5 +176,10 @@ onBeforeUnmount(() => {
   white-space: pre-line;
   color: #444;
   padding-left: 10px;
+}
+
+.next-page-btn {
+  padding: 5px;
+  border-radius: 8px;
 }
 </style>
