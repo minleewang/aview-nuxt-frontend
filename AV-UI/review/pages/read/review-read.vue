@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>{{ review?.reviewTitle || "제목없음" }}</v-card-title>
+      <v-card-title>{{ review?.title }}</v-card-title>
       <v-card-subtitle>{{
         review?.email || formDate(review?.createDate)
       }}</v-card-subtitle>
