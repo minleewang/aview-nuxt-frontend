@@ -18,24 +18,12 @@
             border-radius: 8px;
           "
         />
-        <div style="margin-top: 8px">
-          <v-btn color="info" @click="checkMediaReady"
-            >카메라/마이크 상태 확인</v-btn
-          >
-          <v-btn color="success" class="ml-2" @click="startRecording"
-            >🎥 녹화 시작</v-btn
-          >
-          <v-btn color="error" class="ml-2" @click="stopRecording"
-            >🛑 녹화 종료</v-btn
-          >
-          <v-btn
-            color="warning"
-            class="ml-2"
-            @click="playRecording"
-            :disabled="!recordedBlob"
-            >▶ 영상 재생</v-btn
-          >
-        </div>
+        <div class="button-group">
+  <v-btn color="info" @click="checkMediaReady">카메라/마이크 상태 확인</v-btn>
+  <v-btn color="success" @click="startRecording">🎥 녹화 시작</v-btn>
+  <v-btn color="error" @click="stopRecording">🛑 녹화 종료</v-btn>
+  <v-btn color="warning" @click="playRecording" :disabled="!recordedBlob">▶ 영상 재생</v-btn>
+</div>
       </div>
 
       <!-- 면접 시작 버튼 -->
@@ -595,7 +583,24 @@ const playRecording = () => {
   align-items: center;
   text-align: center;
 }
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
 
+@media (max-width: 768px) {
+  .button-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button-group > * {
+    width: 100%;
+  }
+}
 .input-area {
   display: flex;
   align-items: center;
