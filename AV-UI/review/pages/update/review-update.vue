@@ -5,12 +5,10 @@
         <v-card-title>리뷰 수정</v-card-title>
         <v-card-text>
           <v-text-field v-model="title" label="제목" outlined></v-text-field>
-
           <div class="editor-container" v-if="QuillEditor">
             <QuillEditor
               v-model="content"
               :options="editorOptions"
-              toolbar="full"
               ref="quillEditorRef"
             />
           </div>
@@ -28,7 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, markRaw } from "vue";
+import { shallowRef } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useReviewStore } from "../../../review/stores/reviewStore";
 import {
@@ -47,15 +46,15 @@ const content = ref("");
 const router = useRouter();
 const route = useRoute();
 const reviewStore = useReviewStore();
-const editorOptions = ref({
-  theme: "snow",
-  placeholder: "Write here...",
-});
 
 const QuillEditor = ref<typeof QuillEditorType | null>(null);
-const quillEditorRef = ref<ComponentPublicInstance<
+const quillEditorRef = shallowRef<ComponentPublicInstance<
   typeof QuillEditorType
 > | null>(null);
+const editorOptions = {
+  theme: "snow",
+  placeholder: "내용을 입력하세요...",
+};
 
 const config = useRuntimeConfig();
 let originalFilename = ""; // ✅ 기존 S3 파일명을 저장할 변수 추가
@@ -63,16 +62,16 @@ let originalFilename = ""; // ✅ 기존 S3 파일명을 저장할 변수 추가
 onMounted(async () => {
   console.log("Mounted: Dynamically loading QuillEditor...");
   const { QuillEditor: LoadedQuillEditor } = await import("@vueup/vue-quill");
-  QuillEditor.value = LoadedQuillEditor as typeof QuillEditorType;
+  QuillEditor.value = markRaw(LoadedQuillEditor);
   console.log("Mounted: QuillEditor loaded successfully.");
 
-  const reviewId = route.params.id as string;
+  const reviewId = route.params.reviewId as string;
   const stateReview = history.state.review;
 
   const loadReviewContent = async (reviewData: any) => {
     title.value = reviewData.title;
     originalFilename = reviewData.content;
-    const url = await getSignedUrlFromS3(`blog-post/${originalFilename}`);
+    const url = await getSignedUrlFromS3(originalFilename);
     const response = await fetch(url);
     content.value = await response.text();
     nextTick(() => {
@@ -107,7 +106,7 @@ const uploadToS3 = async (htmlContent: string, filename: string) => {
   return await s3Client.send(command);
 };
 
-const submitPost = async () => {
+const submitReview = async () => {
   console.log("🚀 Submit post started...");
 
   if (!title.value || !content.value) {
@@ -126,7 +125,7 @@ const submitPost = async () => {
     const compressedHTML = await compressHTML(updatedContent);
 
     try {
-      const reviewId = route.params.id as string;
+      const reviewId = route.params.reviewId as string;
       const reviewData = await reviewStore.requestReadReviewToDjango(reviewId);
       const originalTitle = reviewData.title;
       const filename = reviewData.content;
@@ -150,7 +149,7 @@ const submitPost = async () => {
 };
 
 const goBack = () => {
-  router.push(`/review/read/${route.params.id}`);
+  router.push(`/review/read/${route.params.reviewId}`);
 };
 </script>
 <style scoped>

@@ -34,7 +34,7 @@ export default defineNuxtModule({
         },
         {
           name: "ReviewUpdatePage",
-          path: "/review/update",
+          path: "/review/update/:reviewId",
           file: resolve(themeDir, "review/pages/update/review-update.vue"),
         },
         {

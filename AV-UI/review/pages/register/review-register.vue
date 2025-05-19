@@ -1,134 +1,166 @@
 <template>
-  <v-container>
-    <h1>리뷰 작성</h1>
+  <client-only>
+    <v-container>
+      <v-card>
+        <v-card-title>리뷰 수정</v-card-title>
+        <v-card-text>
+          <v-text-field v-model="title" label="제목" outlined></v-text-field>
 
-    <v-text-field v-model="reviewTitle" label="제목" outlined />
-    <v-textarea v-model="reviewContent" label="내용" outlined rows="10" />
+          <div class="editor-container" v-if="QuillEditor">
+            <QuillEditor
+              v-model="content"
+              :options="editorOptions"
+              toolbar="full"
+              ref="quillEditorRef"
+            />
+          </div>
 
-    <v-file-input
-      v-model="reviewImage"
-      label="이미지 업로드"
-      accept="image/*"
-    />
-
-    <v-btn color="primary" :loading="isLoading" @click="registerReview"
-      >제출하기</v-btn
-    >
-  </v-container>
+          <v-card-actions class="justify-end">
+            <v-btn color="primary" class="mt-3" @click="submitReview"
+              >저장</v-btn
+            >
+            <v-btn color="secondary" class="mt-3" @click="goBack">취소</v-btn>
+          </v-card-actions>
+        </v-card-text>
+      </v-card>
+    </v-container>
+  </client-only>
 </template>
-///
-<reference types="nuxt" />
+
 <script setup lang="ts">
-import { ref } from "vue";
-import { useReviewStore } from "~/review/stores/reviewStore";
-import { useRouter } from "vue-router";
-import { createAwsS3Instance } from "~/utility/awsS3Instance";
-import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { ref, onMounted, nextTick } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useReviewStore } from "../../../review/stores/reviewStore";
+import {
+  createAwsS3Instance,
+  getSignedUrlFromS3,
+} from "~/utility/awsS3Instance";
 import { compressHTML } from "~/utility/compression";
 import { useRuntimeConfig } from "nuxt/app";
-import { v4 as uuidv4 } from "uuid";
+import { PutObjectCommand } from "@aws-sdk/client-s3"; // ✅ 누락된 import 추가
+import type { QuillEditor as QuillEditorType } from "@vueup/vue-quill";
+import type { ComponentPublicInstance } from "vue";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 
-// ✅ SEO 메타 정보
-definePageMeta({
-  title: "리뷰 작성 | JobStick",
-  description: "JobStick 리뷰 작성 페이지입니다. 리뷰를 작성해보세요.",
-  keywords: [
-    "리뷰",
-    "리뷰 작성",
-    "리뷰 제출",
-    "JobStick",
-    "잡스틱",
-    "job-stick",
-  ],
-  ogTitle: "JobStick 리뷰 작성",
-  ogDescription:
-    "JobStick 리뷰 작성 페이지입니다. 서비스 이용 후 리뷰를 남겨보세요.",
-  ogImage: "", // 실제 이미지 경로
-  robots: "index, follow", // 검색 엔진 노출 허용
+const title = ref("");
+const content = ref("");
+const router = useRouter();
+const route = useRoute();
+const reviewStore = useReviewStore();
+const editorOptions = ref({
+  theme: "snow",
+  placeholder: "Write here...",
 });
 
-const router = useRouter();
-const reviewStore = useReviewStore();
+const QuillEditor = ref<typeof QuillEditorType | null>(null);
+const quillEditorRef = ref<ComponentPublicInstance<
+  typeof QuillEditorType
+> | null>(null);
+
 const config = useRuntimeConfig();
+let originalFilename = ""; // ✅ 기존 S3 파일명을 저장할 변수 추가
 
-const reviewTitle = ref("");
-const reviewContent = ref("");
-const reviewImage = ref<File | null>(null);
-const isSubmitting = ref(false);
-const isLoading = ref(false);
+onMounted(async () => {
+  console.log("Mounted: Dynamically loading QuillEditor...");
+  const { QuillEditor: LoadedQuillEditor } = await import("@vueup/vue-quill");
+  QuillEditor.value = LoadedQuillEditor;
+  console.log("Mounted: QuillEditor loaded successfully.");
 
-// S3에 HTML 저장
-const uploadToS3 = async (html: string): Promise<string> => {
-  const s3Client = createAwsS3Instance();
-  const filename = `review/html/${uuidv4()}.html`;
-  const compressed = await compressHTML(`<pre>${html}</pre>`);
+  const reviewId = route.params.id as string;
+  const stateReview = history.state.review;
 
-  const params = {
-    Bucket: config.public.AWS_BUCKET_NAME,
-    Key: filename,
-    Body: compressed,
-    ContentType: "text/html",
+  const loadReviewContent = async (reviewData: any) => {
+    title.value = reviewData.title;
+    originalFilename = reviewData.content;
+    const url = await getSignedUrlFromS3(`review/${originalFilename}`);
+    const response = await fetch(url);
+    content.value = await response.text();
+    nextTick(() => {
+      const quillInstance = quillEditorRef.value?.getQuill?.();
+      if (quillInstance) {
+        quillInstance.root.innerHTML = content.value;
+      }
+    });
   };
-  await s3Client.send(new PutObjectCommand(params));
-  return filename;
-};
 
-//이미지 업로드 후 url 반환
-const UploadImageToS3 = async (file: File): Promise<string> => {
+  if (stateReview) {
+    console.log("state review 사용");
+    await loadReviewContent(stateReview);
+  } else {
+    console.log("서버에서 리뷰 로딩");
+    const reviewData = await reviewStore.requestReadReviewToDjango(reviewId);
+    if (reviewData) await loadReviewContent(reviewData);
+  }
+});
+
+const uploadToS3 = async (htmlContent: string, filename: string) => {
   const s3Client = createAwsS3Instance();
-  const ext = file.name.split(".").pop();
-  const filename = `review/images/${uuidv4()}.${ext}`;
   const params = {
     Bucket: config.public.AWS_BUCKET_NAME as string,
-    Key: filename,
-    Body: file,
-    ContentType: file.type,
+    Key: `review/${filename}`,
+    Body: htmlContent,
+    ContentType: "text/html",
   };
 
-  await s3Client.send(new PutObjectCommand(params));
-  return `https://${config.public.AWS_BUCKET_NAME}.s3.${config.public.AWS_REGION}.amazonaws.com/${filename}`;
+  console.log("📝 S3 Upload Params:", params);
+  const command = new PutObjectCommand(params);
+  return await s3Client.send(command);
 };
 
-const registerReview = async () => {
-  if (isSubmitting.value) return;
-  isSubmitting.value = true;
-  try {
-    if (!reviewTitle.value || !reviewContent.value) {
-      alert("제목과 내용을 입력해 주세요");
+const submitReview = async () => {
+  console.log("🚀 Submit post started...");
+  const reviewId = route.params.reviewId as string;
+
+  if (!title.value || !content.value) {
+    alert("제목과 내용을 입력하세요.");
+    return;
+  }
+
+  await nextTick(async () => {
+    const quillInstance = quillEditorRef.value?.getQuill();
+    const updatedContent = quillInstance?.root?.innerHTML || "";
+
+    if (!updatedContent) {
+      alert("내용을 입력해주세요.");
       return;
     }
-    const htmlFileKey = await uploadToS3(reviewContent.value);
-    let imageUrl = "";
-    if (reviewImage.value) {
-      imageUrl = await uploadImageToS3(reviewImage.value);
-    }
+    const compressedHTML = await compressHTML(updatedContent);
 
-    const payload = {
-      title: reviewTitle.value,
-      content: htmlFileKey,
-      imageUrl,
-      userToken: localStorage.getItem("userToken")!,
-    };
-    await reviewStore.requestRegisterReviewToDjango(payload);
-    router.push("/review/list");
-  } catch (e) {
-    console.error("제출 중 오류", e);
-  } finally {
-    isSubmitting.value = false;
-  }
+    try {
+      await uploadToS3(compressedHTML, originalFilename);
+      const reviewData = await reviewStore.requestReadReviewToDjango(reviewId);
+      if (reviewData.title !== title.value) {
+        await reviewStore.requestUpdateReviewToDjango({
+          id: reviewId,
+          title: title.value,
+        });
+      }
+      alert("리뷰가 수정되었습니다.");
+      router.push(`/review/read/${reviewId}`);
+    } catch (err) {
+      console.error("리뷰 수정 실패");
+      alert("수정 중 오류가 발생했습니다.");
+    }
+  });
+};
+
+const goBack = () => {
+  router.push(`/review/read/${route.params.id}`);
 };
 </script>
-
 <style scoped>
 .editor-container {
   margin-top: 20px;
 }
+
 .editor-container .ql-editor {
   min-height: 200px;
 }
+
 .ql-toolbar.ql-snow {
   border-radius: 8px 8px 0 0;
 }
+
 .ql-container.ql-snow {
   border-radius: 0 0 8px 8px;
 }
