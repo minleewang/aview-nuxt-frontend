@@ -100,7 +100,6 @@ const uploadToS3 = async (htmlContent: string, filename: string) => {
     Body: htmlContent,
     ContentType: "text/html",
   };
-
   console.log("📝 S3 Upload Params:", params);
   const command = new PutObjectCommand(params);
   return await s3Client.send(command);

@@ -68,7 +68,7 @@ const fetchReviewDetail = async () => {
 
       if (data.content) {
         const url = await getSignedUrlFromS3(data.content);
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: "no-store" });
         reviewContent.value = await response.text();
 
         reviewStore.reviewContent = reviewContent.value;
