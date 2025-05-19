@@ -3,6 +3,40 @@
     <v-container class="report-containeer">
       <h1 class="report-title">AI 모의면접 결과</h1>
       <v-divider class="my-4" thickness="2" color="white" />
+      <v-col cols="12">
+        <v-card class="pa-6 rounded-xl elevation-6">
+          <v-row
+            align="stretch"
+            justify="center"
+            class="result-summary-row"
+            no-gutters
+          >
+            <v-col
+              cols="12"
+              md="5"
+              class="d-flex flex-column align-center justify-center text-center"
+            >
+              <p class="text-subtitle-2 mb-1">실무자 면접 결과</p>
+              <h1 class="text-h2 font-weight-bold">{{ grade }}</h1>
+            </v-col>
+
+            <v-divider vertical class="mx-4 d-none d-md-block thick-divider" />
+
+            <v-col cols="12" md="5" class="d-flex justify-center align-center">
+              <HexagonChart
+                :scoreList="[
+                  { type: '생산성', score: 85 },
+                  { type: '의사소통', score: 90 },
+                  { type: '개발역량', score: 95 },
+                  { type: '문서작성', score: 88 },
+                  { type: '유연성', score: 80 },
+                  { type: '의사결정력', score: 92 },
+                ]"
+              />
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
 
       <v-row
         v-for="(item, index) in inputList"
@@ -34,18 +68,6 @@
           🎥 녹화 영상 다운로드
         </a>
       </div>
-      <v-row justify="end" class="mt-10">
-        <v-col cols="auto">
-          <v-btn
-            class="next-page-btn"
-            @click="goToNext"
-            color="primary"
-            elevation="4"
-          >
-            다음장
-          </v-btn>
-        </v-col>
-      </v-row>
     </v-container>
   </main>
 </template>
@@ -55,6 +77,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import { useAiInterviewStore } from "../../stores/aiInterviewStore"; // Pinia store import
 import markdownIt from "markdown-it";
+import HexagonChart from "/ai-interview/pages/result/HexagonChart.vue";
 
 // ✅ SEO 메타 정보
 definePageMeta({
@@ -71,12 +94,12 @@ definePageMeta({
     "job-stick",
     "잡스틱",
     "개발자 취업",
-    "개발자 플랫폼"
+    "개발자 플랫폼",
   ],
   ogTitle: "AI 면접 결과 - 잡스틱(JobStick)",
   ogDescription: "AI가 분석한 나의 면접 결과를 지금 확인해보세요.",
   ogImage: "", // 실제 이미지 경로
-  robots: 'index, follow'
+  robots: "index, follow",
 });
 
 // Pinia Store
@@ -86,10 +109,15 @@ const router = useRouter();
 const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
 const downloadUrl = ref(null);
-
-const goToNext = () => {
-  router.push("/ai-interview/score");
-};
+const scoreList = [
+  { type: "생산성", score: 85 },
+  { type: "의사소통", score: 90 },
+  { type: "개발역량", score: 95 },
+  { type: "문서작성", score: 88 },
+  { type: "유연성", score: 80 },
+  { type: "의사결정력", score: 92 },
+];
+const grade = ref("A+");
 
 // Lifecycle Hooks
 onMounted(async () => {
@@ -181,8 +209,24 @@ onBeforeUnmount(() => {
   padding-left: 10px;
 }
 
-.next-page-btn {
-  padding: 5px;
-  border-radius: 8px;
+.result-summary-row {
+  flex-wrap: wrap;
+}
+.mb-4 {
+  margin-bottom: 16px;
+}
+
+.thick-divider {
+  background-color: #000000;
+  width: 5px;
+  min-width: 5px;
+  max-width: 5px;
+  border-radius: 2px;
+}
+
+@media (min-width: 960px) {
+  .mb-md-0 {
+    margin-bottom: 0 !important;
+  }
 }
 </style>

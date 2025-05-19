@@ -33,14 +33,6 @@ export default defineNuxtModule({
             themeDir,
             "ai-interview/pages/result/ai-interview-answer-result.vue"
           ),
-        },
-        {
-          name: "AIInterviewScore",
-          path: "/ai-interview/score",
-          file: resolve(
-            themeDir,
-            "ai-interview/pages/result/ai-interview-score.vue"
-          ),
         }
       );
     });
