@@ -111,10 +111,10 @@ import { useNaverAuthenticationStore } from "../../../naverAuthentication/stores
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: '개인정보 수집 및 이용 동의 | JobStick',
-  description: 'JobStick 이용을 위한 개인정보 수집 및 이용 동의 페이지입니다. 사용자의 소중한 정보를 안전하게 처리합니다.',
-  keywords: ['개인정보', '개인정보 수집', '개인정보 이용', '개인정보 이용 동의', 'JobStick', 'job-stick', '잡스틱'],
-  ogTitle: 'JobStick 개인정보 동의',
+  title: '개인정보 수집 및 이용 동의 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick) 이용을 위한 개인정보 수집 및 이용 동의 페이지입니다. 사용자의 소중한 정보를 안전하게 처리합니다.',
+  keywords: ['개인정보', '개인정보 수집', '개인정보 이용', '개인정보 이용 동의', 'JobStick', 'job-stick', '잡스틱', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '잡스틱(JobStick) 개인정보 동의',
   ogDescription: '서비스 이용을 위한 개인정보 동의 내용을 확인하고 동의해주세요.',
   ogImage: '' // 실제 이미지 경로 
 });

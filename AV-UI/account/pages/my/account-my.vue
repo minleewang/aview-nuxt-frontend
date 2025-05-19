@@ -151,11 +151,11 @@ import { useRouter } from "vue-router";
 
 // ✅ SEO 메타 정보 
 definePageMeta({
-  title: "내 정보 | JobStick",
+  title: "내 정보 | 잡스틱(JobStick)",
   description: "내 계정 정보를 확인하고 수정할 수 있는 페이지입니다.",
-  keywords: ['내 정보', '계정', '프로필', 'JobStick'],
-  ogTitle: "내 정보 - JobStcik",
-  ogDescription: "JobStick에서 내 계정 정보를 안전하게 확인하고 관리하세요.",
+  keywords: ['내 정보', '계정', '프로필', 'JobStick', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: "내 정보 - 잡스틱(JobStcik)",
+  ogDescription: "잡스틱(JobStick)에서 내 계정 정보를 안전하게 확인하고 관리하세요.",
   ogImage: '' // 실제 이미지 경로
 });
 
