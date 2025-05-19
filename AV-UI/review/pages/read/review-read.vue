@@ -76,7 +76,7 @@ const goBack = () => {
 };
 
 const goUpdate = () => {
-  const reviewId = route.params.reviewId as string;
+  const reviewId = review.value?.id || route.params.reviewId;
   if (reviewId) {
     reviewStore.selectedReview = review.value; // ✅ store에 저장
     router.push(`/review/update/${reviewId}`);
