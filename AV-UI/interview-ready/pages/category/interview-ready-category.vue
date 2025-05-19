@@ -41,9 +41,9 @@ import { ref } from "vue"
 
 // ✅ SEO 메타 정보
 definePageMeta({
-    title: '직무 선택 페이지 | JobStick',
-    description: 'JobStick 모의 면접을 시작하기 전에 원하는 직무를 선택해보세요.',
-    keywords: ['직무 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '직무 선택', '직무 카테고리', 'job-stick', '잡스틱'],
+    title: '직무 선택 페이지 | 잡스틱(JobStick)',
+    description: '잡스틱(JobStick) 모의 면접을 시작하기 전에 원하는 직무를 선택해보세요.',
+    keywords: ['직무 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '직무 선택', '직무 카테고리', 'job-stick', '잡스틱', '개발자 플랫폼', '개발자 취업', 'AI 면접'],
     ogTitle: 'JobStick 직무 선택 페이지',
     ogDescription: '모의 면접 시작하기 전에 지원하고자 하는 기업을 선택해보세요.',
     ogImage: '',    // 실제 이미지 경로

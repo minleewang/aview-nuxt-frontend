@@ -50,14 +50,14 @@ import { useRuntimeConfig } from 'nuxt/app'
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: '결제 성공 | JobStick',
-  description: 'JobStick 결제하기가 성공되었습니다. 결제 정보를 확인하세요.',
-  keywords: ['결제', '결제 성공', '결제 정보', 'JobStick', '잡스틱', 'job-stick'],
-  ogTitle: 'JobStick 결제 성공',
-  ogDescription: 'JobStick 결제하기 성공 페이지입니다. 결제 정보를 확인하세요.',
+  title: '결제 성공 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick) 결제하기가 성공되었습니다. 결제 정보를 확인하세요.',
+  keywords: ['결제', '결제 성공', '결제 정보', 'JobStick', '잡스틱', 'job-stick', '잡스틱 결제', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '잡스틱(JobStick) 결제 성공',
+  ogDescription: '잡스틱(JobStick) 결제하기 성공 페이지입니다. 결제 정보를 확인하세요.',
   ogImage: '',
   robots: 'noindex, nofollow'
-})
+});
 
 // ✅ 상태 변수
 const route = useRoute()

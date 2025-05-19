@@ -14,11 +14,11 @@ import { useRouter, useRoute } from "vue-router"
 
 // ✅ SEO 메타 정보
 definePageMeta({
-    title: '백엔드 기술 선택 페이지 | JobStick',
-    description: 'JobStick 모의 면접을 시작하기 전에 백엔드 직무의 기술을 선택해보세요.',
-    keywords: ['기술 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '백엔드', 'backend', 'tech', '잡스틱'],
-    ogTitle: 'JobStick 백엔드 기술 선택 페이지',
-    ogDescription: '모의 면접 시작하기 전에 백엔드 기술을 선택해보세요.',
+    title: '백엔드 기술 선택 페이지 | 잡스틱(JobStick)',
+    description: '잡스틱(JobStick) 모의 면접을 시작하기 전에 백엔드 직무의 기술을 선택해보세요.',
+    keywords: ['기술 선택', '모의 면접', 'AI 모의 면접', 'JobStick', '백엔드', 'backend', 'tech', '잡스틱', '개발자 플랫폼', '개발자 취업', 'AI 면접'],
+    ogTitle: '잡스틱(JobStick) 백엔드 기술 선택 페이지',
+    ogDescription: '잡스틱(JobStick)에서 모의 면접를 시작하기 전에 백엔드 기술을 선택해보세요.',
     ogImage: '',    // 실제 이미지 경로
     robots: 'index, follow' // 검색엔진에 노출 혀용
 });

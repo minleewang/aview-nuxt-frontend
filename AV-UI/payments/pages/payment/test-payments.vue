@@ -43,14 +43,14 @@ import { useRoute } from "vue-router"
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "결제하기 | JobStick",
-  description: "JobStick 서비스를 결제하여 더 많은 서비스를 누려보세요.",
-  keywords: ["결제", "결제하기", "JobStick", "잡스틱", "서비스", "혜택", "job-stick"],
-  ogTitle: "JobStick 결제하기",
-  ogDescription: "JobStick 결제하기 페이지입니다. 더 많은 서비스와 혜택을 누려보세요.",
+  title: "결제하기 | 잡스틱(JobStick)",
+  description: "잡스틱(JobStick) 서비스를 결제하여 더 많은 서비스를 누려보세요.",
+  keywords: ["결제", "결제하기", "JobStick", "잡스틱", "서비스", "혜택", "job-stick", '잡스틱 결제', '개발자 플랫폼', '모의 면접', 'AI 면접', '개발자 취업'],
+  ogTitle: "잡스틱(JobStick) 결제하기",
+  ogDescription: "잡스틱(JobStick) 결제하기 페이지입니다. 더 많은 서비스와 혜택을 누려보세요.",
   ogImage: "",
   robots: "index, follow"
-})
+});
 
 // ✅ 컴포넌트 상태 변수 정의
 const config = useRuntimeConfig()

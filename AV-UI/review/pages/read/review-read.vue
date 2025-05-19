@@ -27,8 +27,8 @@ import { getSignedUrlFromS3, deleteFileFromS3 } from "~/utility/awsS3Instance";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "리뷰 확인 | JobStick",
-  description: "JobStick 리뷰 리스트에서 리뷰를 확인해보세요.",
+  title: "리뷰 확인 | 잡스틱(JobStick)",
+  description: "잡스틱(JobStick) 리뷰 리스트에서 리뷰를 확인해보세요.",
   keywords: [
     "리뷰",
     "리뷰 보기",
@@ -36,9 +36,17 @@ definePageMeta({
     "JobStick",
     "잡스틱",
     "job-stick",
+    "잡스틱 리뷰",
+    "잡스틱 리뷰 보기",
+    "잡스틱 리뷰 확인",
+    "개발자 플랫폼",
+    "개발자 취업",
+    "모의 면접",
+    "AI 면접",
+    "AI 모의 면접"
   ],
-  ogTitle: "JobStick 리뷰 확인",
-  ogDescription: "JobStick 리뷰 확인 페이지입니다. 리뷰 내용을 확인해보세요.",
+  ogTitle: "잡스틱(JobStick) 리뷰 확인",
+  ogDescription: "잡스틱(JobStick) 리뷰 확인 페이지입니다. 리뷰 내용을 확인해보세요.",
   ogImage: "", // 실제 이미지 경로
   robots: "index, follow", // 검색 엔진 노출 허용
 });
