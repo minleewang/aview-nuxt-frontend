@@ -58,7 +58,7 @@ import markdownIt from "markdown-it";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "AI 면접 결과 보기 | JobStick",
+  title: "AI 면접 결과 보기 | 잡스틱(JobStick)",
   description:
     "AI 기반 모의 면접 결과를 확인하고, 나의 강점과 개선점을 분석해보세요.",
   keywords: [
@@ -70,10 +70,13 @@ definePageMeta({
     "JotStick",
     "job-stick",
     "잡스틱",
+    "개발자 취업",
+    "개발자 플랫폼"
   ],
-  ogTitle: "AI 면접 결과 - JobStick",
+  ogTitle: "AI 면접 결과 - 잡스틱(JobStick)",
   ogDescription: "AI가 분석한 나의 면접 결과를 지금 확인해보세요.",
   ogImage: "", // 실제 이미지 경로
+  robots: 'index, follow'
 });
 
 // Pinia Store

@@ -25,6 +25,27 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
+definePageMeta({
+  title: 'AI 면접 결과 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick)에서 AI 모의 면접을 진행하고 나의 강점과 단점을 분석해보세요.',
+  keywords: [
+    '잡스틱',
+    'jobstick',
+    'job-stick',
+    '개발자 플랫폼',
+    '개발자 취업',
+    '모의 면접',
+    'AI 면접',
+    '면접 결과',
+    '면접 결과 분석',
+    '결과 분석'
+  ],
+  ogTitle: 'AI 면접 결과 - 잡스틱(JobStick)',
+  ogDescription: '잡스틱(JobStick) 면접 결과를 통해 나의 강점과 단점을 분석해보세요.',
+  ogImage: '',
+  robots: 'index, follow'
+});
+
 const grade = ref("");
 const router = useRouter();
 const goToBefore = () => {

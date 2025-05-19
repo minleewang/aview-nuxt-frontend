@@ -147,7 +147,7 @@ import hhImage from "@/assets/images/fixed/al3.png";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "AI 모의 면접 시작 | JobStick",
+  title: "AI 모의 면접 시작 | 잡스틱(JobStick)",
   description:
     "AI 기반 모의 면접을 진행하고, 원하는 기업, 직무에 대한 기술 면접을 대비해보세요.",
   keywords: [
@@ -163,10 +163,12 @@ definePageMeta({
     "JobStick",
     "job-stick",
     "잡스틱",
+    "개발자 플랫폼",
+    "개발자 취업"
   ],
-  ogTItle: "AI 모의 면접 준비 - JobStick",
+  ogTItle: "AI 모의 면접 준비 - 잡스틱(JobStick)",
   ogDescription:
-    "AI 기반의 실전 면습 연습을 통해 기술 면접의 실전 감각을 길러보세요.",
+    "잡스틱(JobStick)에서 AI 기반의 실전 면습 연습을 통해 기술 면접의 실전 감각을 길러보세요.",
   ogImage: "", // 실제 이미지 경로
   robots: "index, follow", // 검색 노출 허용
 });
