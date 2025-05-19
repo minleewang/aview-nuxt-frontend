@@ -26,14 +26,14 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 definePageMeta({
-  title: '결제 실패 | JobStick',
-  description: 'JobStick 결제에 실패했습니다.',
-  keywords: ['결제 실패', '실패', 'JobStick', '잡스틱', 'job-stick'],
-  ogTitle: 'JobStick 결제 실패',
-  ogDescription: 'JobStick 결제 실패 안내 페이지입니다. 결제 과정에서 문제가 발생했습니다.',
+  title: '결제 실패 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick) 결제에 실패했습니다.',
+  keywords: ['결제 실패', '결제', 'JobStick', '잡스틱', 'job-stick', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '잡스틱(JobStick) 결제 실패',
+  ogDescription: '잡스틱(JobStick) 결제 실패 안내 페이지입니다. 결제 과정에서 문제가 발생했습니다.',
   ogImage: '', // 실제 이미지 경로
   robots: 'noindex, nofollow'
-})
+});
 </script>
 
 <style scoped>
