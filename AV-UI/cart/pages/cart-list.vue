@@ -110,11 +110,11 @@ import { useRouter } from "vue-router";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "장바구니 | JobStick",
-  description: "장바구니에 담긴 리포트를 확인하고 주문을 진행할 수 있습니다.",
-  keywords: ['장바구니', '기업 선택', 'JobStick 장바구니', '잡스틱 장바구닝', 'JobStick', 'job-stick', '잡스틱'],
-  ogTitle: "JobStick 장바구니",
-  ogDescription: "저장한 리포트를 확인하고 결제를 진행하세요.",
+  title: "장바구니 | 잡스틱(JobStick)",
+  description: "잡스틱(JobStick) 장바구니에 담긴 리포트를 확인하고 주문을 진행할 수 있습니다.",
+  keywords: ['장바구니', '기업 선택', 'JobStick 장바구니', '잡스틱 장바구닝', 'JobStick', 'job-stick', '잡스틱', '개발자 취업', '개발자 플랫폼', '모의 면접', 'AI 면접'],
+  ogTitle: "잡스틱(JobStick) 장바구니",
+  ogDescription: "잡스틱(JobStick)에서 저장한 리포트를 확인하고 결제를 진행하세요.",
   ogImage: "",  // 실제 경로 이미지
   robots: 'index, follow' // 검색 노출 허용 
 });
