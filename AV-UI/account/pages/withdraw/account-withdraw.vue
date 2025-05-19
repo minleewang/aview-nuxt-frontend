@@ -69,11 +69,11 @@ import { useAuthenticationStore } from '@/authentication/stores/authenticationSt
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: '회원 탈퇴 | JobStick',
-  description: 'JobStick 계정을 탈퇴하고자 하는 이유를 선택하고, 계정 삭제 절차를 진행할 수 있습니다.',
-  keywords: ['회원 탈퇴', '계정 삭제', 'JobStick', '서비스 해지'],
-  ogTitle: 'JobStick 회원 탈퇴',
-  ogDescription: '계정을 삭제하고 JobStick 서비스를 탈퇴하는 절차를 안내합니다.',
+  title: '회원 탈퇴 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick) 계정을 탈퇴하고자 하는 이유를 선택하고, 계정 삭제 절차를 진행할 수 있습니다.',
+  keywords: ['회원 탈퇴', '계정 삭제', 'JobStick', '서비스 해지', '탈퇴', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '잡스틱(JobStick) 회원 탈퇴',
+  ogDescription: '계정을 삭제하고 잡스틱(JobStick) 서비스를 탈퇴하는 절차를 안내합니다.',
   ogImage: '' // 실제 이미지 경로
 });
 

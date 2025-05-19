@@ -42,11 +42,11 @@ import { useGithubAuthenticationStore } from "../../../githubAuthentication/stor
 
 // ✅ SEO 메타 정보 설정
 definePageMeta({
-  title: '관리자 GitHub 로그인 | JobStick',
-  description: 'JobStick 관리자 전용 GitHub 계정으로 로그인하여 관리 기능을 이용하세요.',
-  keywords: ['관리자 로그인', 'GitHub 로그인', 'JobStick 관리자', 'Admin GitHub Login', 'JobStick', 'job-stick', '잡스틱'],
-  ogTitle: 'JobStick 관리자 GitHub 로그인',
-  ogDescription: 'JobStick의 관리자용 페이지입니다. GitHub 계정으로 안전하게 로그인하세요.',
+  title: '관리자 GitHub 로그인 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick) 관리자 전용 GitHub 계정으로 로그인하여 관리 기능을 이용하세요.',
+  keywords: ['관리자 로그인', 'GitHub 로그인', 'JobStick 관리자', 'Admin GitHub Login', 'JobStick', 'job-stick', '잡스틱', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '잡스틱(JobStick) 관리자 GitHub 로그인',
+  ogDescription: '잡스틱(JobStick)의 관리자용 페이지입니다. GitHub 계정으로 안전하게 로그인하세요.',
   ogImage: '/assets/images/fixed/icon-github.svg',
   robots: 'noindex, nofollow' // 관리자 페이지는 검색에 노출되지 않도록 처리
 });
