@@ -31,7 +31,7 @@ import { useAdminStore } from "@/stores/adminStore";
 
 // ✅ SEO 메타 정보
 definePageMeta({
-  title: "워크플로우 설정 | Admin Dashboard - JobStick",
+  title: "워크플로우 설정 | Admin Dashboard - 잡스틱(JobStick)",
   description:
     "GitHub 워크플로우를 직접 선택하고 실행할 수 있는 관리자 설정 페이지입니다.",
   keywords: [
@@ -42,12 +42,17 @@ definePageMeta({
     "배포 설정",
     "JobStick",
     "job-stick",
-    "잡스틱"
+    "잡스틱",
+    "개발자 플랫폼",
+    "개발자 취업",
+    "모의 면접",
+    "AI 면접"
   ],
   ogTitle: "워크플로우 설정 - 관리자 페이지",
   ogDescription:
-    "JobStick 관리자 대시보드에서 배포 및 테스트 워크플로우를 관리하세요.",
+    "잡스틱(JobStick) 관리자 대시보드에서 배포 및 테스트 워크플로우를 관리하세요.",
   ogImage: "", // 실제 이미지 경로
+  robots: 'noindex, nofollow'
 });
 
 const adminStore = useAdminStore();
