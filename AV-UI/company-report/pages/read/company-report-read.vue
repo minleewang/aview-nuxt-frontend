@@ -430,11 +430,11 @@ import { useOrderStore } from "../../../order/stores/orderStore";
 
 // ✅ SEO 메타 정보 
 definePageMeta({
-  title: '기업 리포트 상세 보기 | JobStick',
-  description: '선택한 기업의 재무제표와 보고서를 상세히 확인해보세요.',
-  keywords: ['기업 보고서', '재무제표', 'JobStick', '리포트 분석', 'job-stick', '잡스틱'],
-  ogTitle: '기업 리포트 상세 페이지 - JobStick',
-  ogDescription: '기업의 리포트를 한눈에 확인하고 인사이트를 얻어보세요.',
+  title: '기업 리포트 상세 보기 | 잡스틱(JobStick)',
+  description: '잡스틱(JobStick)에서 선택한 기업의 재무제표와 보고서를 상세히 확인해보세요.',
+  keywords: ['기업 보고서', '재무제표', 'JobStick', '리포트 분석', 'job-stick', '잡스틱', '잡스틱 보고서', '개발자 플랫폼', '개발자 취업', '모의 면접', 'AI 면접'],
+  ogTitle: '기업 리포트 상세 페이지 - 잡스틱(JobStick)',
+  ogDescription: '잡스틱(JobStick)에서 기업의 리포트를 한눈에 확인하고 인사이트를 얻어보세요.',
   ogImage: '',  // 실제 이미지 경로
   robots: 'index, follow' // 검색 엔진에 노출
 });
