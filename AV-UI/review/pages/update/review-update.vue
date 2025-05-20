@@ -96,7 +96,7 @@ const uploadToS3 = async (htmlContent: string, filename: string) => {
   const s3Client = createAwsS3Instance();
   const params = {
     Bucket: config.public.AWS_BUCKET_NAME as string,
-    Key: `review/${filename}`,
+    Key: filename,
     Body: htmlContent,
     ContentType: "text/html",
   };
