@@ -23,16 +23,7 @@
             <v-divider vertical class="mx-4 d-none d-md-block thick-divider" />
 
             <v-col cols="12" md="5" class="d-flex justify-center align-center">
-              <HexagonChart
-                :scoreList="[
-                  { type: '생산성', score: 85 },
-                  { type: '의사소통', score: 90 },
-                  { type: '개발역량', score: 95 },
-                  { type: '문서작성', score: 88 },
-                  { type: '유연성', score: 80 },
-                  { type: '의사결정력', score: 92 },
-                ]"
-              />
+              <HexagonChart :scoreList="scoreList" />
             </v-col>
           </v-row>
         </v-card>
@@ -109,15 +100,19 @@ const router = useRouter();
 const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
 const downloadUrl = ref(null);
-const scoreList = [
-  { type: "생산성", score: 85 },
-  { type: "의사소통", score: 90 },
-  { type: "개발역량", score: 95 },
-  { type: "문서작성", score: 88 },
-  { type: "유연성", score: 80 },
-  { type: "의사결정력", score: 92 },
-];
-const grade = ref("A+");
+const grade = ref("");
+const scoreList = ref([]);
+
+// 등급 계산 함수 (A ~ F)
+const calculateGrade = (scores) => {
+  const total = scores.reduce((sum, item) => sum + item.score, 0);
+
+  if (total >= 54) return "A";
+  if (total >= 45) return "B";
+  if (total >= 30) return "C";
+  if (total >= 15) return "D";
+  return "F";
+};
 
 // Lifecycle Hooks
 onMounted(async () => {
@@ -139,6 +134,17 @@ const getScoreResultList = async (userToken) => {
     });
     console.log("✅ 응답 확인:", res);
     inputList.value = res.interviewResultList;
+    const hexagon = res.hexagonScore || {};
+
+    scoreList.value = [
+      { type: "생산성", score: hexagon.productivity || 0 },
+      { type: "의사소통", score: hexagon.communication || 0 },
+      { type: "개발역량", score: hexagon.technical_skills || 0 },
+      { type: "문서작성", score: hexagon.documentation_skills || 0 },
+      { type: "유연성", score: hexagon.flexibility || 0 },
+      { type: "의사결정력", score: hexagon.problem_solving || 0 },
+    ];
+    grade.value = calculateGrade(scoreList.value);
   } catch (err) {
     console.error("❌ 면접 결과 불러오기 실패:", err);
   }

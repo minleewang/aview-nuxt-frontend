@@ -16,7 +16,9 @@ const chartCanvas = ref<HTMLCanvasElement | null>(null);
 let radarChart: Chart | null = null;
 
 const drawChart = () => {
-  if (!chartCanvas.value) return;
+  if (!chartCanvas.value || !props.scoreList || !Array.isArray(props.scoreList))
+    return;
+  if (props.scoreList.length === 0) return;
 
   const labels = props.scoreList.map((item) => item.type);
   const data = props.scoreList.map((item) => item.score);
@@ -43,14 +45,14 @@ const drawChart = () => {
       responsive: true,
       maintainAspectRatio: false,
       layout: {
-        padding: 20, // 👈 육각형 크기 조절
+        padding: 20,
       },
       scales: {
         r: {
           min: 0,
-          max: 100,
+          max: 10,
           ticks: {
-            stepSize: 20,
+            stepSize: 2,
             color: "#444",
           },
           pointLabels: {
@@ -70,7 +72,6 @@ const drawChart = () => {
   });
 };
 
-onMounted(drawChart);
 watch(() => props.scoreList, drawChart);
 </script>
 
