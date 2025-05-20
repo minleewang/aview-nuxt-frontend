@@ -133,6 +133,16 @@
                 ></span>
               </button>
             </v-col>
+             <!-- ✅ 홈으로 가기 버튼 추가 -->
+  <v-col cols="12" class="mt-4">
+    <v-btn
+      color="primary"
+      block
+      @click="router.push('/')"
+    >
+      🏠 홈으로 가기
+    </v-btn>
+  </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -342,4 +352,32 @@ function hideMenu() {
 .delete_button:active {
   border: 1px solid #b20000;
 }
+.go-home-button {
+  background: linear-gradient(135deg, #4a90e2, #007aff);
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 16px;
+  padding: 12px 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 122, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.go-home-button:hover {
+  background: linear-gradient(135deg, #0051a3, #003b80);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 122, 255, 0.5);
+}
+@keyframes glow {
+  from {
+    box-shadow: 0 0 8px rgba(0, 122, 255, 0.4);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 122, 255, 0.8);
+  }
+}
+
 </style>
