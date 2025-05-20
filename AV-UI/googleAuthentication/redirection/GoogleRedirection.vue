@@ -18,25 +18,32 @@ const route = useRoute();
 
 const setRedirectGoogleData = async () => {
   const code = route.query.code;
-  const userToken = await googleAuthenticationStore.requestAccessToken({ code });
 
-  localStorage.setItem("userToken", userToken);
-  googleAuthenticationStore.isAuthenticated = true;
-  googleAuthenticationStore.userToken = userToken;
+  // ✅ 백엔드에서 accessToken, email, userId 받아오기
+  const { accessToken, email, userId } = await googleAuthenticationStore.requestAccessToken({ code });
+
+  // ✅ localStorage에 로그인 기본 정보 저장
+  localStorage.setItem("accessToken", accessToken);
+  localStorage.setItem("email", email);
+  localStorage.setItem("userId", userId);
+
+  // ❌ userToken은 아직 저장하지 않음 (추가 정보 입력 후에 저장됨)
+  // ❌ 로그인 상태 처리도 하지 않음
 
   try {
-    // ✅ 사용자 정보 요청
+    // ✅ 사용자 프로필 정보 요청 (userToken 없이 email로 대체해도 백에서 처리)
     const res = await accountAction.requestProfileToDjango({
-      email: "",         // 지금 API는 email 등 안 써도 됨 (백엔드에서 userToken 기준 조회)
+      email: "",
       nickname: "",
       gender: "",
-      birthyear: 0,
+      birthyear: 0
     });
 
     // ✅ 조건 분기: 정보 누락 여부에 따라 페이지 이동
     if (!res.data.gender || res.data.birthyear === 0) {
-      router.push("/account/modify");
+      router.push("/account/modify/modify-profile");
     } else {
+      // 👉 유효한 정보가 이미 있으면 마이페이지로 이동
       router.push("/account/mypage");
     }
   } catch (err) {
@@ -46,7 +53,7 @@ const setRedirectGoogleData = async () => {
   }
 };
 
-onMounted(async () => {
-  await setRedirectGoogleData();
+onMounted(() => {
+  setRedirectGoogleData();
 });
 </script>

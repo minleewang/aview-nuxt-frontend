@@ -4,8 +4,6 @@ export const googleAuthenticationAction = {
   async requestGoogleLoginToDjango(): Promise<void> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
-      // try-catch 블록은 .then() 안에 있는 promise 체인과 섞여 실제 에러가
-      // try-catch로 잡히지 않을 수 있습니다.
       const res = await djangoAxiosInstance.get("/google-oauth/request-login-url");
       console.log("res.data:", res.data);
 
@@ -14,20 +12,13 @@ export const googleAuthenticationAction = {
       }
 
       window.location.href = res.data.url;
-      
-      // return djangoAxiosInstance
-      //   .get("/google-oauth/request-login-url")
-      //   .then((res) => {
-      //     console.log(`res: ${res}`);
-      //     window.location.href = res.data.url;
-      //   });
     } catch (error) {
       console.log("requestGoogleOauthRedirectionToDjango() 중 에러:", error);
-      throw error;  // 상위 함수에서 에러가 잡히도록 재전파 
+      throw error;
     }
   },
 
-  async requestGoogleWithdrawToDjango(): Promise<void> {
+  async requestGoogleWithdrawToDjango(this: any): Promise<void> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     const userToken = localStorage.getItem("userToken");
     try {
@@ -40,37 +31,51 @@ export const googleAuthenticationAction = {
 
       if (res.data && res.data.message === "구글 연결 해제 성공") {
         alert("구글 계정 탈퇴가 완료되었습니다.");
-        window.location.href = "/"; // 탈퇴 후 홈으로 이동
+        this.userToken = '';
+        this.isAuthenticated = false;
+        localStorage.removeItem('userToken');
+        window.location.href = "/";
       } else {
         console.error("❌ 탈퇴 실패 - 잘못된 응답:", res.data);
       }
     } catch (error) {
       console.error("🚨 구글 탈퇴 요청 중 오류 발생:", error);
+      throw error;
     }
   },
 
-  async requestAccessToken(code: string): Promise<string | null> {
+  async requestAccessToken({ code }: { code: string }): Promise<{ accessToken: string; email: string; userId: string }> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
     try {
       const response = await djangoAxiosInstance.post(
         "/google-oauth/redirect-access-token",
-        code
+        { code }
       );
-      return response.data.userToken;
+      return {
+        accessToken: response.data.accessToken,
+        email: response.data.email,
+        userId: response.data.userId
+      };
     } catch (error) {
       console.log("Access Token 요청 중 문제 발생:", error);
       throw error;
     }
   },
-  async requestLogout(userToken: string): Promise<void> {
+
+  async requestLogout(this: any, userToken: string): Promise<void> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
     try {
       await djangoAxiosInstance.post("/authentication/logout", { userToken });
+      this.userToken = '';
+      this.isAuthenticated = false;
+      localStorage.removeItem("userToken");
     } catch (error) {
       console.log("requestLogout() 중 에러:", error);
+      throw error;
     }
   },
+
   async requestValidationUserToken(userToken: string): Promise<boolean> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
@@ -87,8 +92,8 @@ export const googleAuthenticationAction = {
         return false;
       }
     } catch (error) {
-      console.log("requestLogout() 중 에러:", error);
+      console.log("requestValidationUserToken() 중 에러:", error);
       return false;
     }
-  },
+  }
 };

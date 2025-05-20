@@ -24,15 +24,15 @@
       <h3>현재 <strong class="blue-text">JobStick</strong>이 지원하는 기업</h3>
       <div class="logo-slider">
         <div class="logo-track">
-          <img src="/assets/images/fixed/1.jpg" alt="당근" />
-          <img src="/assets/images/fixed/2.jpg" alt="토스" />
-          <img src="/assets/images/fixed/3.png" alt="엔코아" />
-          <img src="/assets/images/fixed/4.png" alt="kt" />
+          <img src="/assets/images/fixed/d1.png" alt="당근" />
+          <img src="/assets/images/fixed/t2.png" alt="토스" />
+          <img src="/assets/images/fixed/e1.png" alt="엔코아" />
+          <img src="/assets/images/fixed/3.png" alt="kt" />
           <!-- 무한 반복용 -->
-          <img src="/assets/images/fixed/1.jpg" alt="당근" />
-          <img src="/assets/images/fixed/2.jpg" alt="토스" />
-          <img src="/assets/images/fixed/3.png" alt="엔코아" />
-          <img src="/assets/images/fixed/4.png" alt="kt" />
+          <img src="/assets/images/fixed/d1.png" alt="당근" />
+          <img src="/assets/images/fixed/t2.png" alt="토스" />
+          <img src="/assets/images/fixed/e1.png" alt="엔코아" />
+          <img src="/assets/images/fixed/3.png" alt="kt" />
         </div>
       </div>
     </div>

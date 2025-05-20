@@ -37,7 +37,7 @@
             <v-col cols="6">
               <v-btn
                 class="btn-update"
-                @click="$router.push({ name: 'AccountModifyPage' })"
+                @click="router.push('/account/modify/modify-profile')"
               >
                 프로필 수정
               </v-btn>
