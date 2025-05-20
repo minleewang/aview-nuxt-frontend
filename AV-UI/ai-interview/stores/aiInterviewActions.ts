@@ -1,6 +1,6 @@
 import * as axiosUtility from "../../utility/axiosInstance";
-import axios from 'axios'
-import type { AxiosResponse } from 'axios'  // ✅ 타입만 import
+import axios from "axios";
+import type { AxiosResponse } from "axios"; // ✅ 타입만 import
 import { useAiInterviewStore } from "./aiInterviewStore";
 
 // ✅ 회사명 매핑 유틸
@@ -230,6 +230,7 @@ export const aiInterviewActions = {
     experienceLevel: number;
     projectExperience: number;
     academicBackground: number;
+    questionId: number;
     interviewTechStack: number[];
   }): Promise<string> {
     const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
