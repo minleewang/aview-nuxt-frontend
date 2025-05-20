@@ -19,11 +19,18 @@
           "
         />
         <div class="button-group">
-  <v-btn color="info" @click="checkMediaReady">카메라/마이크 상태 확인</v-btn>
-  <v-btn color="success" @click="startRecording">🎥 녹화 시작</v-btn>
-  <v-btn color="error" @click="stopRecording">🛑 녹화 종료</v-btn>
-  <v-btn color="warning" @click="playRecording" :disabled="!recordedBlob">▶ 영상 재생</v-btn>
-</div>
+          <v-btn color="info" @click="checkMediaReady"
+            >카메라/마이크 상태 확인</v-btn
+          >
+          <v-btn color="success" @click="startRecording">🎥 녹화 시작</v-btn>
+          <v-btn color="error" @click="stopRecording">🛑 녹화 종료</v-btn>
+          <v-btn
+            color="warning"
+            @click="playRecording"
+            :disabled="!recordedBlob"
+            >▶ 영상 재생</v-btn
+          >
+        </div>
       </div>
 
       <!-- 면접 시작 버튼 -->
@@ -164,7 +171,7 @@ definePageMeta({
     "job-stick",
     "잡스틱",
     "개발자 플랫폼",
-    "개발자 취업"
+    "개발자 취업",
   ],
   ogTItle: "AI 모의 면접 준비 - 잡스틱(JobStick)",
   ogDescription:
@@ -471,6 +478,7 @@ const handleStartInterview = async () => {
 };
 
 const onAnswerComplete = async () => {
+  clearInterval(timer.value);
   if (recognition && recognizing.value) recognition.stop();
 
   if (!sttLog.value.trim()) {
@@ -525,6 +533,7 @@ const onAnswerComplete = async () => {
   } else {
     alert("모든 면접 질문이 완료되었습니다.");
     finished.value = true;
+    clearInterval(timer.value);
     stopRecordingAuto();
     await aiInterviewStore.requestEndInterviewToDjango(payload);
     await aiInterviewStore.requestGetScoreResultListToDjango(payload);
