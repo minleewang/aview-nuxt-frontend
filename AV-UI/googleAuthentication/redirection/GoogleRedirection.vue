@@ -27,29 +27,24 @@ const setRedirectGoogleData = async () => {
   localStorage.setItem("email", email);
   localStorage.setItem("userId", userId);
 
-  // ❌ userToken은 아직 저장하지 않음 (추가 정보 입력 후에 저장됨)
-  // ❌ 로그인 상태 처리도 하지 않음
-
-  try {
-    // ✅ 사용자 프로필 정보 요청 (userToken 없이 email로 대체해도 백에서 처리)
-    const res = await accountAction.requestProfileToDjango({
-      email: "",
-      nickname: "",
-      gender: "",
-      birthyear: 0
-    });
-
-    // ✅ 조건 분기: 정보 누락 여부에 따라 페이지 이동
-    if (!res.data.gender || res.data.birthyear === 0) {
-      router.push("/account/modify/modify-profile");
-    } else {
-      // 👉 유효한 정보가 이미 있으면 마이페이지로 이동
-      router.push("/account/mypage");
+  // ✅ userToken이 있다면 프로필 정보 확인
+  const userToken = localStorage.getItem("userToken");
+  if (userToken) {
+    try {
+      const res = await accountAction.requestProfileToDjango({ userToken });
+      if (!res.data.gender || res.data.birthyear === 0) {
+        router.push("/account/modify/modify-profile");
+      } else {
+        router.push("/account/mypage");
+      }
+    } catch (err) {
+      console.error("프로필 정보 조회 실패:", err);
+      alert("프로필 정보를 불러오는 데 실패했습니다.");
+      router.push("/account/login");
     }
-  } catch (err) {
-    console.error("프로필 정보 조회 실패:", err);
-    alert("프로필 정보를 불러오는 데 실패했습니다.");
-    router.push("/account/login");
+  } else {
+    // ❌ userToken이 없다면 추가 정보 입력 페이지로 이동
+    router.push("/account/modify/modify-profile");
   }
 };
 
