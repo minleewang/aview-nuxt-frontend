@@ -78,8 +78,8 @@ const uploadToS3 = async (htmlContent: string, filename: string) => {
 const submitReview = async () => {
   console.log("🚀 리뷰 등록 시작");
 
-  if (!title.value || !content.value) {
-    alert("제목과 내용을 입력하세요.");
+  if (!title.value) {
+    alert("제목을 입력하세요.");
     return;
   }
 
@@ -91,7 +91,7 @@ const submitReview = async () => {
       alert("내용을 입력해주세요.");
       return;
     }
-
+    const userToken = localStorage.getItem("userToken");
     const compressedHTML = await compressHTML(htmlContent);
     const filename = `${crypto.randomUUID()}.html`;
 
@@ -101,6 +101,7 @@ const submitReview = async () => {
       await reviewStore.requestRegisterReviewToDjango({
         title: title.value,
         content: `review/${filename}`,
+        userToken,
       });
 
       alert("리뷰가 등록되었습니다.");
