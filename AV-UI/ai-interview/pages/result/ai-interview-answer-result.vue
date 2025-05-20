@@ -54,10 +54,14 @@
         <a
           :href="downloadUrl"
           download="interview-recording.webm"
-          style="color: blue; text-decoration: underline"
+          style="color: blue; text-decoration: underline; margin-right: 20px"
         >
           🎥 녹화 영상 다운로드
         </a>
+
+        <v-btn color="primary" @click="handlePrint" class="no-print">
+          🖨️ 인쇄하기
+        </v-btn>
       </div>
     </v-container>
   </main>
@@ -157,6 +161,10 @@ onBeforeUnmount(() => {
   }
   localStorage.removeItem("interviewRecordingUrl");
 });
+
+const handlePrint = () => {
+  window.print();
+};
 </script>
 
 <style>
@@ -233,6 +241,32 @@ onBeforeUnmount(() => {
 @media (min-width: 960px) {
   .mb-md-0 {
     margin-bottom: 0 !important;
+  }
+}
+
+@media print {
+  /* 인쇄 시 숨기고 싶은 요소 */
+  .no-print {
+    display: none !important;
+  }
+
+  /* 배경 및 여백 조절 */
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0;
+    background: white;
+  }
+
+  /* 페이지 레이아웃 정리 */
+  .report-container {
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: none !important;
   }
 }
 </style>

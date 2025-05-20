@@ -123,16 +123,52 @@
     </div>
 
     <v-container v-if="start && !visible" class="input-area">
+      <!-- 버튼 그룹 -->
       <div class="button-group">
         <button class="send-button" @click="startSTT" :disabled="recognizing">
           {{ recognizing ? "녹음 중..." : "말하기" }}
         </button>
         <button @click="replayQuestion">🗣 AI 질문 듣기</button>
       </div>
-      <v-btn color="primary" @click="onAnswerComplete">답변 완료</v-btn>
-      <div v-if="sttLog !== ''" class="stt-log">
-        <p><strong>STT 결과:</strong> {{ sttLog }}</p>
+
+       <!-- 답변 완료 버튼 -->
+      <v-btn color="primary" @click="onAnswerComplete" :disabled="isGenerating">
+        <template v-if="isGenerating && finished.value">
+          결과 생성 중...
+        </template>
+        <template v-else-if="isGenerating">
+          질문 생성 중...
+        </template>
+        <template v-else>
+          답변 완료
+        </template>
+      </v-btn>
+
+      <!-- STT 상태 메시지 / 결과 -->
+      <div class="stt-log text-center" style="margin-top: 8px">
+        <!-- 🎙️ STT 입력 중 -->
+        <template v-if="recognizing">
+          <p>🎙️ 입력 중입니다...</p>
+        </template>
+
+        <!-- 🤖 질문 생성 중 or 📝 결과 생성 중 + STT 결과 같이 보여줌 -->
+        <template v-else-if="isGenerating">
+          <p style="color: gray">
+            {{ finished.value ? "📝 결과를 생성하고 있어요..." : "🤖 다음 질문을 생성하고 있어요..." }}
+          </p>
+
+          <p v-if="sttLog !== ''">
+            <strong>STT 결과:</strong> {{ sttLog }}
+          </p>
+        </template>
+
+        <!-- ✅ STT 결과만 있을 때 -->
+        <template v-else-if="sttLog !== ''">
+          <p><strong>STT 결과:</strong> {{ sttLog }}</p>
+        </template>
       </div>
+
+      <!-- 직접 입력 필드 -->
       <v-text-field
         v-model="sttLog"
         label="개발 중: 답변 직접 입력"
@@ -200,6 +236,7 @@ const userVideo = ref(null);
 const mediaChecked = ref(false);
 const previewVideo = ref(null);
 const mediaStream = ref(null);
+const isGenerating = ref(false); // 질문 생성 중 여부
 
 const mapCompanyName = (original) => {
   const mapping = {
@@ -478,16 +515,20 @@ const handleStartInterview = async () => {
 };
 
 const onAnswerComplete = async () => {
+  isGenerating.value = true; // ✅ 질문 생성 시작
+
   clearInterval(timer.value);
   if (recognition && recognizing.value) recognition.stop();
 
   if (!sttLog.value.trim()) {
     alert("음성 인식 결과가 없습니다.");
+    isGenerating.value = false;
     return;
   }
   if (currentQuestionId.value >= maxQuestionId.value) {
     alert("모든 면접이 완료되었습니다");
     finished.value = true;
+    isGenerating.value = true;      // ✅ 결과 생성 중 상태 유지 (종료되면 router 이동)
     return;
   }
 
@@ -531,8 +572,13 @@ const onAnswerComplete = async () => {
     nextQuestion = techFollowUp?.questions?.[0];
     nextQuestionId = techFollowUp?.questionIds?.[0];
   } else {
-    alert("모든 면접 질문이 완료되었습니다.");
-    finished.value = true;
+    finished.value = true;           // 1. 면접 종료 상태
+    await nextTick();
+    isGenerating.value = true;       // 2. 결과 생성 중으로 상태 전환
+    await nextTick();                // 3. 메시지 DOM 반영
+
+    alert("모든 면접 질문이 완료되었습니다."); // 4. 팝업 이후 결과 처리
+
     clearInterval(timer.value);
     stopRecordingAuto();
     await aiInterviewStore.requestEndInterviewToDjango(payload);
@@ -543,6 +589,7 @@ const onAnswerComplete = async () => {
 
   if (!nextQuestion || !nextQuestionId) {
     alert("다음 질문을 불러오지 못했습니다.");
+    isGenerating.value = false;
     return;
   }
 
@@ -550,6 +597,8 @@ const onAnswerComplete = async () => {
   currentAIMessage.value = nextQuestion;
   sttLog.value = "";
   speakCurrentMessage();
+
+  isGenerating.value = false; // ✅ 로딩 종료
 };
 
 onBeforeUnmount(() => {
