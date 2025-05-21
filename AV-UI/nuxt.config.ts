@@ -140,16 +140,16 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    AWS_REGION: process.env.AWS_REGION,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
+    GA_MEASUREMENT_ID: process.env.VUE_APP_GA_MEASUREMENT_ID,
+    TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
+    TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY,
     public: {
       MAIN_API_URL: process.env.VUE_APP_BASE_URL,
       AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
-      AWS_REGION: process.env.AWS_REGION,
-      AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-      AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-      AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
-      GA_MEASUREMENT_ID: process.env.VUE_APP_GA_MEASUREMENT_ID,
-      TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
-      TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY,
     },
   },
 
