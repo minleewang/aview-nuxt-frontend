@@ -2,9 +2,9 @@
   <v-container class="py-12">
     <v-row justify="center">
       <v-col cols="12" md="10" class="text-center">
-        <h1 class="text-h4 font-weight-bold mb-4" data-aos="fade-up">
+        <h2 class="text-h4 font-weight-bold mb-4" data-aos="fade-up">
           🧠 AI INTERVIEW, 실제처럼 경험하세요
-        </h1>
+        </h2>
         <p class="text-subtitle-1 mb-10" data-aos="fade-up" data-aos-delay="200">
           <strong class="blue-text">JOBSTICK</strong>의 AI 모의 면접은 단순한 질문이 아닌,
           <strong>개발자 맞춤형 기술 기반 질문</strong>과<br />

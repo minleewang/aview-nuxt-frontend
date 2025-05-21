@@ -2,7 +2,7 @@
   <section class="home-five" data-aos="fade-up">
     <!-- 서비스 소개 -->
     <div class="hero" data-aos="fade-up" data-aos-delay="100">
-      <h1>국내 최초, 개발자를 위한 AI 모의 면접 플랫폼</h1>
+      <h2>국내 최초, 개발자를 위한 AI 모의 면접 플랫폼</h2>
       <p>
         <strong class="blue-text">JobStick</strong>은 진짜 면접처럼 연습하고, <br />
         기업 맞춤 정보를 통해 자신 있게 면접을 준비할 수 있도록 돕습니다.

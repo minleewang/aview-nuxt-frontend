@@ -2,7 +2,7 @@
   <section class="home-four" data-aos="fade-up">
     <!-- 1. 인트로 -->
     <div class="intro-section">
-      <h1>면접, 왜 이렇게 어려울까요?</h1>
+      <h2>면접, 왜 이렇게 어려울까요?</h2>
       <p>
         나도 모르게 반복하는 말버릇,<br />
         예상 질문이 없어 막막함, 긴장되는 태도까지.<br />

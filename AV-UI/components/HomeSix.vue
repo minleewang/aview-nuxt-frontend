@@ -3,9 +3,9 @@
     <!-- 상단 제목 -->
     <v-row justify="center">
       <v-col cols="12" md="10" class="text-center">
-        <h1 class="text-h4 font-weight-bold animate-fade-in" data-aos="fade-up">
+        <h2 class="text-h4 font-weight-bold animate-fade-in" data-aos="fade-up">
           ✨ 단순한 질문이 아닌, <br />나에게 꼭 맞는 AI 면접 질문
-        </h1>
+        </h2>
         <p class="text-subtitle-1 mt-4" data-aos="fade-up" data-aos-delay="200">
           기존 모의 면접 플랫폼은 면접자의 <strong>경력도 직무도 고려하지 않고</strong><br />
           모두에게 동일한 질문을 던집니다.
