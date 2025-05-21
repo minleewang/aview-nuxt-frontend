@@ -147,9 +147,8 @@ export default defineNuxtConfig({
     GA_MEASUREMENT_ID: process.env.VUE_APP_GA_MEASUREMENT_ID,
     TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
     TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY,
-    MAIN_API_URL: process.env.VUE_APP_BASE_URL,
     AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
-    public: {},
+    public: { MAIN_API_URL: process.env.VUE_APP_BASE_URL },
   },
 
   plugins: [{ src: "~/plugins/vgtag.js", mode: "client" }],

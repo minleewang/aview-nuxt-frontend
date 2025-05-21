@@ -6,7 +6,8 @@
       <p>
         나도 모르게 반복하는 말버릇,<br />
         예상 질문이 없어 막막함, 긴장되는 태도까지.<br />
-        <strong class="blue-text">JobStick</strong>이 당신의 면접 고민을 해결해드립니다.<br /><br />
+        <strong class="blue-text">JobStick</strong>이 당신의 면접 고민을
+        해결해드립니다.<br /><br />
         (아래 사진과 같이 실제 모의 면접처럼 서비스를 제공합니다.)
       </p>
     </div>
@@ -22,9 +23,20 @@
       <div class="solution-box">
         <h2>면접, 혼자 준비하기 막막하셨죠?<br />JobStick이 함께합니다</h2>
         <ul>
-          <li>혼자 연습하다 보면 내가 어떤 실수를 반복하는지조차 알기 어렵습니다. JobStick은 AI가 면접자의 말버릇과 태도를 분석해 실질적인 피드백을 제공합니다.</li>
-          <li>기업마다 질문이 다른데, 무작정 준비할 순 없죠. JobStick은 실제 기업에서 자주 묻는 질문과 평가 기준을 기반으로 맞춤형 질문을 제공합니다.</li>
-          <li>면접이 막막하게 느껴질 때, JobStick은 모의 면접부터 실시간 분석, 요약까지 전 과정을 도와주는 면접 파트너가 되어드립니다.</li>
+          <li>
+            혼자 연습하다 보면 내가 어떤 실수를 반복하는지조차 알기 어렵습니다.
+            JobStick은 AI가 면접자의 말버릇과 태도를 분석해 실질적인 피드백을
+            제공합니다.
+          </li>
+          <li>
+            기업마다 질문이 다른데, 무작정 준비할 순 없죠. JobStick은 실제
+            기업에서 자주 묻는 질문과 평가 기준을 기반으로 맞춤형 질문을
+            제공합니다.
+          </li>
+          <li>
+            면접이 막막하게 느껴질 때, JobStick은 모의 면접부터 실시간 분석,
+            요약까지 전 과정을 도와주는 면접 파트너가 되어드립니다.
+          </li>
         </ul>
       </div>
     </div>
@@ -32,16 +44,16 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import { onMounted } from "vue";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // 이미지 import
-import mainImage from '@/assets/images/fixed/sc123.png'
+import mainImage from "@/assets/images/fixed/sc123.png";
 
 onMounted(() => {
-  AOS.init({ once: true, duration: 1000 })
-})
+  AOS.init({ once: true, duration: 1000 });
+});
 </script>
 
 <style scoped>
@@ -137,5 +149,45 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 2px;
+}
+/* ✅ 모바일 대응 추가 */
+@media (max-width: 420px) {
+  .image-box img {
+    max-width: 90vw;
+  }
+}
+
+@media (min-width: 421px) and (max-width: 576px) {
+  .image-box img {
+    max-width: 360px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+  .image-box img {
+    max-width: 410px;
+  }
+  .image-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-box img {
+    width: auto;
+    max-width: 410px; /* ✅ 고정된 최대 가로 너비 제한 */
+    height: auto;
+    border-radius: 12px;
+  }
+
+  .solution-box {
+    margin-top: 0;
+    padding: 24px 20px;
+    width: 100%;
+  }
+
+  .home-four {
+    padding: 40px 16px;
+  }
 }
 </style>
