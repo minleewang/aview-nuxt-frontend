@@ -67,6 +67,7 @@ definePageMeta({
   ogTitle: "관리자 로그인 인증 - 잡스틱(JobStick)",
   ogDescription: "잡스틱(JobStick) 관리자 인증을 통해 GitHub 로그인을 시작하세요.",
   ogImage: "/images/og-admin-login.png",
+  robots: 'noindex, nofollow'
 });
 
 const router = useRouter();
