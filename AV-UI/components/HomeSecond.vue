@@ -24,7 +24,7 @@
                 >
                   <div class="card-inner">
                     <div class="card-front">
-                      <v-img src="@/assets/images/fixed/kim.png" cover />
+                      <v-img src="@/assets/images/fixed/hw.png" cover />
                     </div>
                     <div class="card-back">
                       <div class="text-card">
