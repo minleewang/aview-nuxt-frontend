@@ -48,7 +48,7 @@
             <v-btn class="shiny-button" size="x-large" @click="goToInterview">
               ✨ AI INTERVIEW 시작하기 ✨
             </v-btn>
-          </v-col>
+          </div>
         </v-row>
 
         <v-row justify="center" class="mt-12">
