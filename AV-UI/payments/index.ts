@@ -13,18 +13,16 @@ export default defineNuxtModule({
     nuxt.hook("pages:extend", (pages) => {
       pages.push(
         {
-          name: "paymentsTestPage",
-          path: "/payments/test/page",
-          file: resolve(themeDir, "payments/pages/payment/test-payments.vue"),
-        },
-        {
           name: "paymentSuccessed",
           path: "/payments/succed",
-          file: resolve(themeDir, "payments/pages/succed/payment-successed.vue"),
+          file: resolve(
+            themeDir,
+            "payments/pages/succed/payment-successed.vue"
+          ),
         },
         {
           name: "paymentFailed",
-          path: "/payments/failed",
+          path: "/payments/fail",
           file: resolve(themeDir, "payments/pages/failed/payment-failed.vue"),
         },
         {
