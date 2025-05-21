@@ -564,7 +564,8 @@ const onAnswerComplete = async () => {
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
     nextQuestion = projectFollowUp?.questions?.[0];
     nextQuestionId = projectFollowUp?.questionIds?.[0];
-  } else if (currentQuestionId.value === 5 || currentQuestionId.value === 6) {
+  } else if (currentQuestionId.value === 5) {
+    //|| currentQuestionId.value === 6
     const techFollowUp =
       await aiInterviewStore.requestTechFollowUpQuestionToDjango(payload);
     nextQuestion = techFollowUp?.questions?.[0];
