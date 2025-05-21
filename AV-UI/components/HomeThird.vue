@@ -4,15 +4,14 @@
       <div class="content-container" data-aos="fade-left" data-aos-offset="400">
         <v-card class="content-image" id="first-image"></v-card>
         <div class="text-container">
-          <p class="number-icon">1</p>
+          <p class="number-icon"></p>
           <div class="text-title-container">
-            <p class="text-title">다양한 기업보고서</p>
-            <p class="text-subtitle">최신 기업 및 채용정보 확인</p>
+            <p class="text-title">실제 면접 질문 자료 보유 </p>
+            <p class="text-subtitle">특정 기업들에 대한 맞춤 면접 제공</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              <span class="AIV-span">JOBSTICK</span>는 다양한 기업의 최신 정보를
-              제공합니다.
+              <span class="AIV-span">JOBSTICK</span>은 실제 개발자들이 모여 제작한 프로그램이며, 특정 기업들에 대한 실제 면접 질문 데이터를 기반으로 AI INTERVIEW서비스를 제공합니다.
             </p>
           </div>
         </div>
@@ -24,14 +23,14 @@
         data-aos-offset="400"
       >
         <div class="text-container">
-          <p class="number-icon">2</p>
+          <p class="number-icon"></p>
           <div class="text-title-container">
             <p class="text-title">실전 같은 모의면접</p>
             <p class="text-subtitle">AI기반 맞춤 면접 질문 제공</p>
           </div>
           <div class="text-content-container">
-            <span class="AIV-span">JOBSTICK</span>는 AI를 기반으로 업계별,
-            직무별 맞춤형 질문을 제공하여 실전같은 면접질문을 제공합니다.
+            <span class="AIV-span">JOBSTICK</span>은 질문이 공통적이고 사용자들에게 표준화된 질문을 제공하는 다른 면접 사이트와 달리 AI를 기반으로 업계별,
+            직무별, 경력별 등의 사용자 능력에 맞게 맞춤형 질문과 기술 연계 질문을 제공해드립니다.
           </div>
         </div>
         <v-card class="content-image" id="second-image"></v-card>
@@ -40,15 +39,14 @@
       <div class="content-container" data-aos="fade-left" data-aos-offset="400">
         <v-card class="content-image" id="third-image"></v-card>
         <div class="text-container">
-          <p class="number-icon">3</p>
+          <p class="number-icon"></p>
           <div class="text-title-container">
             <p class="text-title">전문적 피드백</p>
             <p class="text-subtitle">피드백을 통한 문제점 확인</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              정확한 피드백을 통해 문제점 확인하여 면접 스킬을 향상시킬 수
-              있습니다.
+          <span class="AIV-span">JOBSTICK</span>은 정확한 AI분석을 통해 모의 면접에서 이루어지는 실수나 더 좋은 답변의 예시를 보여주며, 사용자들에게 실제 면접에서 더 효과적인 답변이 나오도록 피드백을 제공해드립니다.
             </p>
           </div>
         </div>
@@ -60,17 +58,15 @@
         data-aos-offset="400"
       >
         <div class="text-container">
-          <p class="number-icon">4</p>
+          <p class="number-icon"></p>
           <div class="text-title-container">
             <p class="text-title">영상 분석 확인 가능</p>
             <p class="text-subtitle">면접 피드백 제공</p>
           </div>
           <div class="text-content-container">
             <p class="text-content">
-              시선 처리, 발화 습관 등을 파악할 수 있으며
-            </p>
-            <p class="text-content">
-              이를 기반으로 빠른 면접 스킬을 향상할 수 있습니다.
+            <span class="AIV-span">JOBSTICK</span>은 다른 면접 사이트와 다르게 모의 면접이 이루어지는 순간을 영상으로 담아 제공해드립니다.
+               사용자들이 직접 자신들의 면접 모습을 보며, 불필요한 행동이나 발화 습관의 분석이 가능하게 만들고 효과적으로 면접 준비 시간을 절약하게 만들어드립니다. 
             </p>
           </div>
         </div>
@@ -128,14 +124,14 @@ export default defineComponent({
 }
 
 #first-image {
-  background-image: url("@/assets/images/fixed/info.jpg");
+  background-image: url("@/assets/images/fixed/S.png");
   background-size: 105% 100%;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 #second-image {
-  background-image: url("@/assets/images/fixed/interview.jpg");
+  background-image: url("@/assets/images/fixed/sc123.png");
   background-size: 105% 100%;
   background-position: center;
   background-repeat: no-repeat;

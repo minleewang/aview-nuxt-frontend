@@ -1,67 +1,50 @@
 <template>
   <v-container class="py-16 white-background" fluid data-aos="fade-up">
-    <!-- 상단 제목 -->
     <v-row justify="center" class="mb-10">
-      <v-col cols="12" md="10" class="text-center">
-        <h1 class="text-h4 font-weight-bold text-primary mb-4 animate-fade-in">
-          🙋 자주 묻는 질문 (FAQ)
+      <!-- 왼쪽: 이벤트 배너 및 설명 -->
+      <v-col cols="12" md="6" class="text-center" data-aos="fade-right">
+        <h1 class="text-h4 font-weight-bold shiny-red mb-2 animate-fade-in">
+          EVENT!
         </h1>
-        <p class="text-subtitle-1">
-          <strong class="blue-text">JobStick</strong>은 단순한 면접 준비를 넘어, 
-          <strong>기업 채용 포인트와 예상 질문</strong>까지 분석해서 제공합니다.
+        <p class="event-subtitle mb-4 blue-text">(게스트 로그인 하는 방법)</p>
+
+        <v-img
+          src="@/assets/images/fixed/14.png"
+          alt="JobStick 오픈 이벤트"
+          max-height="360"
+          contain
+          class="mb-4"
+        />
+        <p class="text-subtitle-1 font-weight-bold">
+          JOBSTICK 오픈 기념으로 모든 이용자들에게<br />
+          <span class="blue-text">회원가입 없이도 AI INTERVIEW 기능을 사용할 수 있는</span><br />
+          <span class="red-text">게스트 로그인</span>을 일정 기간 오픈해드립니다!
         </p>
       </v-col>
-    </v-row>
 
-    <!-- FAQ 확장형 패널-->
-    <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-expansion-panels multiple elevation="1">
-          <v-expansion-panel v-for="(item, index) in faqList" :key="index">
-            <v-expansion-panel-title>
-              <strong>{{ item.question }}</strong>
-            </v-expansion-panel-title>
-            <v-expansion-panel-text>
-              {{ item.answer }}
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </v-col>
-    </v-row>
+      <!-- 오른쪽: FAQ와 버튼 -->
+      <v-col
+        cols="12"
+        md="6"
+        data-aos="fade-left"
+        class="d-flex flex-column justify-end align-center"
+        style="min-height: 100%; height: 100%"
+      >
+        <div style="width: 100%; max-width: 560px; margin-top: 60px">
+          <h2 class="text-h5 font-weight-bold mb-4 text-center">자주 묻는 질문 (FAQ)</h2>
+          <v-expansion-panels multiple elevation="1">
+            <v-expansion-panel v-for="(item, index) in faqList" :key="index">
+              <v-expansion-panel-title>
+                <strong>{{ item.question }}</strong>
+              </v-expansion-panel-title>
+              <v-expansion-panel-text>
+                {{ item.answer }}
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
 
-
-    <!-- 이미지 + 텍스트 설명 (텍스트는 v-card 없이 출력) -->
-    <!-- <v-row align="center" justify="center" class="mb-12"> -->
-      <!-- 이미지 -->
-      <!-- <v-col cols="12" md="5" class="pa-0 text-center" data-aos="fade-right">
-        <div class="image-border">
-          <v-img
-            src="@/assets/images/fixed/sc2.png"
-            alt="기업 분석"
-            max-height="380"
-            contain
-            class="rounded-img"
-          />
-        </div>
-        <p class="mt-2 text-caption">※ 기업 공식 채용 페이지 또는 DART 공식 기준</p>
-      </v-col> -->
-
-      <!-- 텍스트만 표시 -->
-      <!-- <v-col cols="12" md="6" class="pa-0 pl-md-10 text-left" data-aos="fade-left">
-        <h3 class="text-h5 font-weight-bold mb-4 blue-text">
-          🚀 <strong class="blue-text">JobStick</strong>이 제공하는 차별화된 기능
-        </h3>
-        <p class="highlight-text">
-          <strong class="blue-text">JobStick</strong>은 특정 기업의 
-          <span class="highlight">채용 정보</span>와 <span class="highlight">실제 면접 질문</span>을 기반으로,<br />
-          사용자가 선택한 기술 역량에 따라 <strong>심화 기술 질문까지 자동 생성</strong>해주는 
-          국내 최초의 AI 모의 면접 플랫폼입니다.<br /><br />
-          이제 단순한 연습을 넘어서, <strong>실제 기업에 맞춘 깊이 있는 면접 대비</strong>가 가능합니다.
-        </p> -->
-
-        <!-- 버튼 -->
-        <v-row justify="center" class="mt-6">
-          <v-col cols="auto">
+          <!-- 버튼 가운데 정렬 -->
+          <div class="d-flex justify-center mt-8">
             <v-btn class="shiny-button" size="x-large" @click="goToInterview">
               ✨ AI INTERVIEW 시작하기 ✨
             </v-btn>
@@ -85,11 +68,10 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { useHead } from 'nuxt/app'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const goToInterview = () => {
@@ -117,7 +99,7 @@ const faqList = [
     question: '🎯 AI 모의 면접 사이트는 어떤 것이 있나요?',
     answer: '✅ JobStick은 개발자 직무에 특화된 국내 최초의 AI 모의 면접 플랫폼으로, 직무와 기술 스택에 따라 맞춤 질문과 피드백을 제공합니다.',
   },
-];
+]
 
 // 블로그 경로로 이동
 const goToBlog = () => {
@@ -127,26 +109,6 @@ const goToBlog = () => {
 onMounted(() => {
   AOS.init({ once: true, duration: 1000 })
 })
-
-useHead({
-  script: [
-    {
-      type: 'application/ld+json',
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": faqList.map((item) => ({
-          "@type": "Question",
-          "name": item.question,
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": item.answer,
-          },
-        })),
-      }),
-    },
-  ],
-});
 </script>
 
 <style scoped>
@@ -168,25 +130,28 @@ useHead({
   }
 }
 
-.image-border {
-  border: 4px solid #1976d2;
-  border-radius: 16px;
-  padding: 8px;
-  display: inline-block;
+.shiny-red {
+  color: #e53935;
+  animation: shineRed 1.8s infinite alternate;
+}
+@keyframes shineRed {
+  0% { text-shadow: 0 0 2px #e53935; }
+  100% { text-shadow: 0 0 10px #e53935; }
 }
 
-.rounded-img {
-  border-radius: 12px;
-}
-
-.highlight-text {
-  color: #444;
+.event-subtitle {
   font-size: 16px;
-  line-height: 1.8;
+  margin-top: -8px;
 }
-.highlight-text .highlight {
-  color: #ffeb3b;
-  font-weight: 600;
+
+.blue-text {
+  color: #1976d2;
+  font-weight: bold;
+}
+
+.red-text {
+  color: #e53935;
+  font-weight: bold;
 }
 
 .shiny-button {
@@ -204,21 +169,7 @@ useHead({
 }
 
 @keyframes shine {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
-.blue-text {
-  color: #1976d2;
-  font-weight: bold;
-}
-
-.no-shadow {
-  box-shadow: none !important;
-  border: none !important;
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 </style>
