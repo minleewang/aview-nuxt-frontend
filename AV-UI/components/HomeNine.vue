@@ -3,9 +3,9 @@
     <!-- 상단 제목 -->
     <v-row justify="center" class="mb-10">
       <v-col cols="12" md="10" class="text-center">
-        <h2 class="text-h4 font-weight-bold text-primary mb-4 animate-fade-in">
+        <h1 class="text-h4 font-weight-bold text-primary mb-4 animate-fade-in">
           🙋 자주 묻는 질문 (FAQ)
-        </h2>
+        </h1>
         <p class="text-subtitle-1">
           <strong class="blue-text">JobStick</strong>은 단순한 면접 준비를 넘어, 
           <strong>기업 채용 포인트와 예상 질문</strong>까지 분석해서 제공합니다.
