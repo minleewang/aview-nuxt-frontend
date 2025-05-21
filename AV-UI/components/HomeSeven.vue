@@ -2,9 +2,9 @@
   <v-container class="py-10" data-aos="fade-up">
     <v-row justify="center">
       <v-col cols="12" class="text-center mb-8">
-        <h1 class="text-h4 font-weight-bold animate-fade-in" data-aos="fade-up">
+        <h2 class="text-h4 font-weight-bold animate-fade-in" data-aos="fade-up">
           💸 경쟁사 대비 말도 안 되게 저렴한 가격
-        </h1>
+        </h2>
         <p class="text-subtitle-1" data-aos="fade-up" data-aos-delay="200">
           <strong class="highlight-text">₩4,000</strong>으로
           <strong class="highlight-text">1일 무제한 AI 모의면접</strong>을 제공합니다.<br />
