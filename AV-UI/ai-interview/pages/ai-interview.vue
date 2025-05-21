@@ -12,8 +12,8 @@
           playsinline
           muted
           style="
-            width: 320px;
-            height: 240px;
+            width: 250px;
+            height: 188px;
             background: #000;
             border-radius: 8px;
           "
@@ -131,17 +131,13 @@
         <button @click="replayQuestion">🗣 AI 질문 듣기</button>
       </div>
 
-       <!-- 답변 완료 버튼 -->
+      <!-- 답변 완료 버튼 -->
       <v-btn color="primary" @click="onAnswerComplete" :disabled="isGenerating">
         <template v-if="isGenerating && finished.value">
           결과 생성 중...
         </template>
-        <template v-else-if="isGenerating">
-          질문 생성 중...
-        </template>
-        <template v-else>
-          답변 완료
-        </template>
+        <template v-else-if="isGenerating"> 질문 생성 중... </template>
+        <template v-else> 답변 완료 </template>
       </v-btn>
 
       <!-- STT 상태 메시지 / 결과 -->
@@ -154,12 +150,14 @@
         <!-- 🤖 질문 생성 중 or 📝 결과 생성 중 + STT 결과 같이 보여줌 -->
         <template v-else-if="isGenerating">
           <p style="color: gray">
-            {{ finished.value ? "📝 결과를 생성하고 있어요..." : "🤖 다음 질문을 생성하고 있어요..." }}
+            {{
+              finished.value
+                ? "📝 결과를 생성하고 있어요..."
+                : "🤖 다음 질문을 생성하고 있어요..."
+            }}
           </p>
 
-          <p v-if="sttLog !== ''">
-            <strong>STT 결과:</strong> {{ sttLog }}
-          </p>
+          <p v-if="sttLog !== ''"><strong>STT 결과:</strong> {{ sttLog }}</p>
         </template>
 
         <!-- ✅ STT 결과만 있을 때 -->
@@ -528,7 +526,7 @@ const onAnswerComplete = async () => {
   if (currentQuestionId.value >= maxQuestionId.value) {
     alert("모든 면접이 완료되었습니다");
     finished.value = true;
-    isGenerating.value = true;      // ✅ 결과 생성 중 상태 유지 (종료되면 router 이동)
+    isGenerating.value = true; // ✅ 결과 생성 중 상태 유지 (종료되면 router 이동)
     return;
   }
 
@@ -550,32 +548,33 @@ const onAnswerComplete = async () => {
 
   let nextQuestion = null;
   let nextQuestionId = null;
-  if (currentQuestionId.value === 1 || currentQuestionId.value === 2) {
+  if (currentQuestionId.value === 1) {
+    //|| currentQuestionId.value === 2
     const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
       payload
     );
     nextQuestion = followUp?.questions?.[0];
     nextQuestionId = followUp?.questionIds?.[0];
-  } else if (currentQuestionId.value === 3) {
+  } else if (currentQuestionId.value === 2) {
     const projectMain =
       await aiInterviewStore.requestProjectCreateInterviewToDjango(payload);
     nextQuestion = projectMain?.question?.[0];
     nextQuestionId = projectMain?.questionId;
-  } else if (currentQuestionId.value === 4 || currentQuestionId.value === 5) {
+  } else if (currentQuestionId.value === 3 || currentQuestionId.value === 4) {
     const projectFollowUp =
       await aiInterviewStore.requestProjectFollowUpQuestionToDjango(payload);
     nextQuestion = projectFollowUp?.questions?.[0];
     nextQuestionId = projectFollowUp?.questionIds?.[0];
-  } else if (currentQuestionId.value === 6 || currentQuestionId.value === 7) {
+  } else if (currentQuestionId.value === 5 || currentQuestionId.value === 6) {
     const techFollowUp =
       await aiInterviewStore.requestTechFollowUpQuestionToDjango(payload);
     nextQuestion = techFollowUp?.questions?.[0];
     nextQuestionId = techFollowUp?.questionIds?.[0];
   } else {
-    finished.value = true;           // 1. 면접 종료 상태
+    finished.value = true; // 1. 면접 종료 상태
     await nextTick();
-    isGenerating.value = true;       // 2. 결과 생성 중으로 상태 전환
-    await nextTick();                // 3. 메시지 DOM 반영
+    isGenerating.value = true; // 2. 결과 생성 중으로 상태 전환
+    await nextTick(); // 3. 메시지 DOM 반영
 
     alert("모든 면접 질문이 완료되었습니다."); // 4. 팝업 이후 결과 처리
 
@@ -678,6 +677,12 @@ const playRecording = () => {
   border-radius: 20px;
   cursor: pointer;
   font-size: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  box-sizing: border-box;
 }
 
 .video-row {
