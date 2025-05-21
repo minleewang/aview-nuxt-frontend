@@ -549,7 +549,6 @@ const onAnswerComplete = async () => {
   let nextQuestion = null;
   let nextQuestionId = null;
   if (currentQuestionId.value === 1) {
-    //|| currentQuestionId.value === 2
     const followUp = await aiInterviewStore.requestFollowUpQuestionToDjango(
       payload
     );

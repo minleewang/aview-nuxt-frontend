@@ -147,6 +147,7 @@ export default defineNuxtConfig({
     GA_MEASUREMENT_ID: process.env.VUE_APP_GA_MEASUREMENT_ID,
     TOSS_SECRET_KEY: process.env.TOSS_SECRET_KEY,
     AI_BASE_URL: process.env.VUE_APP_AI_BASE_URL,
+
     public: {
       MAIN_API_URL: process.env.VUE_APP_BASE_URL,
       TOSS_CLIENT_KEY: process.env.TOSS_CLIENT_KEY,
