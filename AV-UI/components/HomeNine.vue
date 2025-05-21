@@ -48,10 +48,22 @@
             <v-btn class="shiny-button" size="x-large" @click="goToInterview">
               ✨ AI INTERVIEW 시작하기 ✨
             </v-btn>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
+          </v-col>
+        </v-row>
+
+        <v-row justify="center" class="mt-12">
+          <v-col cols="auto">
+            <v-btn
+              class="shiny-button"
+              size="large"
+              @click="goToBlog"
+            >
+              📒 JobStick 블로그 보러 가기
+            </v-btn>
+          </v-col>
+        </v-row>
+      <!-- </v-col>
+    </v-row> -->
   </v-container>
 </template>
 
@@ -88,6 +100,11 @@ const faqList = [
     answer: '✅ JobStick은 개발자 직무에 특화된 국내 최초의 AI 모의 면접 플랫폼으로, 직무와 기술 스택에 따라 맞춤 질문과 피드백을 제공합니다.',
   },
 ]
+
+// 블로그 경로로 이동
+const goToBlog = () => {
+  router.push('/blog/jobstick-blog')
+}
 
 onMounted(() => {
   AOS.init({ once: true, duration: 1000 })
