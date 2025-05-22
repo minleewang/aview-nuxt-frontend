@@ -255,7 +255,7 @@ const goToManagementUserPage = () => router.push("/management/user");
 const goToManagementUserLogList = () => router.push("/management/log");
 const goToGO = () => router.push("/admin/default");
 const goToLlmTestPage = () => router.push("/ai-interview/llm-test");
-const goToMembership = () => router.push("/price");
+const goToMembership = () => router.push("/membership/plans");
 
 // 로그아웃 처리
 const signOut = async () => {
