@@ -1,81 +1,49 @@
-import * as axiosUtility from "../../utility/axiosInstance";
-import { AxiosResponse } from "axios"
+import * as axiosUtility from "../../utility/axiosInstance"
 
 export const orderAction = {
-    async requestCartToAddOrderToDjango(payload) {
-        const {djangoAxiosInstance} = axiosUtility.createAxiosInstances()
-        try {
-            const email = sessionStorage.getItem('email')
-            if (!email) {
-                throw new Error('email not found')
-            }
-            
-            // console.log('payload:', payload)
-            const requestData = { 
-                email,
-                items: payload.items.map(item => ({
-                    cartItemId: item.cartItemId,
-                    quantity: item.quantity,
-                    orderPrice: item.orderPrice
-                }))
-            }
+  async requestCreateOrder(orderData) {
+    const { djangoAxiosInstance } = axiosUtility.createAxiosInstances();
 
-            const response = await djangoAxiosInstance.post('/orders/cart', requestData)
-            // console.log('response data:', response.data)
-            
-            return response.data
-        } catch (error) { 
-            console.error('장바구니 페이지에서 상품 구매시 에러 발생:', error)
-            throw error
-        }
-    },
-    async requestCompanyReportReadToAddOrderToDjango(payload: {email: string, companyReportId: number, companyReportPrice: number}): Promise<void> {
-        const {djangoAxiosInstance} = axiosUtility.createAxiosInstances()
-        try {
-            // console.log('payload:', payload)
+    const { items, total, userToken } = orderData
+    console.log(`requestCreateOrder(): ${items}, ${total}, ${userToken}`)
 
-            const response = await djangoAxiosInstance.post('/orders/company_report', payload )
-            console.log('response data:', response.data)
-            
-        } catch (error) { 
-            console.error('상품 페이지에서 상품 구매 시 에러 발생:', error)
-            throw error
-        }
-    },
-    async requestMyOrderListToDjango(userToken: string): Promise<void> {
-        const {djangoAxiosInstance} = axiosUtility.createAxiosInstances()
-        try {
-            const email = sessionStorage.getItem("email")
-            const res: AxiosResponse<any, any> = await djangoAxiosInstance.post('/orders/list/', { email: email });
-            // console.log('data:', res)
-            const data = res.data;
-            // console.log('data:', data)
-            this.orderList = data
-        } catch (error) {
-            console.error('나의 주문 내역 출력 과정 중 에러 발생:', error);
-            throw error
-        }
-    },
-    async requestMyOrderItemListToDjango(ordersId: number): Promise<void> {
-        const {djangoAxiosInstance} = axiosUtility.createAxiosInstances()
-        try {
-            const res = await djangoAxiosInstance.post(`/orders/read/${ordersId}`);
-            this.orderItemList = res.data
-            return this.orderItemList
-        } catch (error) {
-            console.error('requestMyOrderItemListToDjango() 문제 발생:', error);
-            throw error
-        }
-    },
-    async requestOrderItemDuplicationCheckToDjango(payload: {email: string, companyReportId: number}): Promise<void> {
-        const {djangoAxiosInstance} = axiosUtility.createAxiosInstances()
-        
-        try{
-            const res = await djangoAxiosInstance.post('/orders/order-item-duplication-check', { "payload": payload })
-            return res.data
-        } catch(error){
-            console.error('requestOrderItemDuplicationCheckToDjango() 문제 발생:', error);
-            throw error
-        }
-    },
+    try {
+      // 주문 생성 요청
+      console.log(`requestCreateOrder(): ${JSON.stringify(orderData)}`)
+      const response = await djangoAxiosInstance.post("/orders/create", { items, total, userToken });
+
+      // 요청 성공 여부 확인
+      if (response.data.success) {
+        console.log(`requestCreateOrder(): ${response}`)
+        this.setOrderInfoId(response.data.orderId);
+        return {
+          success: true,
+          orderId: response.data.orderId, // 서버에서 반환한 주문 ID
+        };
+      } else {
+        return {
+          success: false,
+          error: response.data.message || "주문 생성에 실패했습니다.",
+        };
+      }
+    } catch (error) {
+      console.error("Error in requestCreateOrder:", error);
+      return {
+        success: false,
+        error: "서버와 통신 중 오류가 발생했습니다.",
+      };
+    }
+  },
+  setOrderInfoId(orderId: string) {
+    this.orderInfoId = orderId
+  },
+
+  // 주문 ID 클리어
+  clearOrderInfoId() {
+    this.orderInfoId = null
+  },
+
+  getOrderInfoId() {
+    return this.orderInfoId;
+  },
 }
