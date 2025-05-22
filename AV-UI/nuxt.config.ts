@@ -89,6 +89,7 @@ export default defineNuxtConfig({
     "./interview-ready/nuxt.config.ts",
     "./guestAuthentication/nuxt.config.ts",
     "./admin/nuxt.config.ts",
+    "./membership/nuxt.config.ts",
   ],
   css: [
     "vuetify/styles",
@@ -128,6 +129,7 @@ export default defineNuxtConfig({
     "~/interview-ready/index.ts",
     "~/guestAuthentication/index.ts",
     "~/admin/index.ts",
+    "~/membership/index.ts",
   ],
   components: {
     dirs: [

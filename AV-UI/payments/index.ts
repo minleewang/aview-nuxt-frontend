@@ -1,40 +1,33 @@
-import { defineNuxtModule } from "@nuxt/kit";
-import { resolve } from "path";
+import { defineNuxtModule } from '@nuxt/kit';
+import { resolve } from 'path';
 
 export default defineNuxtModule({
-  meta: {
-    name: "payments",
-    configKey: "payments",
-  },
+    meta: {
+        name: 'payments',
+        configKey: 'payments',
+    },
 
-  setup(moduleOptions, nuxt) {
-    const themeDir = resolve(__dirname, "..");
+    setup(moduleOptions, nuxt) {
+        const themeDir = resolve(__dirname, '..');
 
-    nuxt.hook("pages:extend", (pages) => {
-      pages.push(
-        {
-          name: "paymentSuccessed",
-          path: "/payments/succed",
-          file: resolve(
-            themeDir,
-            "payments/pages/succed/payment-successed.vue"
-          ),
-        },
-        {
-          name: "paymentFailed",
-          path: "/payments/fail",
-          file: resolve(themeDir, "payments/pages/failed/payment-failed.vue"),
-        },
-        {
-          name: "paymentIndex",
-          path: "/payment",
-          file: resolve(themeDir, "payments/pages/payment/index.vue"),
-        }
-      );
-    });
+        nuxt.hook('pages:extend', (pages) => {
+            pages.push({
+                name: 'PaymentsConfirm',
+                path: '/payments/confirm',
+                file: resolve(themeDir, 
+                    'payments/pages/confirm.vue'),
+            });
 
-    nuxt.hook("imports:dirs", (dirs) => {
-      dirs.push(resolve(__dirname, "stores"));
-    });
-  },
+            pages.push({
+                name: 'PaymentsSuccess',
+                path: '/payments/success',
+                file: resolve(themeDir, 'payments/pages/success.vue'),
+            });
+        });
+
+        nuxt.hook('imports:dirs', (dirs) => {
+            dirs.push(resolve(__dirname, 'store'));
+        });
+    },
 });
+
