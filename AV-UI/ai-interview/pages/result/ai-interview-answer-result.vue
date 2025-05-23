@@ -101,7 +101,6 @@ definePageMeta({
 const aiInterviewStore = useAiInterviewStore();
 const router = useRouter();
 // Component State
-const userToken = localStorage.getItem("userToken");
 const inputList = ref([]);
 const downloadUrl = ref(null);
 const grade = ref("");
@@ -119,11 +118,13 @@ const calculateGrade = (scores) => {
 };
 
 // Lifecycle Hooks
+const userToken = ref("");
+
 onMounted(async () => {
-  await getScoreResultList(userToken);
-});
-//영상 저장 url 불러오기
-onMounted(() => {
+  userToken.value = localStorage.getItem("userToken");
+
+  await getScoreResultList(userToken.value);
+
   const saveUrl = localStorage.getItem("interviewRecordingUrl");
   if (saveUrl) {
     downloadUrl.value = saveUrl;
